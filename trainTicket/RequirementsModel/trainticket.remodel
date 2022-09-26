@@ -1,0 +1,838 @@
+UseCaseModel TrainTicket {
+
+	UC::buyTicket include queryInformation definedBySSD(BuyTicketSSD)
+	UC::queryInformation definedBySSD(QueryInformationSSD)
+	UC::cancelTrip definedBySSD(CancelTripSSD)
+	UC::sendNotification
+	UC::manageRoute relatedService(ManageRouteCRUDService)
+	UC::manageTrain relatedService(ManageTrainCRUDService)
+	UC::manageSeat relatedService(ManageSeatCRUDService)
+	UC::queryOrder definedBySSD(QueryOrderSSD)
+	UC::manageAccout relatedService(ManageAccoutCRUDService)
+	UC::modifyTrip definedBySSD(ModifyTripSSD) relatedService(ModifyTripService)
+
+	Actor Passenger {
+		buyTicket
+		queryInformation
+		cancelTrip
+		modifyTrip
+	}
+
+	Actor ThirdSystem {
+		sendNotification
+	}
+
+	Actor Staff {
+		manageRoute
+		manageTrain
+		manageSeat
+	}
+
+	Actor Administrator {
+		queryOrder
+		manageAccout
+	}
+
+	Interaction BuyTicketSSD {
+
+		[Participants: Passenger TrainTicketSystem]
+
+		CallMessage::BuyTicketSSDCallMessage1(buyTicket BuyTicketSSDCallMessage1SendingEnd -> BuyTicketSSDExecution1StartEnd)
+		ReturnMessage::BuyTicketSSDCallMessage1Return(BuyTicketSSDExecution1FinishEnd -> BuyTicketSSDCallMessage1ReturnReceivingEnd BuyTicketSSDCallMessage1)
+		CallMessage::BuyTicketSSDCallMessage3(saveOrder BuyTicketSSDCallMessage3SendingEnd -> BuyTicketSSDExecution2StartEnd)
+		ReturnMessage::BuyTicketSSDCallMessage3Return(BuyTicketSSDExecution2FinishEnd -> BuyTicketSSDCallMessage3ReturnReceivingEnd BuyTicketSSDCallMessage3)
+		CallMessage::BuyTicketSSDCallMessage5(pay BuyTicketSSDCallMessage5SendingEnd -> BuyTicketSSDExecution3StartEnd)
+		ReturnMessage::BuyTicketSSDCallMessage5Return(BuyTicketSSDExecution3FinishEnd -> BuyTicketSSDCallMessage5ReturnReceivingEnd BuyTicketSSDCallMessage5)
+
+		Execution::BuyTicketSSDExecution1(TrainTicketSystem BuyTicketSSDExecution1StartEnd BuyTicketSSDExecution1FinishEnd)
+		Execution::BuyTicketSSDExecution2(TrainTicketSystem BuyTicketSSDExecution2StartEnd BuyTicketSSDExecution2FinishEnd)
+		Execution::BuyTicketSSDExecution3(TrainTicketSystem BuyTicketSSDExecution3StartEnd BuyTicketSSDExecution3FinishEnd)
+
+		MessageEnd::BuyTicketSSDCallMessage1SendingEnd(Passenger BuyTicketSSDCallMessage1)
+		ExecutionEnd::BuyTicketSSDExecution1StartEnd(TrainTicketSystem BuyTicketSSDExecution1)
+		ExecutionEnd::BuyTicketSSDExecution1FinishEnd(TrainTicketSystem BuyTicketSSDExecution1)
+		MessageEnd::BuyTicketSSDCallMessage1ReturnReceivingEnd(Passenger BuyTicketSSDCallMessage1Return)
+		MessageEnd::BuyTicketSSDCallMessage3SendingEnd(Passenger BuyTicketSSDCallMessage3)
+		ExecutionEnd::BuyTicketSSDExecution2StartEnd(TrainTicketSystem BuyTicketSSDExecution2)
+		ExecutionEnd::BuyTicketSSDExecution2FinishEnd(TrainTicketSystem BuyTicketSSDExecution2)
+		MessageEnd::BuyTicketSSDCallMessage3ReturnReceivingEnd(Passenger BuyTicketSSDCallMessage3Return)
+		MessageEnd::BuyTicketSSDCallMessage5SendingEnd(Passenger BuyTicketSSDCallMessage5)
+		ExecutionEnd::BuyTicketSSDExecution3StartEnd(TrainTicketSystem BuyTicketSSDExecution3)
+		ExecutionEnd::BuyTicketSSDExecution3FinishEnd(TrainTicketSystem BuyTicketSSDExecution3)
+		MessageEnd::BuyTicketSSDCallMessage5ReturnReceivingEnd(Passenger BuyTicketSSDCallMessage5Return)
+
+	}
+
+	Interaction QueryInformationSSD {
+
+		[Participants: Passenger TrainTicketSystem]
+
+		CallMessage::QueryInformationSSDCallMessage1(queryInformation QueryInformationSSDCallMessage1SendingEnd -> QueryInformationSSDExecution1StartEnd)
+		ReturnMessage::QueryInformationSSDCallMessage1Return(QueryInformationSSDExecution1FinishEnd -> QueryInformationSSDCallMessage1ReturnReceivingEnd QueryInformationSSDCallMessage1)
+		CallMessage::QueryInformationSSDCallMessage3(showTickets QueryInformationSSDCallMessage3SendingEnd -> QueryInformationSSDExecution2StartEnd)
+		ReturnMessage::QueryInformationSSDCallMessage3Return(QueryInformationSSDExecution2FinishEnd -> QueryInformationSSDCallMessage3ReturnReceivingEnd QueryInformationSSDCallMessage3)
+
+		Execution::QueryInformationSSDExecution1(TrainTicketSystem  QueryInformationSSDExecution1StartEnd QueryInformationSSDExecution1FinishEnd)
+		Execution::QueryInformationSSDExecution2(TrainTicketSystem  QueryInformationSSDExecution2StartEnd QueryInformationSSDExecution2FinishEnd)
+
+		MessageEnd::QueryInformationSSDCallMessage1SendingEnd(Passenger QueryInformationSSDCallMessage1)
+		ExecutionEnd::QueryInformationSSDExecution1StartEnd(TrainTicketSystem QueryInformationSSDExecution1)
+		ExecutionEnd::QueryInformationSSDExecution1FinishEnd(TrainTicketSystem QueryInformationSSDExecution1)
+		MessageEnd::QueryInformationSSDCallMessage1ReturnReceivingEnd(Passenger QueryInformationSSDCallMessage1Return)
+		MessageEnd::QueryInformationSSDCallMessage3SendingEnd(Passenger QueryInformationSSDCallMessage3)
+		ExecutionEnd::QueryInformationSSDExecution2StartEnd(TrainTicketSystem QueryInformationSSDExecution2)
+		ExecutionEnd::QueryInformationSSDExecution2FinishEnd(TrainTicketSystem QueryInformationSSDExecution2)
+		MessageEnd::QueryInformationSSDCallMessage3ReturnReceivingEnd(Passenger QueryInformationSSDCallMessage3Return)
+
+	}
+
+	Interaction CancelTripSSD {
+
+		[Participants: Passenger TrainTicketSystem]
+
+		CallMessage::CancelTripSSDCallMessage1(cancelTrip CancelTripSSDCallMessage1SendingEnd -> CancelTripSSDExecution1StartEnd)
+		ReturnMessage::CancelTripSSDCallMessage1Return(CancelTripSSDExecution1FinishEnd -> CancelTripSSDCallMessage1ReturnReceivingEnd CancelTripSSDCallMessage1)
+		CallMessage::CancelTripSSDCallMessage3(changeOrderStatus CancelTripSSDCallMessage3SendingEnd -> CancelTripSSDExecution2StartEnd)
+		ReturnMessage::CancelTripSSDCallMessage3Return(CancelTripSSDExecution2FinishEnd -> CancelTripSSDCallMessage3ReturnReceivingEnd CancelTripSSDCallMessage3)
+
+		Execution::CancelTripSSDExecution1(TrainTicketSystem CancelTripSSDExecution1StartEnd CancelTripSSDExecution1FinishEnd)
+		Execution::CancelTripSSDExecution2(TrainTicketSystem CancelTripSSDExecution2StartEnd CancelTripSSDExecution2FinishEnd)
+
+		MessageEnd::CancelTripSSDCallMessage1SendingEnd(Passenger CancelTripSSDCallMessage1)
+		ExecutionEnd::CancelTripSSDExecution1StartEnd(TrainTicketSystem CancelTripSSDExecution1)
+		ExecutionEnd::CancelTripSSDExecution1FinishEnd(TrainTicketSystem CancelTripSSDExecution1)
+		MessageEnd::CancelTripSSDCallMessage1ReturnReceivingEnd(Passenger CancelTripSSDCallMessage1Return)
+		MessageEnd::CancelTripSSDCallMessage3SendingEnd(Passenger CancelTripSSDCallMessage3)
+		ExecutionEnd::CancelTripSSDExecution2StartEnd(TrainTicketSystem CancelTripSSDExecution2)
+		ExecutionEnd::CancelTripSSDExecution2FinishEnd(TrainTicketSystem CancelTripSSDExecution2)
+		MessageEnd::CancelTripSSDCallMessage3ReturnReceivingEnd(Passenger CancelTripSSDCallMessage3Return)
+
+	}
+
+	Interaction QueryOrderSSD {
+
+		[Participants: Administrator TrainTicketSystem]
+
+		CallMessage::QueryOrderSSDCallMessage1(queryByOrderId QueryOrderSSDCallMessage1SendingEnd -> QueryOrderSSDExecution1StartEnd)
+		ReturnMessage::QueryOrderSSDCallMessage1Return(QueryOrderSSDExecution1FinishEnd -> QueryOrderSSDCallMessage1ReturnReceivingEnd QueryOrderSSDCallMessage1)
+		CallMessage::QueryOrderSSDCallMessage3(queryTicketId QueryOrderSSDCallMessage3SendingEnd -> QueryOrderSSDExecution2StartEnd)
+		ReturnMessage::QueryOrderSSDCallMessage3Return(QueryOrderSSDExecution2FinishEnd -> QueryOrderSSDCallMessage3ReturnReceivingEnd QueryOrderSSDCallMessage3)
+
+		Execution::QueryOrderSSDExecution1(TrainTicketSystem QueryOrderSSDExecution1StartEnd QueryOrderSSDExecution1FinishEnd)
+		Execution::QueryOrderSSDExecution2(TrainTicketSystem QueryOrderSSDExecution2StartEnd QueryOrderSSDExecution2FinishEnd)
+
+		CombinedFragment:: combinedFragement1 -> alt {
+
+			[Participants:TrainTicketSystem Administrator]
+
+			combinedFragement1StartEnd -> combinedFragement1FinishEnd
+
+			Operand::orderId(condition1End condition3End)
+			Operand::ticketId(condition3End combinedFragement1FinishEnd)
+		}
+
+		CombinedFragmentEnd::combinedFragement1StartEnd(combinedFragement1)
+		OperandEnd::condition1End(orderId)
+		MessageEnd::QueryOrderSSDCallMessage1SendingEnd(Administrator QueryOrderSSDCallMessage1)
+		ExecutionEnd::QueryOrderSSDExecution1StartEnd(TrainTicketSystem QueryOrderSSDExecution1)
+		ExecutionEnd::QueryOrderSSDExecution1FinishEnd(TrainTicketSystem QueryOrderSSDExecution1)
+		MessageEnd::QueryOrderSSDCallMessage1ReturnReceivingEnd(Administrator QueryOrderSSDCallMessage1Return)
+		OperandEnd::condition3End(ticketId)
+		MessageEnd::QueryOrderSSDCallMessage3SendingEnd(Administrator QueryOrderSSDCallMessage3)
+		ExecutionEnd::QueryOrderSSDExecution2StartEnd(TrainTicketSystem QueryOrderSSDExecution2)
+		ExecutionEnd::QueryOrderSSDExecution2FinishEnd(TrainTicketSystem QueryOrderSSDExecution2)
+		MessageEnd::QueryOrderSSDCallMessage3ReturnReceivingEnd(Administrator QueryOrderSSDCallMessage3Return)
+		CombinedFragmentEnd::combinedFragement1FinishEnd(combinedFragement1)
+
+	}
+
+	Interaction ModifyTripSSD {
+
+		[Participants: Passenger ModifyTripService]
+
+		CallMessage::ModifyTripSSDCallMessage1(modifyTrip ModifyTripSSDCallMessage1SendingEnd -> ModifyTripSSDExecution1StartEnd)
+		ReturnMessage::ModifyTripSSDCallMessage1Return(ModifyTripSSDExecution1FinishEnd -> ModifyTripSSDCallMessage1ReturnReceivingEnd ModifyTripSSDCallMessage1)
+		CallMessage::ModifyTripSSDCallMessage3(cancelOrder ModifyTripSSDCallMessage3SendingEnd -> ModifyTripSSDExecution2StartEnd)
+		ReturnMessage::ModifyTripSSDCallMessage3Return(ModifyTripSSDExecution2FinishEnd -> ModifyTripSSDCallMessage3ReturnReceivingEnd ModifyTripSSDCallMessage3)
+
+		Execution::ModifyTripSSDExecution1(ModifyTripService ModifyTripSSDExecution1StartEnd ModifyTripSSDExecution1FinishEnd)
+		Execution::ModifyTripSSDExecution2(ModifyTripService ModifyTripSSDExecution2StartEnd ModifyTripSSDExecution2FinishEnd)
+
+		MessageEnd::ModifyTripSSDCallMessage1SendingEnd(Passenger ModifyTripSSDCallMessage1)
+		ExecutionEnd::ModifyTripSSDExecution1StartEnd(ModifyTripService ModifyTripSSDExecution1)
+		ExecutionEnd::ModifyTripSSDExecution1FinishEnd(ModifyTripService ModifyTripSSDExecution1)
+		MessageEnd::ModifyTripSSDCallMessage1ReturnReceivingEnd(Passenger ModifyTripSSDCallMessage1Return)
+		MessageEnd::ModifyTripSSDCallMessage3SendingEnd(Passenger ModifyTripSSDCallMessage3)
+		ExecutionEnd::ModifyTripSSDExecution2StartEnd(ModifyTripService ModifyTripSSDExecution2)
+		ExecutionEnd::ModifyTripSSDExecution2FinishEnd(ModifyTripService ModifyTripSSDExecution2)
+		MessageEnd::ModifyTripSSDCallMessage3ReturnReceivingEnd(Passenger ModifyTripSSDCallMessage3Return)
+
+	}
+
+	Service TrainTicketSystem {
+
+		[Operation]
+		buyTicket(accoutId, routeId)
+		saveOrder(ticketId, boughtTime)
+		pay(price, orderId)
+		queryInformation(startStation, endStation, time)
+		showTickets()
+		cancelTrip(ticketId)
+		changeOrderStatus()
+		queryByOrderId(orderId)
+		queryTicketId(ticketId)
+
+	}
+
+	Service ThirdPartyServices {
+
+		[Operation]
+		sendNotification()
+
+	}
+
+	Service ManageRouteCRUDService {
+
+		[Operation]
+		createRoute(routeid, startstation, endstation, time, trainid)
+		queryRoute(routeid)
+		modifyRoute(routeid, startstation, endstation, time, trainid)
+		deleteRoute(routeid)
+
+	}
+
+	Service ManageTrainCRUDService {
+
+		[Operation]
+		createTrain(trainid, name, traintype)
+		queryTrain(trainid)
+		modifyTrain(trainid, name, traintype)
+		deleteTrain(trainid)
+
+	}
+
+	Service ManageTicketCRUDService {
+
+		[Operation]
+		createTicket(ticketid, routeid, seatid, price, isvalid)
+		queryTicket(ticketid)
+		modifyTicket(ticketid, routeid, seatid, price, isvalid)
+		deleteTicket(ticketid)
+
+	}
+
+	Service ManageOrderCRUDService {
+
+		[Operation]
+		createOrder(orderid, ticketid, accoutid, createtime, orderstatus)
+		queryOrder(orderid)
+		modifyOrder(orderid, ticketid, accoutid, createtime, orderstatus)
+		deleteOrder(orderid)
+
+	}
+
+	Service ManageAccoutCRUDService {
+
+		[Operation]
+		createAccout(accoutid, name, phonenumber)
+		queryAccout(accoutid)
+		modifyAccout(accoutid, name, phonenumber)
+		deleteAccout(accoutid)
+
+	}
+
+	Service ManageSeatCRUDService {
+
+		[Operation]
+		createSeat(seatid, trainid, seattype)
+		querySeat(seatid)
+		modifySeat(seatid, trainid, seattype)
+		deleteSeat(seatid)
+
+	}
+
+	Service ModifyTripService {
+
+		[Operation]
+		modifyTrip(accoutId, ticketId, newRouteId, time)
+		cancelOrder()
+
+	}
+
+//entity create operation 
+	Contract  ManageRouteCRUDService::createRoute(routeid : String, startstation : String, endstation : String, time : String, trainid : String) : Boolean {
+
+		/* definition: find specific Route instance by routeid */
+		definition:
+			route:Route = Route.allInstance()->any(rou:Route | rou.RouteId = routeid)
+
+		/* precondition: the instance route was not found in the system */
+		precondition:
+			route.oclIsUndefined() = true
+
+		/* postcondition: 
+		 * A Route instance rou was created.
+		 * all properties of rou became the same values as inputs.
+		 */
+		postcondition:
+			let rou:Route in
+			rou.oclIsNew() and
+			rou.RouteId = routeid and
+			rou.StartStation = startstation and
+			rou.EndStation = endstation and
+			rou.Time = time and
+			rou.TrainId = trainid and
+			Route.allInstance()->includes(rou) and
+			result = true
+	}
+
+//entity query operation 
+	Contract  ManageRouteCRUDService::queryRoute(routeid : String) : Route {
+
+		/* definition: find specific Route instance by routeid */
+		definition:
+			route:Route = Route.allInstance()->any(rou:Route | rou.RouteId = routeid)
+
+		/* precondition: the instance route was found in the system */
+		precondition:
+			route.oclIsUndefined() = false
+
+		/* postcondition: return found the instance route */
+		postcondition:
+			result = route
+	}
+
+//entity modify operation 
+	Contract  ManageRouteCRUDService::modifyRoute(routeid : String, startstation : String, endstation : String, time : String, trainid : String) : Boolean {
+
+		/* definition: find specific Route instance by routeid */
+		definition:
+			route:Route = Route.allInstance()->any(rou:Route | rou.RouteId = routeid)
+
+		/* precondition: the instance route was found in the system */
+		precondition:
+			route.oclIsUndefined() = false
+
+		/* postcondition: all properties of rou became the same values as inputs. */
+		postcondition:
+			route.RouteId = routeid and
+			route.StartStation = startstation and
+			route.EndStation = endstation and
+			route.Time = time and
+			route.TrainId = trainid and
+			result = true
+	}
+
+//entity delete operation 
+	Contract  ManageRouteCRUDService::deleteRoute(routeid : String) : Boolean {
+
+		/* definition: find specific Route instance by routeid */
+		definition:
+			route:Route = Route.allInstance()->any(rou:Route | rou.RouteId = routeid)
+
+		/* precondition: the instance route was found in the system */
+		precondition:
+			route.oclIsUndefined() = false and
+			Route.allInstance()->includes(route)
+
+		/* postcondition: the instance route was deleted from the system */
+		postcondition:
+			Route.allInstance()->excludes(route) and
+			result = true
+	}
+
+//entity create operation 
+	Contract  ManageTrainCRUDService::createTrain(trainid : String, name : String, traintype : TrainType[G|D|Z|T|A|L]) : Boolean {
+
+		/* definition: find specific Train instance by trainid */
+		definition:
+			train:Train = Train.allInstance()->any(tra:Train | tra.TrainId = trainid)
+
+		/* precondition: the instance train was not found in the system */
+		precondition:
+			train.oclIsUndefined() = true
+
+		/* postcondition: 
+		 * A Train instance tra was created.
+		 * all properties of tra became the same values as inputs.
+		 */
+		postcondition:
+			let tra:Train in
+			tra.oclIsNew() and
+			tra.TrainId = trainid and
+			tra.Name = name and
+			tra.TrainType = traintype and
+			Train.allInstance()->includes(tra) and
+			result = true
+	}
+
+//entity query operation 
+	Contract  ManageTrainCRUDService::queryTrain(trainid : String) : Train {
+
+		/* definition: find specific Train instance by trainid */
+		definition:
+			train:Train = Train.allInstance()->any(tra:Train | tra.TrainId = trainid)
+
+		/* precondition: the instance train was found in the system */
+		precondition:
+			train.oclIsUndefined() = false
+
+		/* postcondition: return found the instance train */
+		postcondition:
+			result = train
+	}
+
+//entity modify operation 
+	Contract  ManageTrainCRUDService::modifyTrain(trainid : String, name : String, traintype : TrainType[G|D|Z|T|A|L]) : Boolean {
+
+		/* definition: find specific Train instance by trainid */
+		definition:
+			train:Train = Train.allInstance()->any(tra:Train | tra.TrainId = trainid)
+
+		/* precondition: the instance train was found in the system */
+		precondition:
+			train.oclIsUndefined() = false
+
+		/* postcondition: all properties of tra became the same values as inputs. */
+		postcondition:
+			train.TrainId = trainid and
+			train.Name = name and
+			train.TrainType = traintype and
+			result = true
+	}
+
+//entity delete operation 
+	Contract  ManageTrainCRUDService::deleteTrain(trainid : String) : Boolean {
+
+		/* definition: find specific Train instance by trainid */
+		definition:
+			train:Train = Train.allInstance()->any(tra:Train | tra.TrainId = trainid)
+
+		/* precondition: the instance train was found in the system */
+		precondition:
+			train.oclIsUndefined() = false and
+			Train.allInstance()->includes(train)
+
+		/* postcondition: the instance train was deleted from the system */
+		postcondition:
+			Train.allInstance()->excludes(train) and
+			result = true
+	}
+
+//entity create operation 
+	Contract  ManageTicketCRUDService::createTicket(ticketid : String, routeid : String, seatid : String, price : Real, isvalid : Boolean) : Boolean {
+
+		/* definition: find specific Ticket instance by ticketid */
+		definition:
+			ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketid)
+
+		/* precondition: the instance ticket was not found in the system */
+		precondition:
+			ticket.oclIsUndefined() = true
+
+		/* postcondition: 
+		 * A Ticket instance tic was created.
+		 * all properties of tic became the same values as inputs.
+		 */
+		postcondition:
+			let tic:Ticket in
+			tic.oclIsNew() and
+			tic.TicketId = ticketid and
+			tic.RouteId = routeid and
+			tic.SeatId = seatid and
+			tic.Price = price and
+			tic.IsValid = isvalid and
+			Ticket.allInstance()->includes(tic) and
+			result = true
+	}
+
+//entity query operation 
+	Contract  ManageTicketCRUDService::queryTicket(ticketid : String) : Ticket {
+
+		/* definition: find specific Ticket instance by ticketid */
+		definition:
+			ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketid)
+
+		/* precondition: the instance ticket was found in the system */
+		precondition:
+			ticket.oclIsUndefined() = false
+
+		/* postcondition: return found the instance ticket */
+		postcondition:
+			result = ticket
+	}
+
+//entity modify operation 
+	Contract  ManageTicketCRUDService::modifyTicket(ticketid : String, routeid : String, seatid : String, price : Real, isvalid : Boolean) : Boolean {
+
+		/* definition: find specific Ticket instance by ticketid */
+		definition:
+			ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketid)
+
+		/* precondition: the instance ticket was found in the system */
+		precondition:
+			ticket.oclIsUndefined() = false
+
+		/* postcondition: all properties of tic became the same values as inputs. */
+		postcondition:
+			ticket.TicketId = ticketid and
+			ticket.RouteId = routeid and
+			ticket.SeatId = seatid and
+			ticket.Price = price and
+			ticket.IsValid = isvalid and
+			result = true
+	}
+
+//entity delete operation 
+	Contract  ManageTicketCRUDService::deleteTicket(ticketid : String) : Boolean {
+
+		/* definition: find specific Ticket instance by ticketid */
+		definition:
+			ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketid)
+
+		/* precondition: the instance ticket was found in the system */
+		precondition:
+			ticket.oclIsUndefined() = false and
+			Ticket.allInstance()->includes(ticket)
+
+		/* postcondition: the instance ticket was deleted from the system */
+		postcondition:
+			Ticket.allInstance()->excludes(ticket) and
+			result = true
+	}
+
+//entity create operation 
+	Contract  ManageOrderCRUDService::createOrder(orderid : String, ticketid : String, accoutid : String, createtime : String, orderstatus : OrderStatus[NOTPAID|PAID|CANCELED]) : Boolean {
+
+		/* definition: find specific Order instance by orderid */
+		definition:
+			order:Order = Order.allInstance()->any(ord:Order | ord.OrderId = orderid)
+
+		/* precondition: the instance order was not found in the system */
+		precondition:
+			order.oclIsUndefined() = true
+
+		/* postcondition: 
+		 * A Order instance ord was created.
+		 * all properties of ord became the same values as inputs.
+		 */
+		postcondition:
+			let ord:Order in
+			ord.oclIsNew() and
+			ord.OrderId = orderid and
+			ord.TicketId = ticketid and
+			ord.AccoutId = accoutid and
+			ord.CreateTime = createtime and
+			ord.OrderStatus = orderstatus and
+			Order.allInstance()->includes(ord) and
+			result = true
+	}
+
+//entity query operation 
+	Contract  ManageOrderCRUDService::queryOrder(orderid : String) : Order {
+
+		/* definition: find specific Order instance by orderid */
+		definition:
+			order:Order = Order.allInstance()->any(ord:Order | ord.OrderId = orderid)
+
+		/* precondition: the instance order was found in the system */
+		precondition:
+			order.oclIsUndefined() = false
+
+		/* postcondition: return found the instance order */
+		postcondition:
+			result = order
+	}
+
+//entity modify operation 
+	Contract  ManageOrderCRUDService::modifyOrder(orderid : String, ticketid : String, accoutid : String, createtime : String, orderstatus : OrderStatus[NOTPAID|PAID|CANCELED]) : Boolean {
+
+		/* definition: find specific Order instance by orderid */
+		definition:
+			order:Order = Order.allInstance()->any(ord:Order | ord.OrderId = orderid)
+
+		/* precondition: the instance order was found in the system */
+		precondition:
+			order.oclIsUndefined() = false
+
+		/* postcondition: all properties of ord became the same values as inputs. */
+		postcondition:
+			order.OrderId = orderid and
+			order.TicketId = ticketid and
+			order.AccoutId = accoutid and
+			order.CreateTime = createtime and
+			order.OrderStatus = orderstatus and
+			result = true
+	}
+
+//entity delete operation 
+	Contract  ManageOrderCRUDService::deleteOrder(orderid : String) : Boolean {
+
+		/* definition: find specific Order instance by orderid */
+		definition:
+			order:Order = Order.allInstance()->any(ord:Order | ord.OrderId = orderid)
+
+		/* precondition: the instance order was found in the system */
+		precondition:
+			order.oclIsUndefined() = false and
+			Order.allInstance()->includes(order)
+
+		/* postcondition: the instance order was deleted from the system */
+		postcondition:
+			Order.allInstance()->excludes(order) and
+			result = true
+	}
+
+//entity create operation 
+	Contract  ManageAccoutCRUDService::createAccout(accoutid : String, name : String, phonenumber : String) : Boolean {
+
+		/* definition: find specific Accout instance by accoutid */
+		definition:
+			accout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutid)
+
+		/* precondition: the instance accout was not found in the system */
+		precondition:
+			accout.oclIsUndefined() = true
+
+		/* postcondition: 
+		 * A Accout instance acc was created.
+		 * all properties of acc became the same values as inputs.
+		 */
+		postcondition:
+			let acc:Accout in
+			acc.oclIsNew() and
+			acc.AccoutId = accoutid and
+			acc.Name = name and
+			acc.PhoneNumber = phonenumber and
+			Accout.allInstance()->includes(acc) and
+			result = true
+	}
+
+//entity query operation 
+	Contract  ManageAccoutCRUDService::queryAccout(accoutid : String) : Accout {
+
+		/* definition: find specific Accout instance by accoutid */
+		definition:
+			accout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutid)
+
+		/* precondition: the instance accout was found in the system */
+		precondition:
+			accout.oclIsUndefined() = false
+
+		/* postcondition: return found the instance accout */
+		postcondition:
+			result = accout
+	}
+
+//entity modify operation 
+	Contract  ManageAccoutCRUDService::modifyAccout(accoutid : String, name : String, phonenumber : String) : Boolean {
+
+		/* definition: find specific Accout instance by accoutid */
+		definition:
+			accout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutid)
+
+		/* precondition: the instance accout was found in the system */
+		precondition:
+			accout.oclIsUndefined() = false
+
+		/* postcondition: all properties of acc became the same values as inputs. */
+		postcondition:
+			accout.AccoutId = accoutid and
+			accout.Name = name and
+			accout.PhoneNumber = phonenumber and
+			result = true
+	}
+
+//entity delete operation 
+	Contract  ManageAccoutCRUDService::deleteAccout(accoutid : String) : Boolean {
+
+		/* definition: find specific Accout instance by accoutid */
+		definition:
+			accout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutid)
+
+		/* precondition: the instance accout was found in the system */
+		precondition:
+			accout.oclIsUndefined() = false and
+			Accout.allInstance()->includes(accout)
+
+		/* postcondition: the instance accout was deleted from the system */
+		postcondition:
+			Accout.allInstance()->excludes(accout) and
+			result = true
+	}
+
+//entity create operation 
+	Contract  ManageSeatCRUDService::createSeat(seatid : String, trainid : String, seattype : SeatType[HARDBED|SOFTBED|SEAT|STAND]) : Boolean {
+
+		/* definition: find specific Seat instance by seatid */
+		definition:
+			seat:Seat = Seat.allInstance()->any(sea:Seat | sea.SeatId = seatid)
+
+		/* precondition: the instance seat was not found in the system */
+		precondition:
+			seat.oclIsUndefined() = true
+
+		/* postcondition: 
+		 * A Seat instance sea was created.
+		 * all properties of sea became the same values as inputs.
+		 */
+		postcondition:
+			let sea:Seat in
+			sea.oclIsNew() and
+			sea.SeatId = seatid and
+			sea.TrainId = trainid and
+			sea.SeatType = seattype and
+			Seat.allInstance()->includes(sea) and
+			result = true
+	}
+
+//entity query operation 
+	Contract  ManageSeatCRUDService::querySeat(seatid : String) : Seat {
+
+		/* definition: find specific Seat instance by seatid */
+		definition:
+			seat:Seat = Seat.allInstance()->any(sea:Seat | sea.SeatId = seatid)
+
+		/* precondition: the instance seat was found in the system */
+		precondition:
+			seat.oclIsUndefined() = false
+
+		/* postcondition: return found the instance seat */
+		postcondition:
+			result = seat
+	}
+
+//entity modify operation 
+	Contract  ManageSeatCRUDService::modifySeat(seatid : String, trainid : String, seattype : SeatType[HARDBED|SOFTBED|SEAT|STAND]) : Boolean {
+
+		/* definition: find specific Seat instance by seatid */
+		definition:
+			seat:Seat = Seat.allInstance()->any(sea:Seat | sea.SeatId = seatid)
+
+		/* precondition: the instance seat was found in the system */
+		precondition:
+			seat.oclIsUndefined() = false
+
+		/* postcondition: all properties of sea became the same values as inputs. */
+		postcondition:
+			seat.SeatId = seatid and
+			seat.TrainId = trainid and
+			seat.SeatType = seattype and
+			result = true
+	}
+
+//entity delete operation 
+	Contract  ManageSeatCRUDService::deleteSeat(seatid : String) : Boolean {
+
+		/* definition: find specific Seat instance by seatid */
+		definition:
+			seat:Seat = Seat.allInstance()->any(sea:Seat | sea.SeatId = seatid)
+
+		/* precondition: the instance seat was found in the system */
+		precondition:
+			seat.oclIsUndefined() = false and
+			Seat.allInstance()->includes(seat)
+
+		/* postcondition: the instance seat was deleted from the system */
+		postcondition:
+			Seat.allInstance()->excludes(seat) and
+			result = true
+	}
+
+	Contract TrainTicketSystem::buyTicket(accoutId : String, routeId : String) : Boolean {
+
+		precondition:
+			true
+		postcondition:
+			true
+	}
+
+	Contract TrainTicketSystem::cancelTrip(ticketId : String) : Boolean {
+
+		precondition:
+			true
+		postcondition:
+			true
+	}
+
+	Contract TrainTicketSystem::queryInformation(startStation : String, endStation : String, time : String) : Boolean {
+
+		precondition:
+			true
+		postcondition:
+			true
+	}
+
+}
+
+DomainModel TrainTicket {
+
+	@AutoCRUD Entity Route {
+		RouteId : String
+		StartStation : String
+		EndStation : String
+		Time : String
+		TrainId : String
+
+		[Refer]
+		InTicket : Ticket* Association
+		UsedTrain : Train ! Association
+	}
+
+	@AutoCRUD Entity Train {
+		TrainId : String
+		Name : String
+		TrainType : TrainType[G|D|Z|T|A|L]
+
+		[Refer]
+		InRoute : Route* Association
+	}
+
+	@AutoCRUD Entity Ticket {
+		TicketId : String
+		RouteId : String
+		SeatId : String
+		Price : Real
+		IsValid : Boolean
+
+		[Refer]
+		HasRoute : Route ! Association
+		InOrder : Order Association
+		HasSeat : Seat Association
+		BelongedAccout : Accout Association
+	}
+
+	@AutoCRUD Entity Order {
+		OrderId : String
+		TicketId : String
+		AccoutId : String
+		CreateTime : String
+		OrderStatus : OrderStatus[NOTPAID|PAID|CANCELED]
+
+		[Refer]
+		HasTicket : Ticket ! Association
+		HasAccout : Accout Association
+	}
+
+	@AutoCRUD Entity Accout {
+		AccoutId : String
+		Name : String
+		PhoneNumber : String
+
+		[Refer]
+		AccouttoSeat : Seat ! Association
+		InOrder : Order ! Association
+		HasTicket : Ticket* ! Association
+	}
+
+	@AutoCRUD Entity Seat {
+		SeatId : String
+		TrainId : String
+		SeatType : SeatType[HARDBED|SOFTBED|SEAT|STAND]
+
+		[Refer]
+		InTicket : Ticket* ! Association
+	}
+
+}
+

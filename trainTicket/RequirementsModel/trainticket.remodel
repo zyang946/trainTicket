@@ -1,15 +1,16 @@
 UseCaseModel TrainTicket {
 
-	UC::buyTicket include queryInformation definedBySSD(BuyTicketSSD)
-	UC::queryInformation definedBySSD(QueryInformationSSD)
-	UC::cancelTrip definedBySSD(CancelTripSSD)
+	UC::buyTicket include queryInformation definedBySSD(BuyTicketSSD) relatedService(BuyTicketService)
+	UC::queryInformation
+	UC::cancelTrip
 	UC::sendNotification
 	UC::manageRoute relatedService(ManageRouteCRUDService)
 	UC::manageTrain relatedService(ManageTrainCRUDService)
 	UC::manageSeat relatedService(ManageSeatCRUDService)
-	UC::queryOrder definedBySSD(QueryOrderSSD)
+	UC::queryOrder definedBySSD(QueryOrderSSD) relatedService(QueryOrderService)
 	UC::manageAccout relatedService(ManageAccoutCRUDService)
 	UC::modifyTrip definedBySSD(ModifyTripSSD) relatedService(ModifyTripService)
+	UC::deleteOverdueOrder definedBySSD(DeleteOverdueOrderSSD) relatedService(DeleteOverdueOrderService)
 
 	Actor Passenger {
 		buyTicket
@@ -31,6 +32,7 @@ UseCaseModel TrainTicket {
 	Actor Administrator {
 		queryOrder
 		manageAccout
+		deleteOverdueOrder
 	}
 
 	Interaction BuyTicketSSD {
@@ -63,76 +65,44 @@ UseCaseModel TrainTicket {
 
 	}
 
-	Interaction QueryInformationSSD {
-
-		[Participants: Passenger TrainTicketSystem]
-
-		CallMessage::QueryInformationSSDCallMessage1(queryInformation QueryInformationSSDCallMessage1SendingEnd -> QueryInformationSSDExecution1StartEnd)
-		ReturnMessage::QueryInformationSSDCallMessage1Return(QueryInformationSSDExecution1FinishEnd -> QueryInformationSSDCallMessage1ReturnReceivingEnd QueryInformationSSDCallMessage1)
-		CallMessage::QueryInformationSSDCallMessage3(showTickets QueryInformationSSDCallMessage3SendingEnd -> QueryInformationSSDExecution2StartEnd)
-		ReturnMessage::QueryInformationSSDCallMessage3Return(QueryInformationSSDExecution2FinishEnd -> QueryInformationSSDCallMessage3ReturnReceivingEnd QueryInformationSSDCallMessage3)
-
-		Execution::QueryInformationSSDExecution1(TrainTicketSystem  QueryInformationSSDExecution1StartEnd QueryInformationSSDExecution1FinishEnd)
-		Execution::QueryInformationSSDExecution2(TrainTicketSystem  QueryInformationSSDExecution2StartEnd QueryInformationSSDExecution2FinishEnd)
-
-		MessageEnd::QueryInformationSSDCallMessage1SendingEnd(Passenger QueryInformationSSDCallMessage1)
-		ExecutionEnd::QueryInformationSSDExecution1StartEnd(TrainTicketSystem QueryInformationSSDExecution1)
-		ExecutionEnd::QueryInformationSSDExecution1FinishEnd(TrainTicketSystem QueryInformationSSDExecution1)
-		MessageEnd::QueryInformationSSDCallMessage1ReturnReceivingEnd(Passenger QueryInformationSSDCallMessage1Return)
-		MessageEnd::QueryInformationSSDCallMessage3SendingEnd(Passenger QueryInformationSSDCallMessage3)
-		ExecutionEnd::QueryInformationSSDExecution2StartEnd(TrainTicketSystem QueryInformationSSDExecution2)
-		ExecutionEnd::QueryInformationSSDExecution2FinishEnd(TrainTicketSystem QueryInformationSSDExecution2)
-		MessageEnd::QueryInformationSSDCallMessage3ReturnReceivingEnd(Passenger QueryInformationSSDCallMessage3Return)
-
-	}
-
-	Interaction CancelTripSSD {
-
-		[Participants: Passenger TrainTicketSystem]
-
-		CallMessage::CancelTripSSDCallMessage1(cancelTrip CancelTripSSDCallMessage1SendingEnd -> CancelTripSSDExecution1StartEnd)
-		ReturnMessage::CancelTripSSDCallMessage1Return(CancelTripSSDExecution1FinishEnd -> CancelTripSSDCallMessage1ReturnReceivingEnd CancelTripSSDCallMessage1)
-		CallMessage::CancelTripSSDCallMessage3(changeOrderStatus CancelTripSSDCallMessage3SendingEnd -> CancelTripSSDExecution2StartEnd)
-		ReturnMessage::CancelTripSSDCallMessage3Return(CancelTripSSDExecution2FinishEnd -> CancelTripSSDCallMessage3ReturnReceivingEnd CancelTripSSDCallMessage3)
-
-		Execution::CancelTripSSDExecution1(TrainTicketSystem CancelTripSSDExecution1StartEnd CancelTripSSDExecution1FinishEnd)
-		Execution::CancelTripSSDExecution2(TrainTicketSystem CancelTripSSDExecution2StartEnd CancelTripSSDExecution2FinishEnd)
-
-		MessageEnd::CancelTripSSDCallMessage1SendingEnd(Passenger CancelTripSSDCallMessage1)
-		ExecutionEnd::CancelTripSSDExecution1StartEnd(TrainTicketSystem CancelTripSSDExecution1)
-		ExecutionEnd::CancelTripSSDExecution1FinishEnd(TrainTicketSystem CancelTripSSDExecution1)
-		MessageEnd::CancelTripSSDCallMessage1ReturnReceivingEnd(Passenger CancelTripSSDCallMessage1Return)
-		MessageEnd::CancelTripSSDCallMessage3SendingEnd(Passenger CancelTripSSDCallMessage3)
-		ExecutionEnd::CancelTripSSDExecution2StartEnd(TrainTicketSystem CancelTripSSDExecution2)
-		ExecutionEnd::CancelTripSSDExecution2FinishEnd(TrainTicketSystem CancelTripSSDExecution2)
-		MessageEnd::CancelTripSSDCallMessage3ReturnReceivingEnd(Passenger CancelTripSSDCallMessage3Return)
-
-	}
-
 	Interaction QueryOrderSSD {
 
 		[Participants: Administrator TrainTicketSystem]
 
-		CallMessage::QueryOrderSSDCallMessage1(queryByOrderId QueryOrderSSDCallMessage1SendingEnd -> QueryOrderSSDExecution1StartEnd)
+		CallMessage::QueryOrderSSDCallMessage1(queryByAccoutId QueryOrderSSDCallMessage1SendingEnd -> QueryOrderSSDExecution1StartEnd)
 		ReturnMessage::QueryOrderSSDCallMessage1Return(QueryOrderSSDExecution1FinishEnd -> QueryOrderSSDCallMessage1ReturnReceivingEnd QueryOrderSSDCallMessage1)
 		CallMessage::QueryOrderSSDCallMessage3(queryTicketId QueryOrderSSDCallMessage3SendingEnd -> QueryOrderSSDExecution2StartEnd)
 		ReturnMessage::QueryOrderSSDCallMessage3Return(QueryOrderSSDExecution2FinishEnd -> QueryOrderSSDCallMessage3ReturnReceivingEnd QueryOrderSSDCallMessage3)
+		CallMessage::QueryOrderSSDCallMessage5(deleteOverdueTicket QueryOrderSSDCallMessage5SendingEnd -> QueryOrderSSDExecution3StartEnd)
+		ReturnMessage::QueryOrderSSDCallMessage5Return(QueryOrderSSDExecution3FinishEnd -> QueryOrderSSDCallMessage5ReturnReceivingEnd QueryOrderSSDCallMessage5)
+		CallMessage::QueryOrderSSDCallMessage7(deleteOverdueOrder QueryOrderSSDCallMessage7SendingEnd -> QueryOrderSSDExecution4StartEnd)
+		ReturnMessage::QueryOrderSSDCallMessage7Return(QueryOrderSSDExecution4FinishEnd -> QueryOrderSSDCallMessage7ReturnReceivingEnd QueryOrderSSDCallMessage7)
 
 		Execution::QueryOrderSSDExecution1(TrainTicketSystem QueryOrderSSDExecution1StartEnd QueryOrderSSDExecution1FinishEnd)
 		Execution::QueryOrderSSDExecution2(TrainTicketSystem QueryOrderSSDExecution2StartEnd QueryOrderSSDExecution2FinishEnd)
+		Execution::QueryOrderSSDExecution3(DeleteOverdueOrderService QueryOrderSSDExecution3StartEnd QueryOrderSSDExecution3FinishEnd)
+		Execution::QueryOrderSSDExecution4(DeleteOverdueOrderService QueryOrderSSDExecution4StartEnd QueryOrderSSDExecution4FinishEnd)
 
-		CombinedFragment:: combinedFragement1 -> alt {
+		CombinedFragment:: queryMethod -> alt {
 
 			[Participants:TrainTicketSystem Administrator]
 
 			combinedFragement1StartEnd -> combinedFragement1FinishEnd
 
-			Operand::orderId(condition1End condition3End)
+			Operand::accoutId(condition1End condition3End)
 			Operand::ticketId(condition3End combinedFragement1FinishEnd)
 		}
 
-		CombinedFragmentEnd::combinedFragement1StartEnd(combinedFragement1)
-		OperandEnd::condition1End(orderId)
+		MessageEnd::QueryOrderSSDCallMessage7SendingEnd(Administrator QueryOrderSSDCallMessage7)
+		ExecutionEnd::QueryOrderSSDExecution4StartEnd(DeleteOverdueOrderService QueryOrderSSDExecution4)
+		ExecutionEnd::QueryOrderSSDExecution4FinishEnd(DeleteOverdueOrderService QueryOrderSSDExecution4)
+		MessageEnd::QueryOrderSSDCallMessage7ReturnReceivingEnd(Administrator QueryOrderSSDCallMessage7Return)
+		MessageEnd::QueryOrderSSDCallMessage5SendingEnd(Administrator QueryOrderSSDCallMessage5)
+		ExecutionEnd::QueryOrderSSDExecution3StartEnd(DeleteOverdueOrderService QueryOrderSSDExecution3)
+		ExecutionEnd::QueryOrderSSDExecution3FinishEnd(DeleteOverdueOrderService QueryOrderSSDExecution3)
+		MessageEnd::QueryOrderSSDCallMessage5ReturnReceivingEnd(Administrator QueryOrderSSDCallMessage5Return)
+		CombinedFragmentEnd::combinedFragement1StartEnd(queryMethod)
+		OperandEnd::condition1End(accoutId)
 		MessageEnd::QueryOrderSSDCallMessage1SendingEnd(Administrator QueryOrderSSDCallMessage1)
 		ExecutionEnd::QueryOrderSSDExecution1StartEnd(TrainTicketSystem QueryOrderSSDExecution1)
 		ExecutionEnd::QueryOrderSSDExecution1FinishEnd(TrainTicketSystem QueryOrderSSDExecution1)
@@ -142,7 +112,7 @@ UseCaseModel TrainTicket {
 		ExecutionEnd::QueryOrderSSDExecution2StartEnd(TrainTicketSystem QueryOrderSSDExecution2)
 		ExecutionEnd::QueryOrderSSDExecution2FinishEnd(TrainTicketSystem QueryOrderSSDExecution2)
 		MessageEnd::QueryOrderSSDCallMessage3ReturnReceivingEnd(Administrator QueryOrderSSDCallMessage3Return)
-		CombinedFragmentEnd::combinedFragement1FinishEnd(combinedFragement1)
+		CombinedFragmentEnd::combinedFragement1FinishEnd(queryMethod)
 
 	}
 
@@ -150,14 +120,28 @@ UseCaseModel TrainTicket {
 
 		[Participants: Passenger ModifyTripService]
 
-		CallMessage::ModifyTripSSDCallMessage1(modifyTrip ModifyTripSSDCallMessage1SendingEnd -> ModifyTripSSDExecution1StartEnd)
+		CallMessage::ModifyTripSSDCallMessage1(updateTicket ModifyTripSSDCallMessage1SendingEnd -> ModifyTripSSDExecution1StartEnd)
 		ReturnMessage::ModifyTripSSDCallMessage1Return(ModifyTripSSDExecution1FinishEnd -> ModifyTripSSDCallMessage1ReturnReceivingEnd ModifyTripSSDCallMessage1)
-		CallMessage::ModifyTripSSDCallMessage3(cancelOrder ModifyTripSSDCallMessage3SendingEnd -> ModifyTripSSDExecution2StartEnd)
+		CallMessage::ModifyTripSSDCallMessage3(updateOrder ModifyTripSSDCallMessage3SendingEnd -> ModifyTripSSDExecution2StartEnd)
 		ReturnMessage::ModifyTripSSDCallMessage3Return(ModifyTripSSDExecution2FinishEnd -> ModifyTripSSDCallMessage3ReturnReceivingEnd ModifyTripSSDCallMessage3)
+		CallMessage::ModifyTripSSDCallMessage5(updateTicket ModifyTripSSDCallMessage5SendingEnd -> ModifyTripSSDExecution3StartEnd)
+		ReturnMessage::ModifyTripSSDCallMessage5Return(ModifyTripSSDExecution3FinishEnd -> ModifyTripSSDCallMessage5ReturnReceivingEnd ModifyTripSSDCallMessage5)
+		CallMessage::ModifyTripSSDCallMessage7(updateOrder ModifyTripSSDCallMessage7SendingEnd -> ModifyTripSSDExecution4StartEnd)
+		ReturnMessage::ModifyTripSSDCallMessage7Return(ModifyTripSSDExecution4FinishEnd -> ModifyTripSSDCallMessage7ReturnReceivingEnd ModifyTripSSDCallMessage7)
 
 		Execution::ModifyTripSSDExecution1(ModifyTripService ModifyTripSSDExecution1StartEnd ModifyTripSSDExecution1FinishEnd)
 		Execution::ModifyTripSSDExecution2(ModifyTripService ModifyTripSSDExecution2StartEnd ModifyTripSSDExecution2FinishEnd)
+		Execution::ModifyTripSSDExecution3(ModifyTripService ModifyTripSSDExecution3StartEnd ModifyTripSSDExecution3FinishEnd)
+		Execution::ModifyTripSSDExecution4(ModifyTripService ModifyTripSSDExecution4StartEnd ModifyTripSSDExecution4FinishEnd)
 
+		MessageEnd::ModifyTripSSDCallMessage5SendingEnd(Passenger ModifyTripSSDCallMessage5)
+		ExecutionEnd::ModifyTripSSDExecution3StartEnd(ModifyTripService ModifyTripSSDExecution3)
+		ExecutionEnd::ModifyTripSSDExecution3FinishEnd(ModifyTripService ModifyTripSSDExecution3)
+		MessageEnd::ModifyTripSSDCallMessage5ReturnReceivingEnd(Passenger ModifyTripSSDCallMessage5Return)
+		MessageEnd::ModifyTripSSDCallMessage7SendingEnd(Passenger ModifyTripSSDCallMessage7)
+		ExecutionEnd::ModifyTripSSDExecution4StartEnd(ModifyTripService ModifyTripSSDExecution4)
+		ExecutionEnd::ModifyTripSSDExecution4FinishEnd(ModifyTripService ModifyTripSSDExecution4)
+		MessageEnd::ModifyTripSSDCallMessage7ReturnReceivingEnd(Passenger ModifyTripSSDCallMessage7Return)
 		MessageEnd::ModifyTripSSDCallMessage1SendingEnd(Passenger ModifyTripSSDCallMessage1)
 		ExecutionEnd::ModifyTripSSDExecution1StartEnd(ModifyTripService ModifyTripSSDExecution1)
 		ExecutionEnd::ModifyTripSSDExecution1FinishEnd(ModifyTripService ModifyTripSSDExecution1)
@@ -169,18 +153,34 @@ UseCaseModel TrainTicket {
 
 	}
 
+	Interaction DeleteOverdueOrderSSD {
+
+		[Participants: Administrator DeleteOverdueOrderService]
+
+		CallMessage::DeleteOverdueOrderSSDCallMessage1(deleteOverdueTicket DeleteOverdueOrderSSDCallMessage1SendingEnd -> DeleteOverdueOrderSSDExecution1StartEnd)
+		ReturnMessage::DeleteOverdueOrderSSDCallMessage1Return(DeleteOverdueOrderSSDExecution1FinishEnd -> DeleteOverdueOrderSSDCallMessage1ReturnReceivingEnd DeleteOverdueOrderSSDCallMessage1)
+		CallMessage::DeleteOverdueOrderSSDCallMessage3(deleteOverdueOrder DeleteOverdueOrderSSDCallMessage3SendingEnd -> DeleteOverdueOrderSSDExecution2StartEnd)
+		ReturnMessage::DeleteOverdueOrderSSDCallMessage3Return(DeleteOverdueOrderSSDExecution2FinishEnd -> DeleteOverdueOrderSSDCallMessage3ReturnReceivingEnd DeleteOverdueOrderSSDCallMessage3)
+
+		Execution::DeleteOverdueOrderSSDExecution1(DeleteOverdueOrderService DeleteOverdueOrderSSDExecution1StartEnd DeleteOverdueOrderSSDExecution1FinishEnd)
+		Execution::DeleteOverdueOrderSSDExecution2(DeleteOverdueOrderService DeleteOverdueOrderSSDExecution2StartEnd DeleteOverdueOrderSSDExecution2FinishEnd)
+
+		MessageEnd::DeleteOverdueOrderSSDCallMessage1SendingEnd(Administrator DeleteOverdueOrderSSDCallMessage1)
+		ExecutionEnd::DeleteOverdueOrderSSDExecution1StartEnd(DeleteOverdueOrderService DeleteOverdueOrderSSDExecution1)
+		ExecutionEnd::DeleteOverdueOrderSSDExecution1FinishEnd(DeleteOverdueOrderService DeleteOverdueOrderSSDExecution1)
+		MessageEnd::DeleteOverdueOrderSSDCallMessage1ReturnReceivingEnd(Administrator DeleteOverdueOrderSSDCallMessage1Return)
+		MessageEnd::DeleteOverdueOrderSSDCallMessage3SendingEnd(Administrator DeleteOverdueOrderSSDCallMessage3)
+		ExecutionEnd::DeleteOverdueOrderSSDExecution2StartEnd(DeleteOverdueOrderService DeleteOverdueOrderSSDExecution2)
+		ExecutionEnd::DeleteOverdueOrderSSDExecution2FinishEnd(DeleteOverdueOrderService DeleteOverdueOrderSSDExecution2)
+		MessageEnd::DeleteOverdueOrderSSDCallMessage3ReturnReceivingEnd(Administrator DeleteOverdueOrderSSDCallMessage3Return)
+
+	}
+
 	Service TrainTicketSystem {
 
 		[Operation]
-		buyTicket(accoutId, routeId)
-		saveOrder(ticketId, boughtTime)
-		pay(price, orderId)
 		queryInformation(startStation, endStation, time)
-		showTickets()
-		cancelTrip(ticketId)
-		changeOrderStatus()
-		queryByOrderId(orderId)
-		queryTicketId(ticketId)
+		cancelTrip(ticketId, accoutId)
 
 	}
 
@@ -188,6 +188,31 @@ UseCaseModel TrainTicket {
 
 		[Operation]
 		sendNotification()
+
+	}
+
+	Service BuyTicketService{
+
+		[Operation]
+		buyTicket(accoutId, routeId, seatId, price, ticketId)
+		saveOrder(orderId, boughtTime)
+		pay()
+
+		[TempProperty]
+		CurrentOrder : Order
+		CurrentAccoutId : String
+		CurrentTicket : Ticket
+
+	}
+
+	Service QueryOrderService{
+
+		[Operation]
+		queryByAccoutId(accoutId)
+		queryTicketId(ticketId)
+
+		[TempProperty]
+		CurrentQueryMethod : QueryMethod[ACCOUT|TICKET]
 
 	}
 
@@ -254,8 +279,22 @@ UseCaseModel TrainTicket {
 	Service ModifyTripService {
 
 		[Operation]
-		modifyTrip(accoutId, ticketId, newRouteId, time)
-		cancelOrder()
+		updateTicket(accoutId, ticketId, newRouteId, price, seatId)
+		updateOrder(time)
+
+		[TempProperty]
+		CurrentOrder : Order
+
+	}
+
+	Service DeleteOverdueOrderService {
+
+		[Operation]
+		deleteOverdueTicket(ticketId)
+		deleteOverdueOrder()
+
+		[TempProperty]
+		CurrentTicketId : String
 
 	}
 
@@ -739,28 +778,160 @@ UseCaseModel TrainTicket {
 			result = true
 	}
 
-	Contract TrainTicketSystem::buyTicket(accoutId : String, routeId : String) : Boolean {
+	Contract BuyTicketService::buyTicket(accoutId : String, routeId : String, seatId : String, price : Real, ticketId : String) : Boolean {
+
+		definition:
+			route:Route = Route.allInstance()->any(rou:Route | rou.RouteId = routeId),
+			accout:Accout = Route.allInstance()->any(acc:Accout | acc.AccoutId = accoutId),
+			seat:Seat = Seat.allInstance()->any(sea:Seat | sea.SeatId = seatId)
 
 		precondition:
-			true
+			route.oclIsUndefined() = false and
+			Accout.oclIsUndefined() = false and
+			Seat.oclIsUndefined() = false
+
 		postcondition:
-			true
+			let ticket:Ticket in
+			ticket.oclIsNew() and
+			ticket.TicketId = ticketId and
+			ticket.RouteId = routeId and
+			ticket.SeatId = seatId and
+			ticket.price = price and
+			ticket.isValid = false and
+			self.CurrentTicket = ticket and
+			self.CurrentAccoutId = accoutId and
+			Ticket.allInstance()->includes(ticket) and
+			result = true
 	}
 
-	Contract TrainTicketSystem::cancelTrip(ticketId : String) : Boolean {
+	Contract BuyTicketService::saveOrder(orderId : String, boughtTime : String) : Boolean {
+
+		definition:
+			order:Order = Order.allInstance()->any(ord:Order | ord.OrderId = orderId)
 
 		precondition:
-			true
+			order.oclIsUndefined() = true
 		postcondition:
-			true
+			let order:Order in
+			order.oclIsNew() and
+			order.OrderId = orderId and
+			orderId.TicketId = self.CurrentTicket.TicketId and
+			orderID.AccoutId = self.CurrentAccoutId and
+			orderId.CreatTime = boughtTime and
+			orderId.OrderStatus = OrderStatus::NOTPAID and
+			self.CurrentOrder = order and
+			Order.allInstance()->includes(order) and
+			result = true
 	}
 
-	Contract TrainTicketSystem::queryInformation(startStation : String, endStation : String, time : String) : Boolean {
+	Contract BuyTicketService::pay() : Boolean {
+
+		definition:
+			ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = self.CurrentTicket.TicketId),
+			order:Order = Order.allInstance()->any(ord:Order | ord.OrderId = self.CurrentOrder.OrderId)
+
+		precondition:
+			ticket.oclIsUndefined() = false and
+			order.oclIsUndefined() = false
+		postcondition:
+			ticket.isValid = true and
+			order.OrderStatus = OrderStatus::PAID and
+			result = true
+
+	}
+
+	Contract TrainTicketSystem::queryInformation(startStation : String, endStation : String, time : String) : Set(Route) {
 
 		precondition:
 			true
 		postcondition:
-			true
+			result = Route.allInstance()->select(route:Route | route.StartStation = startStation and route.EndStation = endStation and route.Time = time)
+	}
+
+	Contract TrainTicketSystem::cancelTrip(ticketId : String, accoutId : String) : Boolean {
+
+		definition:
+			ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketId and tic.isValid = true),
+			accout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutId),
+			order:Order = Order.allInstance()->any(ord:Order | ord.TickeId = ticketId and ord.AccoutId = accoutId and ord.OrderStatus = OrderStatus::PAID)
+
+		precondition:
+			ticket.oclIsUndefined() = false and
+			accout.oclIsUndefined() = false and
+			order.oclIsUndefined() = false
+		postcondition:
+			ticket.isValid = false and
+			order.OrderStatus = OrderStatus::CANCELED
+	}
+
+	Contract QueryOrderService::queryByAccoutId(accoutId : String) : Set(Order) {
+
+		definition:
+			accout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutId)
+
+		precondition:
+			accout.oclIsUndefined() = false
+		postcondition:
+			result = Order.allInstance()->select(order:Order | order.AccoutId = accoutId)
+	}
+
+	Contract QueryOrderService::queryTicketId(ticketId : String) : Set(Order) {
+
+		definition:
+			ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = tickeId)
+
+		precondition:
+			ticket.oclIsUndefined() = false
+		postcondition:
+			result = Order.allInstance()->select(order:Order | order.TicketId = ticketId)
+	}
+
+	Contract ModifyTripService::updateTicket(accoutId : String, ticketId : String, newRouteId : String, price : Real, seatId : String): Boolean {
+
+		definition:
+			ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketid and tic.isValid = true),
+			accout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutId),
+			order:Order = Order.allInstance()->any(ord:Order | ord.AccoutId = accoutID and ord.TicketId = tickeId and ord.OrderStatus = OrderStatus::PAID)
+
+		/* precondition: the instance ticket was found in the system */
+		precondition:
+			ticket.oclIsUndefined() = false and
+			accout.oclIsUndefined() = false and
+			order.oclIsUndefined() = false
+
+		/* postcondition: all properties of tic became the same values as inputs. */
+		postcondition:
+			ticket.TicketId = ticketid and
+			ticket.RouteId = routeid and
+			ticket.SeatId = seatid and
+			ticket.Price = price and
+			self.CurrentOrder = order and
+			result = true
+	}
+
+	Contract DeleteOverdueOrderService::deleteOverdueTicket(ticketId : String) : Boolean {
+
+		definition:
+			ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketId and tic.isValid = false)
+
+		precondition:
+			ticket.oclIsUndefined() = false
+		postcondition:
+			Ticket.allInstance()->excludes(ticket) and
+			self.CurrentTicketId = ticketId and
+			result = true
+	}
+
+	Contract DeleteOverdueOrderService::deleteOverdueOrder() : Boolean {
+
+		definition:
+			order:Order = Order.allInstance()->any(ord:Order | ord.TicketId = ticketId and ord.OrderStatus = OrderStatus::CANCELED)
+
+		precondition:
+			order.oclIsUndefined() = false
+		postcondition:
+			Order.allInstance()->excludes(order) and
+			result = true
 	}
 
 }
@@ -807,7 +978,7 @@ DomainModel TrainTicket {
 		TicketId : String
 		AccoutId : String
 		CreateTime : String
-		OrderStatus : OrderStatus[NOTPAID|PAID|CANCELED]
+		OrderStatus : EnumEntity1[NOTPAID|PAID|CANCELED]
 
 		[Refer]
 		HasTicket : Ticket ! Association

@@ -12,7 +12,7 @@
         <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/net.mydreamy.requirementmodel.design/description/requirementmodel.odesign#//@ownedViewpoints[name='RequirementModel']/@ownedRepresentations[name='Use%20Case%20Diagram']"/>
         <target xmi:type="rEMODEL:UseCaseModel" href="trainticket.remodel#//@UseCaseModel"/>
       </ownedRepresentationDescriptors>
-      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_pBwQkjygEe2-MKWhcAVadA" name="BuyTicketSSD" repPath="#_pBwQkDygEe2-MKWhcAVadA" changeId="67285590-2d68-489e-acd1-a6cd9c7c7b71">
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_pBwQkjygEe2-MKWhcAVadA" name="BuyTicketSSD" repPath="#_pBwQkDygEe2-MKWhcAVadA" changeId="d36103cf-4fba-439c-9cc3-8e8809c4d744">
         <description xmi:type="description_2:SequenceDiagramDescription" href="platform:/plugin/net.mydreamy.requirementmodel.design/description/requirementmodel.odesign#//@ownedViewpoints[name='RequirementModel']/@ownedRepresentations[name='SequenceDiagram']"/>
         <target xmi:type="rEMODEL:Interaction" href="trainticket.remodel#//@UseCaseModel/@interaction.0"/>
       </ownedRepresentationDescriptors>
@@ -1725,7 +1725,7 @@
       </ownedStyle>
       <actualMapping xmi:type="description_2:InstanceRoleMapping" href="platform:/plugin/net.mydreamy.requirementmodel.design/description/requirementmodel.odesign#//@ownedViewpoints[name='RequirementModel']/@ownedRepresentations[name='SequenceDiagram']/@defaultLayer/@nodeMappings[name='Participant']"/>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DEdge" uid="_lrAIMD1FEe2vbd2lMU1PAA" name="buyTicket (accoutId, routeId, seatId, price, ticketId)" sourceNode="_pB2XNDygEe2-MKWhcAVadA" targetNode="_lq-TAT1FEe2vbd2lMU1PAA">
+    <ownedDiagramElements xmi:type="diagram:DEdge" uid="_lrAIMD1FEe2vbd2lMU1PAA" name="buyTicket (accoutId, routeId, ticketId)" sourceNode="_pB2XNDygEe2-MKWhcAVadA" targetNode="_lq-TAT1FEe2vbd2lMU1PAA">
       <target xmi:type="rEMODEL:CallMessage" href="trainticket.remodel#//@UseCaseModel/@interaction.0/@messages.0"/>
       <semanticElements xmi:type="rEMODEL:CallMessage" href="trainticket.remodel#//@UseCaseModel/@interaction.0/@messages.0"/>
       <graphicalFilters xmi:type="diagram:AbsoluteBoundsFilter" uid="_lrB9YD1FEe2vbd2lMU1PAA" y="168" height="0"/>
@@ -1749,7 +1749,7 @@
       </ownedStyle>
       <actualMapping xmi:type="description_2:BasicMessageMapping" href="platform:/plugin/net.mydreamy.requirementmodel.design/description/requirementmodel.odesign#//@ownedViewpoints[name='RequirementModel']/@ownedRepresentations[name='SequenceDiagram']/@defaultLayer/@edgeMappings[name='CallMessage']"/>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DEdge" uid="_lrAvRD1FEe2vbd2lMU1PAA" name="pay ()" sourceNode="_pB2XNDygEe2-MKWhcAVadA" targetNode="_lq-TAT1FEe2vbd2lMU1PAA">
+    <ownedDiagramElements xmi:type="diagram:DEdge" uid="_lrAvRD1FEe2vbd2lMU1PAA" name="pay (price)" sourceNode="_pB2XNDygEe2-MKWhcAVadA" targetNode="_lq-TAT1FEe2vbd2lMU1PAA">
       <target xmi:type="rEMODEL:CallMessage" href="trainticket.remodel#//@UseCaseModel/@interaction.0/@messages.4"/>
       <semanticElements xmi:type="rEMODEL:CallMessage" href="trainticket.remodel#//@UseCaseModel/@interaction.0/@messages.4"/>
       <graphicalFilters xmi:type="diagram:AbsoluteBoundsFilter" uid="_lrB9Yj1FEe2vbd2lMU1PAA" y="432" height="0"/>

@@ -39,12 +39,6 @@ UseCaseModel TrainTicket {
 
 		[Participants: Passenger TrainTicketSystem]
 
-		CallMessage::BuyTicketSSDCallMessage1(buyTicket BuyTicketSSDCallMessage1SendingEnd -> BuyTicketSSDExecution1StartEnd)
-		ReturnMessage::BuyTicketSSDCallMessage1Return(BuyTicketSSDExecution1FinishEnd -> BuyTicketSSDCallMessage1ReturnReceivingEnd BuyTicketSSDCallMessage1)
-		CallMessage::BuyTicketSSDCallMessage3(saveOrder BuyTicketSSDCallMessage3SendingEnd -> BuyTicketSSDExecution2StartEnd)
-		ReturnMessage::BuyTicketSSDCallMessage3Return(BuyTicketSSDExecution2FinishEnd -> BuyTicketSSDCallMessage3ReturnReceivingEnd BuyTicketSSDCallMessage3)
-		CallMessage::BuyTicketSSDCallMessage5(pay BuyTicketSSDCallMessage5SendingEnd -> BuyTicketSSDExecution3StartEnd)
-		ReturnMessage::BuyTicketSSDCallMessage5Return(BuyTicketSSDExecution3FinishEnd -> BuyTicketSSDCallMessage5ReturnReceivingEnd BuyTicketSSDCallMessage5)
 		CallMessage::CreateTripSSDCallMessage7(check CreateTripSSDCallMessage7SendingEnd -> CreateTripSSDExecution4StartEnd)
 		ReturnMessage::CreateTripSSDCallMessage7Return(CreateTripSSDExecution4FinishEnd -> CreateTripSSDCallMessage7ReturnReceivingEnd CreateTripSSDCallMessage7)
 		CallMessage::CreateTripSSDCallMessage9(buyTicket CreateTripSSDCallMessage9SendingEnd -> CreateTripSSDExecution5StartEnd)
@@ -58,9 +52,6 @@ UseCaseModel TrainTicket {
 		CallMessage::CreateTripSSDCallMessage17(pay CreateTripSSDCallMessage17SendingEnd -> CreateTripSSDExecution9StartEnd)
 		ReturnMessage::CreateTripSSDCallMessage17Return(CreateTripSSDExecution9FinishEnd -> CreateTripSSDCallMessage17ReturnReceivingEnd CreateTripSSDCallMessage17)
 
-		Execution::BuyTicketSSDExecution1(TrainTicketSystem BuyTicketSSDExecution1StartEnd BuyTicketSSDExecution1FinishEnd)
-		Execution::BuyTicketSSDExecution2(TrainTicketSystem BuyTicketSSDExecution2StartEnd BuyTicketSSDExecution2FinishEnd)
-		Execution::BuyTicketSSDExecution3(TrainTicketSystem BuyTicketSSDExecution3StartEnd BuyTicketSSDExecution3FinishEnd)
 		Execution::CreateTripSSDExecution4(TrainTicketSystem CreateTripSSDExecution4StartEnd CreateTripSSDExecution4FinishEnd)
 		Execution::CreateTripSSDExecution5(TrainTicketSystem CreateTripSSDExecution5StartEnd CreateTripSSDExecution5FinishEnd)
 		Execution::CreateTripSSDExecution6(TrainTicketSystem CreateTripSSDExecution6StartEnd CreateTripSSDExecution6FinishEnd)
@@ -92,18 +83,6 @@ UseCaseModel TrainTicket {
 		ExecutionEnd::CreateTripSSDExecution9StartEnd(TrainTicketSystem CreateTripSSDExecution9)
 		ExecutionEnd::CreateTripSSDExecution9FinishEnd(TrainTicketSystem CreateTripSSDExecution9)
 		MessageEnd::CreateTripSSDCallMessage17ReturnReceivingEnd(Passenger CreateTripSSDCallMessage17Return)
-		MessageEnd::BuyTicketSSDCallMessage1SendingEnd(Passenger BuyTicketSSDCallMessage1)
-		ExecutionEnd::BuyTicketSSDExecution1StartEnd(TrainTicketSystem BuyTicketSSDExecution1)
-		ExecutionEnd::BuyTicketSSDExecution1FinishEnd(TrainTicketSystem BuyTicketSSDExecution1)
-		MessageEnd::BuyTicketSSDCallMessage1ReturnReceivingEnd(Passenger BuyTicketSSDCallMessage1Return)
-		MessageEnd::BuyTicketSSDCallMessage3SendingEnd(Passenger BuyTicketSSDCallMessage3)
-		ExecutionEnd::BuyTicketSSDExecution2StartEnd(TrainTicketSystem BuyTicketSSDExecution2)
-		ExecutionEnd::BuyTicketSSDExecution2FinishEnd(TrainTicketSystem BuyTicketSSDExecution2)
-		MessageEnd::BuyTicketSSDCallMessage3ReturnReceivingEnd(Passenger BuyTicketSSDCallMessage3Return)
-		MessageEnd::BuyTicketSSDCallMessage5SendingEnd(Passenger BuyTicketSSDCallMessage5)
-		ExecutionEnd::BuyTicketSSDExecution3StartEnd(TrainTicketSystem BuyTicketSSDExecution3)
-		ExecutionEnd::BuyTicketSSDExecution3FinishEnd(TrainTicketSystem BuyTicketSSDExecution3)
-		MessageEnd::BuyTicketSSDCallMessage5ReturnReceivingEnd(Passenger BuyTicketSSDCallMessage5Return)
 
 	}
 
@@ -162,10 +141,6 @@ UseCaseModel TrainTicket {
 
 		[Participants: Passenger ModifyTripService]
 
-		CallMessage::ModifyTripSSDCallMessage1(updateTicket ModifyTripSSDCallMessage1SendingEnd -> ModifyTripSSDExecution1StartEnd)
-		ReturnMessage::ModifyTripSSDCallMessage1Return(ModifyTripSSDExecution1FinishEnd -> ModifyTripSSDCallMessage1ReturnReceivingEnd ModifyTripSSDCallMessage1)
-		CallMessage::ModifyTripSSDCallMessage3(updateOrder ModifyTripSSDCallMessage3SendingEnd -> ModifyTripSSDExecution2StartEnd)
-		ReturnMessage::ModifyTripSSDCallMessage3Return(ModifyTripSSDExecution2FinishEnd -> ModifyTripSSDCallMessage3ReturnReceivingEnd ModifyTripSSDCallMessage3)
 		CallMessage::ModifyTripSSDCallMessage5(updateTicket ModifyTripSSDCallMessage5SendingEnd -> ModifyTripSSDExecution3StartEnd)
 		ReturnMessage::ModifyTripSSDCallMessage5Return(ModifyTripSSDExecution3FinishEnd -> ModifyTripSSDCallMessage5ReturnReceivingEnd ModifyTripSSDCallMessage5)
 		CallMessage::ModifyTripSSDCallMessage7(updateOrder ModifyTripSSDCallMessage7SendingEnd -> ModifyTripSSDExecution4StartEnd)
@@ -175,8 +150,6 @@ UseCaseModel TrainTicket {
 		CallMessage::ModifyTripSSDCallMessage11(checkTicket ModifyTripSSDCallMessage11SendingEnd -> ModifyTripSSDExecution6StartEnd)
 		ReturnMessage::ModifyTripSSDCallMessage11Return(ModifyTripSSDExecution6FinishEnd -> ModifyTripSSDCallMessage11ReturnReceivingEnd ModifyTripSSDCallMessage11)
 
-		Execution::ModifyTripSSDExecution1(ModifyTripService ModifyTripSSDExecution1StartEnd ModifyTripSSDExecution1FinishEnd)
-		Execution::ModifyTripSSDExecution2(ModifyTripService ModifyTripSSDExecution2StartEnd ModifyTripSSDExecution2FinishEnd)
 		Execution::ModifyTripSSDExecution3(ModifyTripService ModifyTripSSDExecution3StartEnd ModifyTripSSDExecution3FinishEnd)
 		Execution::ModifyTripSSDExecution4(ModifyTripService ModifyTripSSDExecution4StartEnd ModifyTripSSDExecution4FinishEnd)
 		Execution::ModifyTripSSDExecution5(ModifyTripService ModifyTripSSDExecution5StartEnd ModifyTripSSDExecution5FinishEnd)
@@ -198,14 +171,6 @@ UseCaseModel TrainTicket {
 		ExecutionEnd::ModifyTripSSDExecution5StartEnd(ModifyTripService ModifyTripSSDExecution5)
 		ExecutionEnd::ModifyTripSSDExecution5FinishEnd(ModifyTripService ModifyTripSSDExecution5)
 		MessageEnd::ModifyTripSSDCallMessage9ReturnReceivingEnd(Passenger ModifyTripSSDCallMessage9Return)
-		MessageEnd::ModifyTripSSDCallMessage1SendingEnd(Passenger ModifyTripSSDCallMessage1)
-		ExecutionEnd::ModifyTripSSDExecution1StartEnd(ModifyTripService ModifyTripSSDExecution1)
-		ExecutionEnd::ModifyTripSSDExecution1FinishEnd(ModifyTripService ModifyTripSSDExecution1)
-		MessageEnd::ModifyTripSSDCallMessage1ReturnReceivingEnd(Passenger ModifyTripSSDCallMessage1Return)
-		MessageEnd::ModifyTripSSDCallMessage3SendingEnd(Passenger ModifyTripSSDCallMessage3)
-		ExecutionEnd::ModifyTripSSDExecution2StartEnd(ModifyTripService ModifyTripSSDExecution2)
-		ExecutionEnd::ModifyTripSSDExecution2FinishEnd(ModifyTripService ModifyTripSSDExecution2)
-		MessageEnd::ModifyTripSSDCallMessage3ReturnReceivingEnd(Passenger ModifyTripSSDCallMessage3Return)
 
 	}
 

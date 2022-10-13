@@ -68,11 +68,11 @@ these constraints could include
 	</tr>
 	</table>
 	 
-<b>SI3 - BuyTicketService</b>
+<b>SI3 - CreateTripService</b>
 <table>
 	<tr>
 		<td><b>Service Name:</b></td>
-		<td><span name ="SERVICEBuyTicketService">BuyTicketService</span></td>
+		<td><span name ="SERVICECreateTripService">CreateTripService</span></td>
 	</tr>
 	<tr>
 		<td><b>Service ID:</b></td>
@@ -84,26 +84,26 @@ these constraints could include
 	</tr>
 	<tr>
 		<td><b>Operation:</b></td>
-	<td><ul><li><a href="#OPbuyTicket">buyTicket</a></li><li><a href="#OPsaveOrder">saveOrder</a></li><li><a href="#OPshowSeats">showSeats</a></li><li><a href="#OPselectSeat">selectSeat</a></li><li><a href="#OPpay">pay</a></li></ul></td>
+	<td><ul><li><a href="#OPcheck">check</a></li><li><a href="#OPbuyTicket">buyTicket</a></li><li><a href="#OPsaveOrder">saveOrder</a></li><li><a href="#OPshowSeats">showSeats</a></li><li><a href="#OPselectSeat">selectSeat</a></li><li><a href="#OPpay">pay</a></li></ul></td>
 	</tr>
 <tr>
 			<td><b>Temporary Variable</b></td>
 			<td><b>Variable Description</b></td>
 	</tr>
 	<tr>
-		<td><span name ="BuyTicketServiceCurrentOrder">CurrentOrder</span></td>
+		<td><span name ="CreateTripServiceCurrentOrder">CurrentOrder</span></td>
 		<td>CurrentOrder is a object of <a href="#CLASSOrder">Order</a></td>
 					</tr>
 	<tr>
-		<td><span name ="BuyTicketServiceCurrentAccout">CurrentAccout</span></td>
+		<td><span name ="CreateTripServiceCurrentAccout">CurrentAccout</span></td>
 		<td>CurrentAccout is a object of <a href="#CLASSAccout">Accout</a></td>
 					</tr>
 	<tr>
-		<td><span name ="BuyTicketServiceCurrentTicket">CurrentTicket</span></td>
+		<td><span name ="CreateTripServiceCurrentTicket">CurrentTicket</span></td>
 		<td>CurrentTicket is a object of <a href="#CLASSTicket">Ticket</a></td>
 					</tr>
 	<tr>
-		<td><span name ="BuyTicketServiceCurrentRoute">CurrentRoute</span></td>
+		<td><span name ="CreateTripServiceCurrentRoute">CurrentRoute</span></td>
 		<td>CurrentRoute is a object of <a href="#CLASSRoute">Route</a></td>
 					</tr>
 	</table>
@@ -272,7 +272,7 @@ these constraints could include
 	</tr>
 	<tr>
 		<td><b>Operation:</b></td>
-	<td><ul><li><a href="#OPupdateTicket">updateTicket</a></li><li><a href="#OPupdateOrder">updateOrder</a></li><li><a href="#OPshowSeatsByRouteId">showSeatsByRouteId</a></li><li><a href="#OPselectNewSeat">selectNewSeat</a></li><li><a href="#OPpayDifference">payDifference</a></li></ul></td>
+	<td><ul><li><a href="#OPcheckTicket">checkTicket</a></li><li><a href="#OPupdateTicket">updateTicket</a></li><li><a href="#OPupdateOrder">updateOrder</a></li><li><a href="#OPshowSeatsByRouteId">showSeatsByRouteId</a></li><li><a href="#OPselectNewSeat">selectNewSeat</a></li><li><a href="#OPpayDifference">payDifference</a></li></ul></td>
 	</tr>
 <tr>
 			<td><b>Temporary Variable</b></td>
@@ -324,6 +324,38 @@ these constraints could include
 					</tr>
 	</table>
 	 
+<b>SI13 - CancelTripService</b>
+<table>
+	<tr>
+		<td><b>Service Name:</b></td>
+		<td><span name ="SERVICECancelTripService">CancelTripService</span></td>
+	</tr>
+	<tr>
+		<td><b>Service ID:</b></td>
+		<td>SI13</td>
+	</tr>
+	<tr>
+		<td><b>Description:</b></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td><b>Operation:</b></td>
+	<td><ul><li><a href="#OPcheckCancelTrip">checkCancelTrip</a></li><li><a href="#OPcancelTicket">cancelTicket</a></li><li><a href="#OPrefund">refund</a></li></ul></td>
+	</tr>
+<tr>
+			<td><b>Temporary Variable</b></td>
+			<td><b>Variable Description</b></td>
+	</tr>
+	<tr>
+		<td><span name ="CancelTripServiceCurrentOrder">CurrentOrder</span></td>
+		<td>CurrentOrder is a object of <a href="#CLASSOrder">Order</a></td>
+					</tr>
+	<tr>
+		<td><span name ="CancelTripServiceCurrentTicket">CurrentTicket</span></td>
+		<td>CurrentTicket is a object of <a href="#CLASSTicket">Ticket</a></td>
+					</tr>
+	</table>
+	 
  
 ### 1.3.2  Product functions
 <b>Use Case Diagram</b>
@@ -339,10 +371,10 @@ these constraints could include
 	</tr>
 	<tr>
 		<td>UC1</td>
-		<td><a href="#UCbuyTicket">buyTicket</a></td>
+		<td><a href="#UCcreateTrip">createTrip</a></td>
 		<td></td>
 		<td>
-		<p><a href="#OPbuyTicket">buyTicket</a></p><p><a href="#OPsaveOrder">saveOrder</a></p><p><a href="#OPshowSeats">showSeats</a></p><p><a href="#OPselectSeat">selectSeat</a></p><p><a href="#OPpay">pay</a></p>
+		<p><a href="#OPcheck">check</a></p><p><a href="#OPbuyTicket">buyTicket</a></p><p><a href="#OPsaveOrder">saveOrder</a></p><p><a href="#OPshowSeats">showSeats</a></p><p><a href="#OPselectSeat">selectSeat</a></p><p><a href="#OPpay">pay</a></p>
 		</td>
 	</tr>
 	<tr>
@@ -357,6 +389,7 @@ these constraints could include
 		<td><a href="#UCcancelTrip">cancelTrip</a></td>
 		<td></td>
 		<td>
+		<p><a href="#OPcheckCancelTrip">checkCancelTrip</a></p><p><a href="#OPcancelTicket">cancelTicket</a></p><p><a href="#OPrefund">refund</a></p>
 		</td>
 	</tr>
 	<tr>
@@ -411,7 +444,7 @@ these constraints could include
 		<td><a href="#UCmodifyTrip">modifyTrip</a></td>
 		<td></td>
 		<td>
-		<p><a href="#OPupdateTicket">updateTicket</a></p><p><a href="#OPupdateOrder">updateOrder</a></p><p><a href="#OPshowSeatsByRouteId">showSeatsByRouteId</a></p><p><a href="#OPselectNewSeat">selectNewSeat</a></p><p><a href="#OPpayDifference">payDifference</a></p>
+		<p><a href="#OPcheckTicket">checkTicket</a></p><p><a href="#OPupdateTicket">updateTicket</a></p><p><a href="#OPupdateOrder">updateOrder</a></p><p><a href="#OPshowSeatsByRouteId">showSeatsByRouteId</a></p><p><a href="#OPselectNewSeat">selectNewSeat</a></p><p><a href="#OPpayDifference">payDifference</a></p>
 		</td>
 	</tr>
 	<tr>
@@ -449,7 +482,12 @@ these constraints could include
 		<td></td>
 	</tr><tr>
 		<td>A4</td>
-		<td><span name ="ACTORAdministrator">Administrator</span></td>
+		<td><span name ="ACTORSheduler">Sheduler</span></td>
+		<td></td>
+		<td></td>
+	</tr><tr>
+		<td>A5</td>
+		<td><span name ="ACTORScheduler">Scheduler</span></td>
 		<td></td>
 		<td></td>
 	</tr>
@@ -487,17 +525,17 @@ This information may be provided by reference to an appendix or to another docum
 # 3  Requirements
 ## 3.1  Functions
 ### 3.1.1   Use Case
-<b>UC1 - buyTicket</b>
+<b>UC1 - createTrip</b>
 <p>System Sequence Diagram:</p>
  
-![BuyTicketSSD](Images/BuyTicketSSD.svg)
+![CreateTripSSD](Images/CreateTripSSD.svg)
  
 <p>Use Case Description:</p>
  
 <table>
 	<tr>
 		<td><b>UseCase Name:</b></td>
-		<td><span name ="UCbuyTicket">buyTicket</span></td>
+		<td><span name ="UCcreateTrip">createTrip</span></td>
 	</tr>
 	<tr>
 		<td><b>UseCase ID:</b></td>
@@ -521,7 +559,7 @@ This information may be provided by reference to an appendix or to another docum
 	</tr>						
 	<tr>
 		<td><b>Basic Path:</b></td>
-	<td><p>1. Passenger clicks to execute the operation <a href="#OPbuyTicket">buyTicket</a>, with entering accoutId, routeId, ticketId</p><p>2. Passenger clicks to execute the operation <a href="#OPsaveOrder">saveOrder</a>, with entering orderId, boughtTime</p><p>3. Passenger clicks to execute the operation <a href="#OPpay">pay</a>, with entering price</p></td>
+	<td><p>1. Passenger clicks to execute the operation <a href="#OPcheck">check</a>, with entering accoutId</p><p>2. Passenger clicks to execute the operation <a href="#OPbuyTicket">buyTicket</a>, with entering routeId, ticketId</p><p>3. Passenger clicks to execute the operation <a href="#OPsaveOrder">saveOrder</a>, with entering orderId, boughtTime</p><p>4. Passenger clicks to execute the operation <a href="#OPshowSeats">showSeats</a></p><p>5. Passenger clicks to execute the operation <a href="#OPselectSeat">selectSeat</a>, with entering seatId</p><p>6. Passenger clicks to execute the operation <a href="#OPpay">pay</a>, with entering price</p></td>
 	</tr>
 	<tr>
 		<td><b>Alternative Path:</b></td>
@@ -569,6 +607,9 @@ This information may be provided by reference to an appendix or to another docum
 	</table>
 
 <b>UC3 - cancelTrip</b>
+<p>System Sequence Diagram:</p>
+ 
+![CancelTripSSD](Images/CancelTripSSD.svg)
  
 <p>Use Case Description:</p>
  
@@ -599,7 +640,7 @@ This information may be provided by reference to an appendix or to another docum
 	</tr>						
 	<tr>
 		<td><b>Basic Path:</b></td>
-	<td></td>
+	<td><p>1. Passenger clicks to execute the operation <a href="#OPcheckCancelTrip">checkCancelTrip</a>, with entering accoutId, ticketId</p><p>2. Passenger clicks to execute the operation <a href="#OPcancelTicket">cancelTicket</a></p><p>3. Passenger clicks to execute the operation <a href="#OPrefund">refund</a></p></td>
 	</tr>
 	<tr>
 		<td><b>Alternative Path:</b></td>
@@ -785,7 +826,7 @@ This information may be provided by reference to an appendix or to another docum
 	</tr>
 	<tr>
 		<td><b>Involved Actor:</b></td>
-	<td><a href="#ACTORAdministrator">Administrator</a></td>
+	<td><a href="#ACTORSheduler">Sheduler</a></td>
 	</tr>
 	<tr>
 		<td><b>Preconditions:</b></td>
@@ -797,7 +838,7 @@ This information may be provided by reference to an appendix or to another docum
 	</tr>						
 	<tr>
 		<td><b>Basic Path:</b></td>
-	<td><p>1. Administrator clicks to execute the operation <a href="#OPdeleteOverdueOrder">deleteOverdueOrder</a></p><p>2. Administrator clicks to execute the operation <a href="#OPdeleteOverdueTicket">deleteOverdueTicket</a>, with entering ticketId</p><p>3.  Execute  queryMethod</p><p>&emsp;Select accoutId:</p><p>&emsp;&emsp;Administrator clicks to execute the operation <a href="#OPqueryByAccoutId">queryByAccoutId</a>, with entering accoutId</p><p>&emsp;Select ticketId:</p><p>&emsp;&emsp;Administrator clicks to execute the operation <a href="#OPqueryTicketId">queryTicketId</a>, with entering ticketId</p></td>
+	<td><p>1. Sheduler clicks to execute the operation <a href="#OPdeleteOverdueOrder">deleteOverdueOrder</a></p><p>2. Sheduler clicks to execute the operation <a href="#OPdeleteOverdueTicket">deleteOverdueTicket</a>, with entering ticketId</p><p>3.  Execute  queryMethod</p><p>&emsp;Select accoutId:</p><p>&emsp;&emsp;Sheduler clicks to execute the operation <a href="#OPqueryByAccoutId">queryByAccoutId</a>, with entering accoutId</p><p>&emsp;Select ticketId:</p><p>&emsp;&emsp;Sheduler clicks to execute the operation <a href="#OPqueryTicketId">queryTicketId</a>, with entering ticketId</p></td>
 	</tr>
 	<tr>
 		<td><b>Alternative Path:</b></td>
@@ -824,7 +865,7 @@ This information may be provided by reference to an appendix or to another docum
 	</tr>
 	<tr>
 		<td><b>Involved Actor:</b></td>
-	<td><a href="#ACTORAdministrator">Administrator</a></td>
+	<td><a href="#ACTORSheduler">Sheduler</a></td>
 	</tr>
 	<tr>
 		<td><b>Preconditions:</b></td>
@@ -878,7 +919,7 @@ This information may be provided by reference to an appendix or to another docum
 	</tr>						
 	<tr>
 		<td><b>Basic Path:</b></td>
-	<td><p>1. Passenger clicks to execute the operation <a href="#OPupdateTicket">updateTicket</a>, with entering accoutId, ticketId, newRouteId</p><p>2. Passenger clicks to execute the operation <a href="#OPupdateOrder">updateOrder</a>, with entering time</p><p>3. Passenger clicks to execute the operation <a href="#OPpayDifference">payDifference</a>, with entering difference</p><p>4. Passenger clicks to execute the operation <a href="#OPupdateTicket">updateTicket</a>, with entering accoutId, ticketId, newRouteId</p><p>5. Passenger clicks to execute the operation <a href="#OPupdateOrder">updateOrder</a>, with entering time</p></td>
+	<td><p>1. Passenger clicks to execute the operation <a href="#OPcheckTicket">checkTicket</a>, with entering accoutId, ticketId</p><p>2. Passenger clicks to execute the operation <a href="#OPupdateTicket">updateTicket</a>, with entering newRouteId</p><p>3. Passenger clicks to execute the operation <a href="#OPupdateOrder">updateOrder</a>, with entering time</p><p>4. Passenger clicks to execute the operation <a href="#OPpayDifference">payDifference</a>, with entering difference</p></td>
 	</tr>
 	<tr>
 		<td><b>Alternative Path:</b></td>
@@ -908,7 +949,7 @@ This information may be provided by reference to an appendix or to another docum
 	</tr>
 	<tr>
 		<td><b>Involved Actor:</b></td>
-	<td><a href="#ACTORAdministrator">Administrator</a></td>
+	<td><a href="#ACTORScheduler">Scheduler</a></td>
 	</tr>
 	<tr>
 		<td><b>Preconditions:</b></td>
@@ -920,7 +961,7 @@ This information may be provided by reference to an appendix or to another docum
 	</tr>						
 	<tr>
 		<td><b>Basic Path:</b></td>
-	<td><p>1. Administrator clicks to execute the operation <a href="#OPdeleteOverdueTicket">deleteOverdueTicket</a>, with entering ticketId</p><p>2. Administrator clicks to execute the operation <a href="#OPdeleteOverdueOrder">deleteOverdueOrder</a></p></td>
+	<td><p>1. Sheduler clicks to execute the operation <a href="#OPdeleteOverdueTicket">deleteOverdueTicket</a>, with entering ticketId</p><p>2. Sheduler clicks to execute the operation <a href="#OPdeleteOverdueOrder">deleteOverdueOrder</a></p></td>
 	</tr>
 	<tr>
 		<td><b>Alternative Path:</b></td>
@@ -2706,11 +2747,11 @@ The return value was true
 	</tr>
 	<tr>
 		<td><b>Service:</b></td>
-		<td><a href="#SERVICEBuyTicketService">BuyTicketService</a></td>
+		<td><a href="#SERVICECreateTripService">CreateTripService</a></td>
 	</tr>
 	<tr>
 		<td><b>Input:</b></td>
-<td><p>1. name: <i>accoutId</i>, type: String</p><p>2. name: <i>routeId</i>, type: String</p><p>3. name: <i>ticketId</i>, type: String</p></td>
+<td><p>1. name: <i>routeId</i>, type: String</p><p>2. name: <i>ticketId</i>, type: String</p></td>
 </tr>
 <tr>
 	<td><b>Output Type:</b></td>
@@ -2718,44 +2759,39 @@ The return value was true
 </tr>
 <tr>
 			<td><b>Definition:</b></td>
-<td><p>1. <i>route</i> is the object <i>rou</i> in the instance set of class <a href="#CLASSRoute">Route</a>. <i>rou</i> represents an object of class <a href="#CLASSRoute">Route</a>, and <i>rou</i> meets:</p><p>&emsp;&emsp;The attribute <i>RouteId</i> of the object <i>rou</i> is equal to <i>routeId</i></p><p>2. <i>accout</i> is the object <i>acc</i> in the instance set of class <a href="#CLASSAccout">Accout</a>. <i>acc</i> represents an object of class <a href="#CLASSAccout">Accout</a>, and <i>acc</i> meets:</p><p>&emsp;&emsp;The attribute <i>AccoutId</i> of the object <i>acc</i> is equal to <i>accoutId</i></p><p>3. <i>ticket</i> is the object <i>tic</i> in the instance set of class <a href="#CLASSTicket">Ticket</a>. <i>tic</i> represents an object of class <a href="#CLASSTicket">Ticket</a>, and <i>tic</i> meets:</p><p>&emsp;&emsp;The attribute <i>TicketId</i> of the object <i>tic</i> is equal to <i>ticketId</i></p></td>
+<td><p>1. <i>route</i> is the object <i>rou</i> in the instance set of class <a href="#CLASSRoute">Route</a>. <i>rou</i> represents an object of class <a href="#CLASSRoute">Route</a>, and <i>rou</i> meets:</p><p>&emsp;&emsp;The attribute <i>RouteId</i> of the object <i>rou</i> is equal to <i>routeId</i></p><p>2. <i>ticket</i> is the object <i>tic</i> in the instance set of class <a href="#CLASSTicket">Ticket</a>. <i>tic</i> represents an object of class <a href="#CLASSTicket">Ticket</a>, and <i>tic</i> meets:</p><p>&emsp;&emsp;The attribute <i>TicketId</i> of the object <i>tic</i> is equal to <i>ticketId</i></p></td>
 	</tr>
 	<tr>
 <td><b>Preconditions:</b></td>
-		<td><p>1. The object <i>route</i> exists</p><p>2. The object <i>accout</i> exists</p><p>3. The object <i>ticket</i> doesn't exist</p></td>
+		<td><p>1. The object <i>route</i> exists</p><p>2. The object <i>ticket</i> doesn't exist</p></td>
 </tr>
 	<tr>
 		<td><b>Postconditions:</b></td>
-	<td><p>1. <i>tic</i> represented the object of class <a href="#CLASSTicket">Ticket</a></p><p>2. The object <i>tic</i> was created</p><p>3. The attribute <i>TicketId</i> of the object <i>tic</i> became <i>ticketId</i></p><p>4. The attribute <i>RouteId</i> of the object <i>tic</i> became <i>routeId</i></p><p>5. The attribute <i>IsValid</i> of the object <i>tic</i> became <b>false</b></p><p>6. The object <i>tic</i> was put into the instance set of class <a href="#CLASSTicket">Ticket</a></p><p>7. The object <a href="#BuyTicketServiceCurrentTicket">CurrentTicket</a> became <i>tic</i></p><p>8. The object <a href="#BuyTicketServiceCurrentAccout">CurrentAccout</a> became <i>accout</i></p><p>9. The object <a href="#BuyTicketServiceCurrentRoute">CurrentRoute</a> became <i>route</i></p><p>10. The return value was <b>true</b></p></td>
+	<td><p>1. <i>tic</i> represented the object of class <a href="#CLASSTicket">Ticket</a></p><p>2. The object <i>tic</i> was created</p><p>3. The attribute <i>TicketId</i> of the object <i>tic</i> became <i>ticketId</i></p><p>4. The attribute <i>RouteId</i> of the object <i>tic</i> became <i>routeId</i></p><p>5. The attribute <i>IsValid</i> of the object <i>tic</i> became <b>false</b></p><p>6. The object <i>tic</i> was put into the instance set of class <a href="#CLASSTicket">Ticket</a></p><p>7. ERROR12</p><p>8. ERROR12</p><p>9. The return value was <b>true</b></p></td>
 	</tr>
 </table>
  
 <p>Contract of <b>buyTicket</b>:</p>
  
 ```java
-Contract BuyTicketService::buyTicket(accoutId : String, routeId : String, ticketId : String) : Boolean {
+Contract CreateTripService::buyTicket(routeId : String, ticketId : String) : Boolean {
 /*
 Generated by RM2Doc - Definition
 route is the object rou in the instance set of class Route. rou represents an object of class Route, and rou meets:
     The attribute RouteId of the object rou is equal to routeId
-accout is the object acc in the instance set of class Accout. acc represents an object of class Accout, and acc meets:
-    The attribute AccoutId of the object acc is equal to accoutId
 ticket is the object tic in the instance set of class Ticket. tic represents an object of class Ticket, and tic meets:
     The attribute TicketId of the object tic is equal to ticketId
 */
 		definition:
 			route:Route = Route.allInstance()->any(rou:Route | rou.RouteId = routeId),
-			accout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutId),
 			ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketId)
 /*
 Generated by RM2Doc - Precondition
 The object route exists
-The object accout exists
 The object ticket doesn't exist
 */
 		precondition:
 			route.oclIsUndefined() = false and
-			accout.oclIsUndefined() = false and
 			ticket.oclIsUndefined() = true
 /*
 Generated by RM2Doc - Postcondition
@@ -2765,9 +2801,8 @@ The attribute TicketId of the object tic became ticketId
 The attribute RouteId of the object tic became routeId
 The attribute IsValid of the object tic became false
 The object tic was put into the instance set of class Ticket
-The object CurrentTicket became tic
-The object CurrentAccout became accout
-The object CurrentRoute became route
+ERROR12
+ERROR12
 The return value was true
 */
 		postcondition:
@@ -2777,9 +2812,8 @@ The return value was true
 			tic.RouteId = routeId and
 			tic.IsValid = false and
 			Ticket.allInstance()->includes(tic) and
-			self.CurrentTicket = tic and
-			self.CurrentAccout = accout and
-			self.CurrentRoute = route and
+			CurrentTicket = tic and
+			CurrentRoute = route and
 			result = true
 }
 ```
@@ -2800,7 +2834,7 @@ The return value was true
 	</tr>
 	<tr>
 		<td><b>Service:</b></td>
-		<td><a href="#SERVICEBuyTicketService">BuyTicketService</a></td>
+		<td><a href="#SERVICECreateTripService">CreateTripService</a></td>
 	</tr>
 	<tr>
 		<td><b>Input:</b></td>
@@ -2820,14 +2854,14 @@ The return value was true
 </tr>
 	<tr>
 		<td><b>Postconditions:</b></td>
-	<td><p>1. <i>ord</i> represented the object of class <a href="#CLASSOrder">Order</a></p><p>2. The object <i>ord</i> was created</p><p>3. The attribute <i>OrderId</i> of the object <i>ord</i> became <i>orderId</i></p><p>4. The attribute <i>TicketId</i> of the object <i>ord</i> became the attribute <i>TicketId</i> of the object <a href="#BuyTicketServiceCurrentTicket">CurrentTicket</a></p><p>5. The attribute <i>AccoutId</i> of the object <i>ord</i> became the attribute <i>AccoutId</i> of the object <a href="#BuyTicketServiceCurrentAccout">CurrentAccout</a></p><p>6. The attribute <i>CreateTime</i> of the object <i>ord</i> became <i>boughtTime</i></p><p>7. The attribute <i>OrderStatus</i> of the object <i>ord</i> became <b>NOTPAID</b></p><p>8. The object <a href="#BuyTicketServiceCurrentOrder">CurrentOrder</a> became <i>ord</i></p><p>9. The object <i>ord</i> was put into the instance set of class <a href="#CLASSOrder">Order</a></p><p>10. The return value was <b>true</b></p></td>
+	<td><p>1. <i>ord</i> represented the object of class <a href="#CLASSOrder">Order</a></p><p>2. The object <i>ord</i> was created</p><p>3. The attribute <i>OrderId</i> of the object <i>ord</i> became <i>orderId</i></p><p>4. The attribute <i>TicketId</i> of the object <i>ord</i> became the attribute <i>TicketId</i> of the object <i>CurrentTicket</i></p><p>5. The attribute <i>AccoutId</i> of the object <i>ord</i> became the attribute <i>AccoutId</i> of the object <i>CurrentAccout</i></p><p>6. The attribute <i>CreateTime</i> of the object <i>ord</i> became <i>boughtTime</i></p><p>7. The attribute <i>OrderStatus</i> of the object <i>ord</i> became <b>NOTPAID</b></p><p>8. ERROR12</p><p>9. The object <i>ord</i> was put into the instance set of class <a href="#CLASSOrder">Order</a></p><p>10. The return value was <b>true</b></p></td>
 	</tr>
 </table>
  
 <p>Contract of <b>saveOrder</b>:</p>
  
 ```java
-Contract BuyTicketService::saveOrder(orderId : String, boughtTime : String) : Boolean {
+Contract CreateTripService::saveOrder(orderId : String, boughtTime : String) : Boolean {
 /*
 Generated by RM2Doc - Definition
 order is the object ord in the instance set of class Order. ord represents an object of class Order, and ord meets:
@@ -2850,7 +2884,7 @@ The attribute TicketId of the object ord became the attribute TicketId of the ob
 The attribute AccoutId of the object ord became the attribute AccoutId of the object CurrentAccout
 The attribute CreateTime of the object ord became boughtTime
 The attribute OrderStatus of the object ord became NOTPAID
-The object CurrentOrder became ord
+ERROR12
 The object ord was put into the instance set of class Order
 The return value was true
 */
@@ -2858,11 +2892,11 @@ The return value was true
 			let ord:Order in
 			ord.oclIsNew() and
 			ord.OrderId = orderId and
-			ord.TicketId = self.CurrentTicket.TicketId and
-			ord.AccoutId = self.CurrentAccout.AccoutId and
+			ord.TicketId = CurrentTicket.TicketId and
+			ord.AccoutId = CurrentAccout.AccoutId and
 			ord.CreateTime = boughtTime and
 			ord.OrderStatus = OrderStatus::NOTPAID and
-			self.CurrentOrder = ord and
+			CurrentOrder = ord and
 			Order.allInstance()->includes(ord) and
 			result = true
 }
@@ -2884,7 +2918,7 @@ The return value was true
 	</tr>
 	<tr>
 		<td><b>Service:</b></td>
-		<td><a href="#SERVICEBuyTicketService">BuyTicketService</a></td>
+		<td><a href="#SERVICECreateTripService">CreateTripService</a></td>
 	</tr>
 	<tr>
 		<td><b>Input:</b></td>
@@ -2900,14 +2934,14 @@ The return value was true
 </tr>
 	<tr>
 		<td><b>Postconditions:</b></td>
-	<td><p>The return value was the set of class <a href="#CLASSSeat">Seat</a>, including all <i>sea</i> in the instance set of class <a href="#CLASSSeat">Seat</a>. <i>sea</i> represented an object of class <a href="#CLASSSeat">Seat</a>, and <i>sea</i> meet:</p><p>&emsp;&emsp;The attribute <i>TrainId</i> of the object <i>sea</i> was equal to the attribute <i>TrainId</i> of the object <a href="#BuyTicketServiceCurrentRoute">CurrentRoute</a></p></td>
+	<td><p>The return value was the set of class <a href="#CLASSSeat">Seat</a>, including all <i>sea</i> in the instance set of class <a href="#CLASSSeat">Seat</a>. <i>sea</i> represented an object of class <a href="#CLASSSeat">Seat</a>, and <i>sea</i> meet:</p><p>&emsp;&emsp;The attribute <i>TrainId</i> of the object <i>sea</i> was equal to the attribute <i>TrainId</i> of the object <i>CurrentRoute</i></p></td>
 	</tr>
 </table>
  
 <p>Contract of <b>showSeats</b>:</p>
  
 ```java
-Contract BuyTicketService::showSeats() : Set(Seat) {
+Contract CreateTripService::showSeats() : Set(Seat) {
 /*
 Generated by RM2Doc - Precondition
 None
@@ -2920,7 +2954,7 @@ The return value was the set of class Seat, including all sea in the instance se
     The attribute TrainId of the object sea was equal to the attribute TrainId of the object CurrentRoute
 */
 		postcondition:
-			result = Seat.allInstance()->select(sea:Seat | sea.TrainId = self.CurrentRoute.TrainId)
+			result = Seat.allInstance()->select(sea:Seat | sea.TrainId =  CurrentRoute.TrainId)
 }
 ```
 
@@ -2940,7 +2974,7 @@ The return value was the set of class Seat, including all sea in the instance se
 	</tr>
 	<tr>
 		<td><b>Service:</b></td>
-		<td><a href="#SERVICEBuyTicketService">BuyTicketService</a></td>
+		<td><a href="#SERVICECreateTripService">CreateTripService</a></td>
 	</tr>
 	<tr>
 		<td><b>Input:</b></td>
@@ -2960,14 +2994,14 @@ The return value was the set of class Seat, including all sea in the instance se
 </tr>
 	<tr>
 		<td><b>Postconditions:</b></td>
-	<td><p>1. The attribute <i>seatId</i> of the object <a href="#BuyTicketServiceCurrentTicket">CurrentTicket</a> became <i>seatId</i></p><p>2. The return value was <b>true</b></p></td>
+	<td><p>1. The attribute <i>seatId</i> of the object <i>CurrentTicket</i> became <i>seatId</i></p><p>2. The return value was <b>true</b></p></td>
 	</tr>
 </table>
  
 <p>Contract of <b>selectSeat</b>:</p>
  
 ```java
-Contract BuyTicketService::selectSeat(seatId : String) : Boolean {
+Contract CreateTripService::selectSeat(seatId : String) : Boolean {
 /*
 Generated by RM2Doc - Definition
 seat is the object sea in the instance set of class Seat. sea represents an object of class Seat, and sea meets:
@@ -2988,7 +3022,7 @@ The attribute seatId of the object CurrentTicket became seatId
 The return value was true
 */
 		postcondition:
-			self.CurrentTicket.seatId = seatId and
+			CurrentTicket.seatId = seatId and
 			result = true
 }
 ```
@@ -3009,7 +3043,7 @@ The return value was true
 	</tr>
 	<tr>
 		<td><b>Service:</b></td>
-		<td><a href="#SERVICEBuyTicketService">BuyTicketService</a></td>
+		<td><a href="#SERVICECreateTripService">CreateTripService</a></td>
 	</tr>
 	<tr>
 		<td><b>Input:</b></td>
@@ -3025,14 +3059,14 @@ The return value was true
 </tr>
 	<tr>
 		<td><b>Postconditions:</b></td>
-	<td><p>1. The attribute <i>Price</i> of the object <a href="#BuyTicketServiceCurrentTicket">CurrentTicket</a> became <i>price</i></p><p>2. The attribute <i>IsValid</i> of the object <a href="#BuyTicketServiceCurrentTicket">CurrentTicket</a> became <b>true</b></p><p>3. The attribute <i>OrderStatus</i> of the object <a href="#BuyTicketServiceCurrentOrder">CurrentOrder</a> became <b>PAID</b></p><p>4. The system operation <a href="#OPsendNotification">sendNotification</a> was executed</p><p>5. The return value was <b>true</b></p></td>
+	<td><p>1. The attribute <i>Price</i> of the object <i>CurrentTicket</i> became <i>price</i></p><p>2. The attribute <i>IsValid</i> of the object <i>CurrentTicket</i> became <b>true</b></p><p>3. The attribute <i>OrderStatus</i> of the object <i>CurrentOrder</i> became <b>PAID</b></p><p>4. The system operation <a href="#OPsendNotification">sendNotification</a> was executed</p><p>5. The return value was <b>true</b></p></td>
 	</tr>
 </table>
  
 <p>Contract of <b>pay</b>:</p>
  
 ```java
-Contract BuyTicketService::pay(price : Real) : Boolean {
+Contract CreateTripService::pay(price : Real) : Boolean {
 /*
 Generated by RM2Doc - Precondition
 The price is greater than 0
@@ -3048,10 +3082,10 @@ The system operation sendNotification was executed
 The return value was true
 */
 		postcondition:
-			self.CurrentTicket.Price = price and
-			self.CurrentTicket.IsValid = true and
-			self.CurrentOrder.OrderStatus = OrderStatus::PAID and
-			sendNotification(self.CurrentAccout.PhoneNumber) and
+			CurrentTicket.Price = price and
+			CurrentTicket.IsValid = true and
+			CurrentOrder.OrderStatus = OrderStatus::PAID and
+			sendNotification(CurrentAccout.PhoneNumber) and
 			result = true
 }
 ```
@@ -3351,7 +3385,7 @@ The return value was the set of class Order, including all order in the instance
 	</tr>
 	<tr>
 		<td><b>Input:</b></td>
-<td><p>1. name: <i>accoutId</i>, type: String</p><p>2. name: <i>ticketId</i>, type: String</p><p>3. name: <i>newRouteId</i>, type: String</p></td>
+<td><p>name: <i>newRouteId</i>, type: String</p></td>
 </tr>
 <tr>
 	<td><b>Output Type:</b></td>
@@ -3359,70 +3393,46 @@ The return value was the set of class Order, including all order in the instance
 </tr>
 <tr>
 			<td><b>Definition:</b></td>
-<td><p>1. <i>ticket</i> is the object <i>tic</i> in the instance set of class <a href="#CLASSTicket">Ticket</a>. <i>tic</i> represents an object of class <a href="#CLASSTicket">Ticket</a>, and <i>tic</i> meets:</p><p>&emsp;&emsp;The attribute <i>TicketId</i> of the object <i>tic</i> is equal to <i>ticketId</i></p><p>&emsp;&emsp;The attribute <i>IsValid</i> of the object <i>tic</i> is equal to <b>true</b></p><p>2. <i>accout</i> is the object <i>acc</i> in the instance set of class <a href="#CLASSAccout">Accout</a>. <i>acc</i> represents an object of class <a href="#CLASSAccout">Accout</a>, and <i>acc</i> meets:</p><p>&emsp;&emsp;The attribute <i>AccoutId</i> of the object <i>acc</i> is equal to <i>accoutId</i></p><p>3. <i>route</i> is the object <i>rou</i> in the instance set of class <a href="#CLASSRoute">Route</a>. <i>rou</i> represents an object of class <a href="#CLASSRoute">Route</a>, and <i>rou</i> meets:</p><p>&emsp;&emsp;The attribute <i>RouteId</i> of the object <i>rou</i> is equal to <i>newRouteId</i></p><p>4. <i>order</i> is the object <i>ord</i> in the instance set of class <a href="#CLASSOrder">Order</a>. <i>ord</i> represents an object of class <a href="#CLASSOrder">Order</a>, and <i>ord</i> meets:</p><p>&emsp;&emsp;The attribute <i>AccoutId</i> of the object <i>ord</i> is equal to <i>accoutId</i></p><p>&emsp;&emsp;The attribute <i>TicketId</i> of the object <i>ord</i> is equal to <i>ticketId</i></p><p>&emsp;&emsp;The attribute <i>OrderStatus</i> of the object <i>ord</i> is equal to <b>PAID</b></p></td>
+<td><p><i>route</i> is the object <i>rou</i> in the instance set of class <a href="#CLASSRoute">Route</a>. <i>rou</i> represents an object of class <a href="#CLASSRoute">Route</a>, and <i>rou</i> meets:</p><p>&emsp;&emsp;The attribute <i>RouteId</i> of the object <i>rou</i> is equal to <i>newRouteId</i></p></td>
 	</tr>
 	<tr>
 <td><b>Preconditions:</b></td>
-		<td><p>1. The object <i>ticket</i> exists</p><p>2. The object <i>accout</i> exists</p><p>3. The object <i>route</i> exists</p><p>4. The object <i>order</i> exists</p></td>
+		<td><p>The object <i>route</i> exists</p></td>
 </tr>
 	<tr>
 		<td><b>Postconditions:</b></td>
-	<td><p>1. The attribute <i>RouteId</i> of the object <i>ticket</i> became <i>newRouteId</i></p><p>2. The attribute <i>IsValid</i> of the object <i>ticket</i> became <b>false</b></p><p>3. The object <a href="#ModifyTripServiceCurrentTicket">CurrentTicket</a> became <i>ticket</i></p><p>4. The object <a href="#ModifyTripServiceCurrentOrder">CurrentOrder</a> became <i>order</i></p><p>5. The object <a href="#ModifyTripServiceCurrentAccout">CurrentAccout</a> became <i>accout</i></p><p>6. The object <a href="#ModifyTripServiceCurrentRoute">CurrentRoute</a> became <i>route</i></p><p>7. The return value was <b>true</b></p></td>
+	<td><p>1. The attribute <i>RouteId</i> of the object <i>CurrentTicket</i> became <i>newRouteId</i></p><p>2. The attribute <i>IsValid</i> of the object <i>CurrentTicket</i> became <b>false</b></p><p>3. ERROR12</p><p>4. The return value was <b>true</b></p></td>
 	</tr>
 </table>
  
 <p>Contract of <b>updateTicket</b>:</p>
  
 ```java
-Contract ModifyTripService::updateTicket(accoutId : String, ticketId : String, newRouteId : String): Boolean {
+Contract ModifyTripService::updateTicket(newRouteId : String): Boolean {
 /*
 Generated by RM2Doc - Definition
-ticket is the object tic in the instance set of class Ticket. tic represents an object of class Ticket, and tic meets:
-    The attribute TicketId of the object tic is equal to ticketId
-    The attribute IsValid of the object tic is equal to true
-accout is the object acc in the instance set of class Accout. acc represents an object of class Accout, and acc meets:
-    The attribute AccoutId of the object acc is equal to accoutId
 route is the object rou in the instance set of class Route. rou represents an object of class Route, and rou meets:
     The attribute RouteId of the object rou is equal to newRouteId
-order is the object ord in the instance set of class Order. ord represents an object of class Order, and ord meets:
-    The attribute AccoutId of the object ord is equal to accoutId
-    The attribute TicketId of the object ord is equal to ticketId
-    The attribute OrderStatus of the object ord is equal to PAID
 */
 		definition:
-			ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketId and tic.IsValid = true),
-			accout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutId),
-			route:Route = Route.allInstance()->any(rou:Route | rou.RouteId = newRouteId),
-			order:Order = Order.allInstance()->any(ord:Order | ord.AccoutId = accoutId and ord.TicketId = ticketId and ord.OrderStatus = OrderStatus::PAID)
+			route:Route = Route.allInstance()->any(rou:Route | rou.RouteId = newRouteId)
 /*
 Generated by RM2Doc - Precondition
-The object ticket exists
-The object accout exists
 The object route exists
-The object order exists
 */
 		precondition:
-			ticket.oclIsUndefined() = false and
-			accout.oclIsUndefined() = false and
-			route.oclIsUndefined() = false and
-			order.oclIsUndefined() = false
+			route.oclIsUndefined() = false
 /*
 Generated by RM2Doc - Postcondition
-The attribute RouteId of the object ticket became newRouteId
-The attribute IsValid of the object ticket became false
-The object CurrentTicket became ticket
-The object CurrentOrder became order
-The object CurrentAccout became accout
-The object CurrentRoute became route
+The attribute RouteId of the object CurrentTicket became newRouteId
+The attribute IsValid of the object CurrentTicket became false
+ERROR12
 The return value was true
 */
 		postcondition:
-			ticket.RouteId = newRouteId and
-			ticket.IsValid = false and
-			self.CurrentTicket = ticket and
-			self.CurrentOrder = order and
-			self.CurrentAccout = accout and
-			self.CurrentRoute = route and
+			CurrentTicket.RouteId = newRouteId and
+			CurrentTicket.IsValid = false and
+			CurrentRoute = route and
 			result = true
 }
 ```
@@ -3459,7 +3469,7 @@ The return value was true
 </tr>
 	<tr>
 		<td><b>Postconditions:</b></td>
-	<td><p>1. The attribute <i>CreateTime</i> of the object <a href="#ModifyTripServiceCurrentOrder">CurrentOrder</a> became <i>time</i></p><p>2. The attribute <i>OrderStatus</i> of the object <a href="#ModifyTripServiceCurrentOrder">CurrentOrder</a> became <b>NOTPAID</b></p><p>3. The return value was <b>true</b></p></td>
+	<td><p>1. The attribute <i>CreateTime</i> of the object <i>CurrentOrder</i> became <i>time</i></p><p>2. The attribute <i>OrderStatus</i> of the object <i>CurrentOrder</i> became <b>NOTPAID</b></p><p>3. The return value was <b>true</b></p></td>
 	</tr>
 </table>
  
@@ -3480,8 +3490,8 @@ The attribute OrderStatus of the object CurrentOrder became NOTPAID
 The return value was true
 */
 		postcondition:
-			self.CurrentOrder.CreateTime = time and
-			self.CurrentOrder.OrderStatus = OrderStatus::NOTPAID and
+			CurrentOrder.CreateTime = time and
+			CurrentOrder.OrderStatus = OrderStatus::NOTPAID and
 			result = true
 }
 ```
@@ -3518,7 +3528,7 @@ The return value was true
 </tr>
 	<tr>
 		<td><b>Postconditions:</b></td>
-	<td><p>The return value was the set of class <a href="#CLASSSeat">Seat</a>, including all <i>sea</i> in the instance set of class <a href="#CLASSSeat">Seat</a>. <i>sea</i> represented an object of class <a href="#CLASSSeat">Seat</a>, and <i>sea</i> meet:</p><p>&emsp;&emsp;The attribute <i>TrainId</i> of the object <i>sea</i> was equal to the attribute <i>TrainId</i> of the object <a href="#ModifyTripServiceCurrentRoute">CurrentRoute</a></p></td>
+	<td><p>The return value was the set of class <a href="#CLASSSeat">Seat</a>, including all <i>sea</i> in the instance set of class <a href="#CLASSSeat">Seat</a>. <i>sea</i> represented an object of class <a href="#CLASSSeat">Seat</a>, and <i>sea</i> meet:</p><p>&emsp;&emsp;The attribute <i>TrainId</i> of the object <i>sea</i> was equal to the attribute <i>TrainId</i> of the object <i>CurrentRoute</i></p></td>
 	</tr>
 </table>
  
@@ -3538,7 +3548,7 @@ The return value was the set of class Seat, including all sea in the instance se
     The attribute TrainId of the object sea was equal to the attribute TrainId of the object CurrentRoute
 */
 		postcondition:
-			result = Seat.allInstance()->select(sea:Seat | sea.TrainId = self.CurrentRoute.TrainId)
+			result = Seat.allInstance()->select(sea:Seat | sea.TrainId =  CurrentRoute.TrainId)
 }
 ```
 
@@ -3643,7 +3653,7 @@ The return value was true
 </tr>
 	<tr>
 		<td><b>Postconditions:</b></td>
-	<td><p>1. The attribute <i>IsValid</i> of the object <a href="#ModifyTripServiceCurrentTicket">CurrentTicket</a> became <b>true</b></p><p>2. The attribute <i>Price</i> of the object <a href="#ModifyTripServiceCurrentTicket">CurrentTicket</a> became the attribute <i>Price</i> of the object <a href="#ModifyTripServiceCurrentTicket">CurrentTicket</a> plus <i>difference</i></p><p>3. The attribute <i>OrderStatus</i> of the object <a href="#ModifyTripServiceCurrentOrder">CurrentOrder</a> became <b>PAID</b></p><p>4. The system operation <a href="#OPsendNotification">sendNotification</a> was executed</p><p>5. The return value was <b>true</b></p></td>
+	<td><p>1. The attribute <i>IsValid</i> of the object <i>CurrentTicket</i> became <b>true</b></p><p>2. The attribute <i>Price</i> of the object <i>CurrentTicket</i> became the attribute <i>Price</i> of the object <i>CurrentTicket</i> plus <i>difference</i></p><p>3. The attribute <i>OrderStatus</i> of the object <i>CurrentOrder</i> became <b>PAID</b></p><p>4. The system operation <a href="#OPsendNotification">sendNotification</a> was executed</p><p>5. The return value was <b>true</b></p></td>
 	</tr>
 </table>
  
@@ -3666,10 +3676,10 @@ The system operation sendNotification was executed
 The return value was true
 */
 		postcondition:
-			self.CurrentTicket.IsValid = true and
-			self.CurrentTicket.Price = self.CurrentTicket.Price + difference and
-			self.CurrentOrder.OrderStatus = OrderStatus::PAID and
-			sendNotification(self.CurrentAccout.PhoneNumber) and
+			CurrentTicket.IsValid = true and
+			CurrentTicket.Price = CurrentTicket.Price + difference and
+			CurrentOrder.OrderStatus = OrderStatus::PAID and
+			sendNotification(CurrentAccout.PhoneNumber) and
 			result = true
 }
 ```
@@ -3773,7 +3783,7 @@ The return value was true
 </tr>
 <tr>
 			<td><b>Definition:</b></td>
-<td><p><i>order</i> is the object <i>ord</i> in the instance set of class <a href="#CLASSOrder">Order</a>. <i>ord</i> represents an object of class <a href="#CLASSOrder">Order</a>, and <i>ord</i> meets:</p><p>&emsp;&emsp;The attribute <i>TicketId</i> of the object <i>ord</i> is equal to the value of temporary variable <a href="#DeleteOverdueOrderServiceCurrentTicketId">CurrentTicketId</a></p><p>&emsp;&emsp;The attribute <i>OrderStatus</i> of the object <i>ord</i> is equal to <b>CANCELED</b></p></td>
+<td><p><i>order</i> is the object <i>ord</i> in the instance set of class <a href="#CLASSOrder">Order</a>. <i>ord</i> represents an object of class <a href="#CLASSOrder">Order</a>, and <i>ord</i> meets:</p><p>&emsp;&emsp;The attribute <i>TicketId</i> of the object <i>ord</i> is equal to <i>CurrentTicketId</i></p><p>&emsp;&emsp;The attribute <i>OrderStatus</i> of the object <i>ord</i> is equal to <b>CANCELED</b></p></td>
 	</tr>
 	<tr>
 <td><b>Preconditions:</b></td>
@@ -3792,11 +3802,11 @@ Contract DeleteOverdueOrderService::deleteOverdueOrder() : Boolean {
 /*
 Generated by RM2Doc - Definition
 order is the object ord in the instance set of class Order. ord represents an object of class Order, and ord meets:
-    The attribute TicketId of the object ord is equal to the value of temporary variable CurrentTicketId
+    The attribute TicketId of the object ord is equal to CurrentTicketId
     The attribute OrderStatus of the object ord is equal to CANCELED
 */
 		definition:
-			order:Order = Order.allInstance()->any(ord:Order | ord.TicketId = self.CurrentTicketId and ord.OrderStatus = OrderStatus::CANCELED)
+			order:Order = Order.allInstance()->any(ord:Order | ord.TicketId = CurrentTicketId and ord.OrderStatus = OrderStatus::CANCELED)
 /*
 Generated by RM2Doc - Precondition
 The object order exists
@@ -3866,6 +3876,349 @@ The return value was true
 */
 		postcondition:
 			result = true
+}
+```
+
+<b>OP42 - check</b>
+<table>
+	<tr>
+		<td><b>Operation Name:</b></td>
+		<td><span name ="OPcheck">check</span></td>
+	</tr>
+	<tr>
+		<td><b>Operation ID:</b></td>
+		<td>OP42</td>
+	</tr>
+	<tr>
+		<td><b>Description:</b></td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td><b>Service:</b></td>
+		<td><a href="#SERVICECreateTripService">CreateTripService</a></td>
+	</tr>
+	<tr>
+		<td><b>Input:</b></td>
+<td><p>name: <i>accoutId</i>, type: String</p></td>
+</tr>
+<tr>
+	<td><b>Output Type:</b></td>
+	<td>Boolean</td>
+</tr>
+<tr>
+			<td><b>Definition:</b></td>
+<td><p><i>accout</i> is the object <i>acc</i> in the instance set of class <a href="#CLASSAccout">Accout</a>. <i>acc</i> represents an object of class <a href="#CLASSAccout">Accout</a>, and <i>acc</i> meets:</p><p>&emsp;&emsp;The attribute <i>AccoutId</i> of the object <i>acc</i> is equal to <i>accoutId</i></p></td>
+	</tr>
+	<tr>
+<td><b>Preconditions:</b></td>
+		<td><p>The object <i>accout</i> exists</p></td>
+</tr>
+	<tr>
+		<td><b>Postconditions:</b></td>
+	<td><p>The return value was <b>true</b></p></td>
+	</tr>
+</table>
+ 
+<p>Contract of <b>check</b>:</p>
+ 
+```java
+Contract CreateTripService::check(accoutId : String) : Boolean {
+/*
+Generated by RM2Doc - Definition
+accout is the object acc in the instance set of class Accout. acc represents an object of class Accout, and acc meets:
+    The attribute AccoutId of the object acc is equal to accoutId
+*/
+		definition:
+			accout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutId)
+/*
+Generated by RM2Doc - Precondition
+The object accout exists
+*/
+		precondition:
+			accout.oclIsUndefined() = false
+/*
+Generated by RM2Doc - Postcondition
+The return value was true
+*/
+		postcondition:
+			result = true
+}
+```
+
+<b>OP43 - checkTicket</b>
+<table>
+	<tr>
+		<td><b>Operation Name:</b></td>
+		<td><span name ="OPcheckTicket">checkTicket</span></td>
+	</tr>
+	<tr>
+		<td><b>Operation ID:</b></td>
+		<td>OP43</td>
+	</tr>
+	<tr>
+		<td><b>Description:</b></td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td><b>Service:</b></td>
+		<td><a href="#SERVICEModifyTripService">ModifyTripService</a></td>
+	</tr>
+	<tr>
+		<td><b>Input:</b></td>
+<td><p>1. name: <i>accoutId</i>, type: String</p><p>2. name: <i>ticketId</i>, type: String</p></td>
+</tr>
+<tr>
+	<td><b>Output Type:</b></td>
+	<td>Boolean</td>
+</tr>
+<tr>
+			<td><b>Definition:</b></td>
+<td><p>1. <i>order</i> is the object <i>ord</i> in the instance set of class <a href="#CLASSOrder">Order</a>. <i>ord</i> represents an object of class <a href="#CLASSOrder">Order</a>, and <i>ord</i> meets:</p><p>&emsp;&emsp;The attribute <i>AccoutId</i> of the object <i>ord</i> is equal to <i>accoutId</i></p><p>&emsp;&emsp;The attribute <i>TicketId</i> of the object <i>ord</i> is equal to <i>ticketId</i></p><p>&emsp;&emsp;The attribute <i>OrderStatus</i> of the object <i>ord</i> is equal to <b>PAID</b></p><p>2. <i>ticket</i> is the object <i>tic</i> in the instance set of class <a href="#CLASSTicket">Ticket</a>. <i>tic</i> represents an object of class <a href="#CLASSTicket">Ticket</a>, and <i>tic</i> meets:</p><p>&emsp;&emsp;The attribute <i>TicketId</i> of the object <i>tic</i> is equal to <i>ticketId</i></p><p>&emsp;&emsp;The attribute <i>IsValid</i> of the object <i>tic</i> is equal to <b>true</b></p><p>3. <i>accout</i> is the object <i>acc</i> in the instance set of class <a href="#CLASSAccout">Accout</a>. <i>acc</i> represents an object of class <a href="#CLASSAccout">Accout</a>, and <i>acc</i> meets:</p><p>&emsp;&emsp;The attribute <i>AccoutId</i> of the object <i>acc</i> is equal to <i>accoutId</i></p></td>
+	</tr>
+	<tr>
+<td><b>Preconditions:</b></td>
+		<td><p>1. The object <i>order</i> exists</p><p>2. The object <i>ticket</i> exists</p><p>3. The object <i>accout</i> exists</p></td>
+</tr>
+	<tr>
+		<td><b>Postconditions:</b></td>
+	<td><p>1. ERROR12</p><p>2. ERROR12</p><p>3. ERROR12</p><p>4. The return value was <b>true</b></p></td>
+	</tr>
+</table>
+ 
+<p>Contract of <b>checkTicket</b>:</p>
+ 
+```java
+Contract ModifyTripService::checkTicket(accoutId : String, ticketId : String) : Boolean {
+/*
+Generated by RM2Doc - Definition
+order is the object ord in the instance set of class Order. ord represents an object of class Order, and ord meets:
+    The attribute AccoutId of the object ord is equal to accoutId
+    The attribute TicketId of the object ord is equal to ticketId
+    The attribute OrderStatus of the object ord is equal to PAID
+ticket is the object tic in the instance set of class Ticket. tic represents an object of class Ticket, and tic meets:
+    The attribute TicketId of the object tic is equal to ticketId
+    The attribute IsValid of the object tic is equal to true
+accout is the object acc in the instance set of class Accout. acc represents an object of class Accout, and acc meets:
+    The attribute AccoutId of the object acc is equal to accoutId
+*/
+		definition:
+			order:Order = Order.allInstance()->any(ord:Order | ord.AccoutId = accoutId and ord.TicketId = ticketId and ord.OrderStatus = OrderStatus::PAID),
+			ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketId and tic.IsValid = true),
+			accout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutId)
+/*
+Generated by RM2Doc - Precondition
+The object order exists
+The object ticket exists
+The object accout exists
+*/
+		precondition:
+			order.oclIsUndefined() = false and
+			ticket.oclIsUndefined() = false and
+			accout.oclIsUndefined() = false
+/*
+Generated by RM2Doc - Postcondition
+ERROR12
+ERROR12
+ERROR12
+The return value was true
+*/
+		postcondition:
+			CurrentOrder = order and
+			CurrentTicket = ticket and
+			CurrentAccout = accout and
+			result = true
+}
+```
+
+<b>OP44 - checkCancelTrip</b>
+<table>
+	<tr>
+		<td><b>Operation Name:</b></td>
+		<td><span name ="OPcheckCancelTrip">checkCancelTrip</span></td>
+	</tr>
+	<tr>
+		<td><b>Operation ID:</b></td>
+		<td>OP44</td>
+	</tr>
+	<tr>
+		<td><b>Description:</b></td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td><b>Service:</b></td>
+		<td><a href="#SERVICECancelTripService">CancelTripService</a></td>
+	</tr>
+	<tr>
+		<td><b>Input:</b></td>
+<td><p>1. name: <i>accoutId</i>, type: String</p><p>2. name: <i>ticketId</i>, type: String</p></td>
+</tr>
+<tr>
+	<td><b>Output Type:</b></td>
+	<td>Boolean</td>
+</tr>
+<tr>
+			<td><b>Definition:</b></td>
+<td><p>1. <i>order</i> is the object <i>ord</i> in the instance set of class <a href="#CLASSOrder">Order</a>. <i>ord</i> represents an object of class <a href="#CLASSOrder">Order</a>, and <i>ord</i> meets:</p><p>&emsp;&emsp;The attribute <i>AccoutId</i> of the object <i>ord</i> is equal to <i>accoutId</i></p><p>&emsp;&emsp;The attribute <i>TicketId</i> of the object <i>ord</i> is equal to <i>ticketId</i></p><p>&emsp;&emsp;The attribute <i>OrderStatus</i> of the object <i>ord</i> is equal to <b>PAID</b></p><p>2. <i>ticket</i> is the object <i>tic</i> in the instance set of class <a href="#CLASSTicket">Ticket</a>. <i>tic</i> represents an object of class <a href="#CLASSTicket">Ticket</a>, and <i>tic</i> meets:</p><p>&emsp;&emsp;The attribute <i>TicketId</i> of the object <i>tic</i> is equal to <i>ticketId</i></p><p>&emsp;&emsp;The attribute <i>IsValid</i> of the object <i>tic</i> is equal to <b>true</b></p></td>
+	</tr>
+	<tr>
+<td><b>Preconditions:</b></td>
+		<td><p>1. The object <i>order</i> exists</p><p>2. The object <i>ticket</i> exists</p></td>
+</tr>
+	<tr>
+		<td><b>Postconditions:</b></td>
+	<td><p>1. ERROR12</p><p>2. ERROR12</p><p>3. The return value was <b>true</b></p></td>
+	</tr>
+</table>
+ 
+<p>Contract of <b>checkCancelTrip</b>:</p>
+ 
+```java
+Contract CancelTripService::checkCancelTrip(accoutId : String, ticketId : String) : Boolean {
+/*
+Generated by RM2Doc - Definition
+order is the object ord in the instance set of class Order. ord represents an object of class Order, and ord meets:
+    The attribute AccoutId of the object ord is equal to accoutId
+    The attribute TicketId of the object ord is equal to ticketId
+    The attribute OrderStatus of the object ord is equal to PAID
+ticket is the object tic in the instance set of class Ticket. tic represents an object of class Ticket, and tic meets:
+    The attribute TicketId of the object tic is equal to ticketId
+    The attribute IsValid of the object tic is equal to true
+*/
+		definition:
+			order:Order = Order.allInstance()->any(ord:Order | ord.AccoutId = accoutId and ord.TicketId = ticketId and ord.OrderStatus = OrderStatus::PAID),
+			ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketId and tic.IsValid = true)
+/*
+Generated by RM2Doc - Precondition
+The object order exists
+The object ticket exists
+*/
+		precondition:
+			order.oclIsUndefined() = false and
+			ticket.oclIsUndefined() = false
+/*
+Generated by RM2Doc - Postcondition
+ERROR12
+ERROR12
+The return value was true
+*/
+		postcondition:
+			CurrentOrder = order and
+			CurrentTicket = ticket and
+			result = true
+}
+```
+
+<b>OP45 - cancelTicket</b>
+<table>
+	<tr>
+		<td><b>Operation Name:</b></td>
+		<td><span name ="OPcancelTicket">cancelTicket</span></td>
+	</tr>
+	<tr>
+		<td><b>Operation ID:</b></td>
+		<td>OP45</td>
+	</tr>
+	<tr>
+		<td><b>Description:</b></td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td><b>Service:</b></td>
+		<td><a href="#SERVICECancelTripService">CancelTripService</a></td>
+	</tr>
+	<tr>
+		<td><b>Input:</b></td>
+<td>None</td>
+</tr>
+<tr>
+	<td><b>Output Type:</b></td>
+	<td>Boolean</td>
+</tr>
+	<tr>
+<td><b>Preconditions:</b></td>
+		<td><p>None</p></td>
+</tr>
+	<tr>
+		<td><b>Postconditions:</b></td>
+	<td><p>1. The attribute <i>OrderStatus</i> of the object <i>CurrentOrder</i> became <b>CANCELED</b></p><p>2. The attribute <i>IsValid</i> of the object <i>CurrentTicket</i> became <b>false</b></p><p>3. The return value was <b>true</b></p></td>
+	</tr>
+</table>
+ 
+<p>Contract of <b>cancelTicket</b>:</p>
+ 
+```java
+Contract CancelTripService::cancelTicket() : Boolean {
+/*
+Generated by RM2Doc - Precondition
+None
+*/
+		precondition:
+			true
+/*
+Generated by RM2Doc - Postcondition
+The attribute OrderStatus of the object CurrentOrder became CANCELED
+The attribute IsValid of the object CurrentTicket became false
+The return value was true
+*/
+		postcondition:
+			CurrentOrder.OrderStatus = OrderStatus::CANCELED and
+			CurrentTicket.IsValid = false and
+			result = true
+}
+```
+
+<b>OP46 - refund</b>
+<table>
+	<tr>
+		<td><b>Operation Name:</b></td>
+		<td><span name ="OPrefund">refund</span></td>
+	</tr>
+	<tr>
+		<td><b>Operation ID:</b></td>
+		<td>OP46</td>
+	</tr>
+	<tr>
+		<td><b>Description:</b></td>
+		<td> </td>
+	</tr>
+	<tr>
+		<td><b>Service:</b></td>
+		<td><a href="#SERVICECancelTripService">CancelTripService</a></td>
+	</tr>
+	<tr>
+		<td><b>Input:</b></td>
+<td>None</td>
+</tr>
+<tr>
+	<td><b>Output Type:</b></td>
+	<td>Real</td>
+</tr>
+	<tr>
+<td><b>Preconditions:</b></td>
+		<td><p>None</p></td>
+</tr>
+	<tr>
+		<td><b>Postconditions:</b></td>
+	<td><p>The return value was the attribute <i>Price</i> of the object <i>CurrentTicket</i></p></td>
+	</tr>
+</table>
+ 
+<p>Contract of <b>refund</b>:</p>
+ 
+```java
+Contract CancelTripService::refund() : Real {
+/*
+Generated by RM2Doc - Precondition
+None
+*/
+		precondition:
+			true
+/*
+Generated by RM2Doc - Postcondition
+The return value was the attribute Price of the object CurrentTicket
+*/
+		postcondition:
+			result = CurrentTicket.Price
 }
 ```
 

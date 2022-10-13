@@ -226,7 +226,7 @@ public class BuyTicketServiceImpl implements BuyTicketService, Serializable {
 			//no nested iterator --  iterator: select
 			for (Seat sea : ((List<Seat>)EntityManager.getAllInstancesOf("Seat")))
 			{
-				if (sea.getTrainId() == CurrentRoute.getTrainId())
+				if (sea.getTrainId().equals(CurrentRoute.getTrainId()))
 				{
 					tempssea.add(sea);
 				} 
@@ -258,7 +258,7 @@ public class BuyTicketServiceImpl implements BuyTicketService, Serializable {
 		//no nested iterator --  iterator: any previous:any
 		for (Seat sea : (List<Seat>)EntityManager.getAllInstancesOf("Seat"))
 		{
-			if (sea.getTrainId() == CurrentRoute.getTrainId() && sea.getSeatId().equals(seatId))
+			if (sea.getTrainId().equals(CurrentRoute.getTrainId()) && sea.getSeatId().equals(seatId))
 			{
 				seat = sea;
 				break;

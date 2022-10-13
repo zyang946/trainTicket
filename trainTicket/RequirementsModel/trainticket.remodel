@@ -2,7 +2,7 @@ UseCaseModel TrainTicket {
 
 	UC::createTrip include queryInformation definedBySSD(CreateTripSSD) relatedService(CreateTripService)
 	UC::queryInformation
-	UC::cancelTrip
+	UC::cancelTrip definedBySSD(CancelTripSSD) relatedService(CancelTripService)
 	UC::sendNotification
 	UC::manageRoute relatedService(ManageRouteCRUDService)
 	UC::manageTrain relatedService(ManageTrainCRUDService)
@@ -29,9 +29,12 @@ UseCaseModel TrainTicket {
 		manageSeat
 	}
 
-	Actor Administrator {
+	Actor Sheduler {
 		queryOrder
 		manageAccout
+		}
+
+	Actor Scheduler {
 		deleteOverdueOrder
 	}
 
@@ -88,7 +91,7 @@ UseCaseModel TrainTicket {
 
 	Interaction QueryOrderSSD {
 
-		[Participants: Administrator TrainTicketSystem]
+		[Participants: Sheduler TrainTicketSystem]
 
 		CallMessage::QueryOrderSSDCallMessage1(queryByAccoutId QueryOrderSSDCallMessage1SendingEnd -> QueryOrderSSDExecution1StartEnd)
 		ReturnMessage::QueryOrderSSDCallMessage1Return(QueryOrderSSDExecution1FinishEnd -> QueryOrderSSDCallMessage1ReturnReceivingEnd QueryOrderSSDCallMessage1)
@@ -106,7 +109,7 @@ UseCaseModel TrainTicket {
 
 		CombinedFragment:: queryMethod -> alt {
 
-			[Participants:TrainTicketSystem Administrator]
+			[Participants:TrainTicketSystem Sheduler]
 
 			combinedFragement1StartEnd -> combinedFragement1FinishEnd
 
@@ -114,25 +117,25 @@ UseCaseModel TrainTicket {
 			Operand::ticketId(condition3End combinedFragement1FinishEnd)
 		}
 
-		MessageEnd::QueryOrderSSDCallMessage7SendingEnd(Administrator QueryOrderSSDCallMessage7)
+		MessageEnd::QueryOrderSSDCallMessage7SendingEnd(Sheduler QueryOrderSSDCallMessage7)
 		ExecutionEnd::QueryOrderSSDExecution4StartEnd(DeleteOverdueOrderService QueryOrderSSDExecution4)
 		ExecutionEnd::QueryOrderSSDExecution4FinishEnd(DeleteOverdueOrderService QueryOrderSSDExecution4)
-		MessageEnd::QueryOrderSSDCallMessage7ReturnReceivingEnd(Administrator QueryOrderSSDCallMessage7Return)
-		MessageEnd::QueryOrderSSDCallMessage5SendingEnd(Administrator QueryOrderSSDCallMessage5)
+		MessageEnd::QueryOrderSSDCallMessage7ReturnReceivingEnd(Sheduler QueryOrderSSDCallMessage7Return)
+		MessageEnd::QueryOrderSSDCallMessage5SendingEnd(Sheduler QueryOrderSSDCallMessage5)
 		ExecutionEnd::QueryOrderSSDExecution3StartEnd(DeleteOverdueOrderService QueryOrderSSDExecution3)
 		ExecutionEnd::QueryOrderSSDExecution3FinishEnd(DeleteOverdueOrderService QueryOrderSSDExecution3)
-		MessageEnd::QueryOrderSSDCallMessage5ReturnReceivingEnd(Administrator QueryOrderSSDCallMessage5Return)
+		MessageEnd::QueryOrderSSDCallMessage5ReturnReceivingEnd(Sheduler QueryOrderSSDCallMessage5Return)
 		CombinedFragmentEnd::combinedFragement1StartEnd(queryMethod)
 		OperandEnd::condition1End(accoutId)
-		MessageEnd::QueryOrderSSDCallMessage1SendingEnd(Administrator QueryOrderSSDCallMessage1)
+		MessageEnd::QueryOrderSSDCallMessage1SendingEnd(Sheduler QueryOrderSSDCallMessage1)
 		ExecutionEnd::QueryOrderSSDExecution1StartEnd(TrainTicketSystem QueryOrderSSDExecution1)
 		ExecutionEnd::QueryOrderSSDExecution1FinishEnd(TrainTicketSystem QueryOrderSSDExecution1)
-		MessageEnd::QueryOrderSSDCallMessage1ReturnReceivingEnd(Administrator QueryOrderSSDCallMessage1Return)
+		MessageEnd::QueryOrderSSDCallMessage1ReturnReceivingEnd(Sheduler QueryOrderSSDCallMessage1Return)
 		OperandEnd::condition3End(ticketId)
-		MessageEnd::QueryOrderSSDCallMessage3SendingEnd(Administrator QueryOrderSSDCallMessage3)
+		MessageEnd::QueryOrderSSDCallMessage3SendingEnd(Sheduler QueryOrderSSDCallMessage3)
 		ExecutionEnd::QueryOrderSSDExecution2StartEnd(TrainTicketSystem QueryOrderSSDExecution2)
 		ExecutionEnd::QueryOrderSSDExecution2FinishEnd(TrainTicketSystem QueryOrderSSDExecution2)
-		MessageEnd::QueryOrderSSDCallMessage3ReturnReceivingEnd(Administrator QueryOrderSSDCallMessage3Return)
+		MessageEnd::QueryOrderSSDCallMessage3ReturnReceivingEnd(Sheduler QueryOrderSSDCallMessage3Return)
 		CombinedFragmentEnd::combinedFragement1FinishEnd(queryMethod)
 
 	}
@@ -176,7 +179,7 @@ UseCaseModel TrainTicket {
 
 	Interaction DeleteOverdueOrderSSD {
 
-		[Participants: Administrator DeleteOverdueOrderService]
+		[Participants: Sheduler DeleteOverdueOrderService]
 
 		CallMessage::DeleteOverdueOrderSSDCallMessage1(deleteOverdueTicket DeleteOverdueOrderSSDCallMessage1SendingEnd -> DeleteOverdueOrderSSDExecution1StartEnd)
 		ReturnMessage::DeleteOverdueOrderSSDCallMessage1Return(DeleteOverdueOrderSSDExecution1FinishEnd -> DeleteOverdueOrderSSDCallMessage1ReturnReceivingEnd DeleteOverdueOrderSSDCallMessage1)
@@ -186,14 +189,44 @@ UseCaseModel TrainTicket {
 		Execution::DeleteOverdueOrderSSDExecution1(DeleteOverdueOrderService DeleteOverdueOrderSSDExecution1StartEnd DeleteOverdueOrderSSDExecution1FinishEnd)
 		Execution::DeleteOverdueOrderSSDExecution2(DeleteOverdueOrderService DeleteOverdueOrderSSDExecution2StartEnd DeleteOverdueOrderSSDExecution2FinishEnd)
 
-		MessageEnd::DeleteOverdueOrderSSDCallMessage1SendingEnd(Administrator DeleteOverdueOrderSSDCallMessage1)
+		MessageEnd::DeleteOverdueOrderSSDCallMessage1SendingEnd(Sheduler DeleteOverdueOrderSSDCallMessage1)
 		ExecutionEnd::DeleteOverdueOrderSSDExecution1StartEnd(DeleteOverdueOrderService DeleteOverdueOrderSSDExecution1)
 		ExecutionEnd::DeleteOverdueOrderSSDExecution1FinishEnd(DeleteOverdueOrderService DeleteOverdueOrderSSDExecution1)
-		MessageEnd::DeleteOverdueOrderSSDCallMessage1ReturnReceivingEnd(Administrator DeleteOverdueOrderSSDCallMessage1Return)
-		MessageEnd::DeleteOverdueOrderSSDCallMessage3SendingEnd(Administrator DeleteOverdueOrderSSDCallMessage3)
+		MessageEnd::DeleteOverdueOrderSSDCallMessage1ReturnReceivingEnd(Sheduler DeleteOverdueOrderSSDCallMessage1Return)
+		MessageEnd::DeleteOverdueOrderSSDCallMessage3SendingEnd(Sheduler DeleteOverdueOrderSSDCallMessage3)
 		ExecutionEnd::DeleteOverdueOrderSSDExecution2StartEnd(DeleteOverdueOrderService DeleteOverdueOrderSSDExecution2)
 		ExecutionEnd::DeleteOverdueOrderSSDExecution2FinishEnd(DeleteOverdueOrderService DeleteOverdueOrderSSDExecution2)
-		MessageEnd::DeleteOverdueOrderSSDCallMessage3ReturnReceivingEnd(Administrator DeleteOverdueOrderSSDCallMessage3Return)
+		MessageEnd::DeleteOverdueOrderSSDCallMessage3ReturnReceivingEnd(Sheduler DeleteOverdueOrderSSDCallMessage3Return)
+
+	}
+
+	Interaction CancelTripSSD {
+
+		[Participants: Passenger CancelTripService]
+
+		CallMessage::CancelTripSSDCallMessage1(checkCancelTrip CancelTripSSDCallMessage1SendingEnd -> CancelTripSSDExecution1StartEnd)
+		ReturnMessage::CancelTripSSDCallMessage1Return(CancelTripSSDExecution1FinishEnd -> CancelTripSSDCallMessage1ReturnReceivingEnd CancelTripSSDCallMessage1)
+		CallMessage::CancelTripSSDCallMessage3(cancelTicket CancelTripSSDCallMessage3SendingEnd -> CancelTripSSDExecution2StartEnd)
+		ReturnMessage::CancelTripSSDCallMessage3Return(CancelTripSSDExecution2FinishEnd -> CancelTripSSDCallMessage3ReturnReceivingEnd CancelTripSSDCallMessage3)
+		CallMessage::CancelTripSSDCallMessage5(refund CancelTripSSDCallMessage5SendingEnd -> CancelTripSSDExecution3StartEnd)
+		ReturnMessage::CancelTripSSDCallMessage5Return(CancelTripSSDExecution3FinishEnd -> CancelTripSSDCallMessage5ReturnReceivingEnd CancelTripSSDCallMessage5)
+
+		Execution::CancelTripSSDExecution1(CancelTripService CancelTripSSDExecution1StartEnd CancelTripSSDExecution1FinishEnd)
+		Execution::CancelTripSSDExecution2(CancelTripService CancelTripSSDExecution2StartEnd CancelTripSSDExecution2FinishEnd)
+		Execution::CancelTripSSDExecution3(CancelTripService CancelTripSSDExecution3StartEnd CancelTripSSDExecution3FinishEnd)
+
+		MessageEnd::CancelTripSSDCallMessage1SendingEnd(Passenger CancelTripSSDCallMessage1)
+		ExecutionEnd::CancelTripSSDExecution1StartEnd(CancelTripService CancelTripSSDExecution1)
+		ExecutionEnd::CancelTripSSDExecution1FinishEnd(CancelTripService CancelTripSSDExecution1)
+		MessageEnd::CancelTripSSDCallMessage1ReturnReceivingEnd(Passenger CancelTripSSDCallMessage1Return)
+		MessageEnd::CancelTripSSDCallMessage3SendingEnd(Passenger CancelTripSSDCallMessage3)
+		ExecutionEnd::CancelTripSSDExecution2StartEnd(CancelTripService CancelTripSSDExecution2)
+		ExecutionEnd::CancelTripSSDExecution2FinishEnd(CancelTripService CancelTripSSDExecution2)
+		MessageEnd::CancelTripSSDCallMessage3ReturnReceivingEnd(Passenger CancelTripSSDCallMessage3Return)
+		MessageEnd::CancelTripSSDCallMessage5SendingEnd(Passenger CancelTripSSDCallMessage5)
+		ExecutionEnd::CancelTripSSDExecution3StartEnd(CancelTripService CancelTripSSDExecution3)
+		ExecutionEnd::CancelTripSSDExecution3FinishEnd(CancelTripService CancelTripSSDExecution3)
+		MessageEnd::CancelTripSSDCallMessage5ReturnReceivingEnd(Passenger CancelTripSSDCallMessage5Return)
 
 	}
 
@@ -216,7 +249,7 @@ UseCaseModel TrainTicket {
 
 		[Operation]
 		check(accoutId)
-		buyTicket(accoutId, routeId,ticketId)
+		buyTicket(routeId,ticketId)
 		saveOrder(orderId, boughtTime)
 		showSeats()
 		selectSeat(seatId)
@@ -305,7 +338,7 @@ UseCaseModel TrainTicket {
 
 		[Operation]
 		checkTicket(accoutId, ticketId)
-		updateTicket(accoutId, ticketId, newRouteId)
+		updateTicket(newRouteId)
 		updateOrder(time)
 		showSeatsByRouteId()
 		selectNewSeat(seatId)
@@ -330,50 +363,63 @@ UseCaseModel TrainTicket {
 
 	}
 
+	Service CancelTripService {
+
+		[Operation]
+		checkCancelTrip(accoutId, ticketId)
+		cancelTicket()
+		refund()
+
+		[TempProperty]
+		CurrentOrder : Order
+		CurrentTicket : Ticket
+
+	}
+
 //entity create operation 
-	/* Generated by RM2Doc
-	 * create route
-	 * The parameter <routeid> is used to find the route
-	 * null
-	 * null
-	 * null
-	 * The parameter <trainid> is used to find the train
-	 * Return true
-	 */
+/* Generated by RM2Doc
+create route
+The parameter <routeid> is used to find the route
+null
+null
+null
+The parameter <trainid> is used to find the train
+Return true
+*/
 	Contract  ManageRouteCRUDService::createRoute(routeid : String, startstation : String, endstation : String, time : String, trainid : String) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * route is the object rou in the instance set of class Route. rou represents an object of class Route, and rou meets:
-		 *     The attribute RouteId of the object rou is equal to routeid
-		 * train is the object tra in the instance set of class Train. tra represents an object of class Train, and tra meets:
-		 *     The attribute TrainId of the object tra is equal to trainid
-		 */
+/*
+Generated by RM2Doc - Definition
+route is the object rou in the instance set of class Route. rou represents an object of class Route, and rou meets:
+    The attribute RouteId of the object rou is equal to routeid
+train is the object tra in the instance set of class Train. tra represents an object of class Train, and tra meets:
+    The attribute TrainId of the object tra is equal to trainid
+*/
 		definition:
 			route:Route = Route.allInstance()->any(rou:Route | rou.RouteId = routeid),
 			train:Train = Train.allInstance()->any(tra:Train | tra.TrainId = trainid)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object route doesn't exist
-		 * The object train exists
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object route doesn't exist
+The object train exists
+*/
 		precondition:
 			route.oclIsUndefined() = true and
 			train.oclIsUndefined() = false
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * rou represented the object of class Route
-		 * The object rou was created
-		 * The attribute RouteId of the object rou became routeid
-		 * The attribute StartStation of the object rou became startstation
-		 * The attribute EndStation of the object rou became endstation
-		 * The attribute Time of the object rou became time
-		 * The attribute TrainId of the object rou became trainid
-		 * The object rou was put into the instance set of class Route
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+rou represented the object of class Route
+The object rou was created
+The attribute RouteId of the object rou became routeid
+The attribute StartStation of the object rou became startstation
+The attribute EndStation of the object rou became endstation
+The attribute Time of the object rou became time
+The attribute TrainId of the object rou became trainid
+The object rou was put into the instance set of class Route
+The return value was true
+*/
 		postcondition:
 			let rou:Route in
 			rou.oclIsNew() and
@@ -387,77 +433,77 @@ UseCaseModel TrainTicket {
 	}
 
 //entity query operation 
-	/* Generated by RM2Doc
-	 * query route
-	 * The parameter <routeid> is used to find the route
-	 * Return the route
-	 */
+/* Generated by RM2Doc
+query route
+The parameter <routeid> is used to find the route
+Return the route
+*/
 	Contract  ManageRouteCRUDService::queryRoute(routeid : String) : Route {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * route is the object rou in the instance set of class Route. rou represents an object of class Route, and rou meets:
-		 *     The attribute RouteId of the object rou is equal to routeid
-		 */
+/*
+Generated by RM2Doc - Definition
+route is the object rou in the instance set of class Route. rou represents an object of class Route, and rou meets:
+    The attribute RouteId of the object rou is equal to routeid
+*/
 		definition:
 			route:Route = Route.allInstance()->any(rou:Route | rou.RouteId = routeid)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object route exists
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object route exists
+*/
 		precondition:
 			route.oclIsUndefined() = false
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The return value was route
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The return value was route
+*/
 		postcondition:
 			result = route
 	}
 
 //entity modify operation 
-	/* Generated by RM2Doc
-	 * modify route
-	 * The parameter <routeid> is used to find the route
-	 * null
-	 * null
-	 * null
-	 * The parameter <trainid> is used to find the train
-	 * Return true
-	 */
+/* Generated by RM2Doc
+modify route
+The parameter <routeid> is used to find the route
+null
+null
+null
+The parameter <trainid> is used to find the train
+Return true
+*/
 	Contract  ManageRouteCRUDService::modifyRoute(routeid : String, startstation : String, endstation : String, time : String, trainid : String) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * route is the object rou in the instance set of class Route. rou represents an object of class Route, and rou meets:
-		 *     The attribute RouteId of the object rou is equal to routeid
-		 * train is the object tra in the instance set of class Train. tra represents an object of class Train, and tra meets:
-		 *     The attribute TrainId of the object tra is equal to trainid
-		 */
+/*
+Generated by RM2Doc - Definition
+route is the object rou in the instance set of class Route. rou represents an object of class Route, and rou meets:
+    The attribute RouteId of the object rou is equal to routeid
+train is the object tra in the instance set of class Train. tra represents an object of class Train, and tra meets:
+    The attribute TrainId of the object tra is equal to trainid
+*/
 		definition:
 			route:Route = Route.allInstance()->any(rou:Route | rou.RouteId = routeid),
 			train:Train = Train.allInstance()->any(tra:Train | tra.TrainId = trainid)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object route exists
-		 * The object train exists
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object route exists
+The object train exists
+*/
 		precondition:
 			route.oclIsUndefined() = false and
 			train.oclIsUndefined() = false
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The attribute RouteId of the object route became routeid
-		 * The attribute StartStation of the object route became startstation
-		 * The attribute EndStation of the object route became endstation
-		 * The attribute Time of the object route became time
-		 * The attribute TrainId of the object route became trainid
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The attribute RouteId of the object route became routeid
+The attribute StartStation of the object route became startstation
+The attribute EndStation of the object route became endstation
+The attribute Time of the object route became time
+The attribute TrainId of the object route became trainid
+The return value was true
+*/
 		postcondition:
 			route.RouteId = routeid and
 			route.StartStation = startstation and
@@ -468,75 +514,75 @@ UseCaseModel TrainTicket {
 	}
 
 //entity delete operation 
-	/* Generated by RM2Doc
-	 * delete route
-	 * The parameter <routeid> is used to find the route
-	 * Return true
-	 */
+/* Generated by RM2Doc
+delete route
+The parameter <routeid> is used to find the route
+Return true
+*/
 	Contract  ManageRouteCRUDService::deleteRoute(routeid : String) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * route is the object rou in the instance set of class Route. rou represents an object of class Route, and rou meets:
-		 *     The attribute RouteId of the object rou is equal to routeid
-		 */
+/*
+Generated by RM2Doc - Definition
+route is the object rou in the instance set of class Route. rou represents an object of class Route, and rou meets:
+    The attribute RouteId of the object rou is equal to routeid
+*/
 		definition:
 			route:Route = Route.allInstance()->any(rou:Route | rou.RouteId = routeid)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object route exists
-		 * The object route is in the instance set of class Route
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object route exists
+The object route is in the instance set of class Route
+*/
 		precondition:
 			route.oclIsUndefined() = false and
 			Route.allInstance()->includes(route)
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The object route was deleted from the instance set of class Route
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The object route was deleted from the instance set of class Route
+The return value was true
+*/
 		postcondition:
 			Route.allInstance()->excludes(route) and
 			result = true
 	}
 
 //entity create operation 
-	/* Generated by RM2Doc
-	 * create train
-	 * The parameter <trainid> is used to find the train
-	 * null
-	 * null
-	 * Return true
-	 */
+/* Generated by RM2Doc
+create train
+The parameter <trainid> is used to find the train
+null
+null
+Return true
+*/
 	Contract  ManageTrainCRUDService::createTrain(trainid : String, name : String, traintype : TrainType[G|D|Z|T|A|L]) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * train is the object tra in the instance set of class Train. tra represents an object of class Train, and tra meets:
-		 *     The attribute TrainId of the object tra is equal to trainid
-		 */
+/*
+Generated by RM2Doc - Definition
+train is the object tra in the instance set of class Train. tra represents an object of class Train, and tra meets:
+    The attribute TrainId of the object tra is equal to trainid
+*/
 		definition:
 			train:Train = Train.allInstance()->any(tra:Train | tra.TrainId = trainid)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object train doesn't exist
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object train doesn't exist
+*/
 		precondition:
 			train.oclIsUndefined() = true
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * tra represented the object of class Train
-		 * The object tra was created
-		 * The attribute TrainId of the object tra became trainid
-		 * The attribute Name of the object tra became name
-		 * The attribute TrainType of the object tra became traintype
-		 * The object tra was put into the instance set of class Train
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+tra represented the object of class Train
+The object tra was created
+The attribute TrainId of the object tra became trainid
+The attribute Name of the object tra became name
+The attribute TrainType of the object tra became traintype
+The object tra was put into the instance set of class Train
+The return value was true
+*/
 		postcondition:
 			let tra:Train in
 			tra.oclIsNew() and
@@ -548,68 +594,68 @@ UseCaseModel TrainTicket {
 	}
 
 //entity query operation 
-	/* Generated by RM2Doc
-	 * query train
-	 * The parameter <trainid> is used to find the train
-	 * Return the train
-	 */
+/* Generated by RM2Doc
+query train
+The parameter <trainid> is used to find the train
+Return the train
+*/
 	Contract  ManageTrainCRUDService::queryTrain(trainid : String) : Train {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * train is the object tra in the instance set of class Train. tra represents an object of class Train, and tra meets:
-		 *     The attribute TrainId of the object tra is equal to trainid
-		 */
+/*
+Generated by RM2Doc - Definition
+train is the object tra in the instance set of class Train. tra represents an object of class Train, and tra meets:
+    The attribute TrainId of the object tra is equal to trainid
+*/
 		definition:
 			train:Train = Train.allInstance()->any(tra:Train | tra.TrainId = trainid)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object train exists
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object train exists
+*/
 		precondition:
 			train.oclIsUndefined() = false
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The return value was train
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The return value was train
+*/
 		postcondition:
 			result = train
 	}
 
 //entity modify operation 
-	/* Generated by RM2Doc
-	 * modify train
-	 * The parameter <trainid> is used to find the train
-	 * null
-	 * null
-	 * Return true
-	 */
+/* Generated by RM2Doc
+modify train
+The parameter <trainid> is used to find the train
+null
+null
+Return true
+*/
 	Contract  ManageTrainCRUDService::modifyTrain(trainid : String, name : String, traintype : TrainType[G|D|Z|T|A|L]) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * train is the object tra in the instance set of class Train. tra represents an object of class Train, and tra meets:
-		 *     The attribute TrainId of the object tra is equal to trainid
-		 */
+/*
+Generated by RM2Doc - Definition
+train is the object tra in the instance set of class Train. tra represents an object of class Train, and tra meets:
+    The attribute TrainId of the object tra is equal to trainid
+*/
 		definition:
 			train:Train = Train.allInstance()->any(tra:Train | tra.TrainId = trainid)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object train exists
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object train exists
+*/
 		precondition:
 			train.oclIsUndefined() = false
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The attribute TrainId of the object train became trainid
-		 * The attribute Name of the object train became name
-		 * The attribute TrainType of the object train became traintype
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The attribute TrainId of the object train became trainid
+The attribute Name of the object train became name
+The attribute TrainType of the object train became traintype
+The return value was true
+*/
 		postcondition:
 			train.TrainId = trainid and
 			train.Name = name and
@@ -618,79 +664,79 @@ UseCaseModel TrainTicket {
 	}
 
 //entity delete operation 
-	/* Generated by RM2Doc
-	 * delete train
-	 * The parameter <trainid> is used to find the train
-	 * Return true
-	 */
+/* Generated by RM2Doc
+delete train
+The parameter <trainid> is used to find the train
+Return true
+*/
 	Contract  ManageTrainCRUDService::deleteTrain(trainid : String) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * train is the object tra in the instance set of class Train. tra represents an object of class Train, and tra meets:
-		 *     The attribute TrainId of the object tra is equal to trainid
-		 */
+/*
+Generated by RM2Doc - Definition
+train is the object tra in the instance set of class Train. tra represents an object of class Train, and tra meets:
+    The attribute TrainId of the object tra is equal to trainid
+*/
 		definition:
 			train:Train = Train.allInstance()->any(tra:Train | tra.TrainId = trainid)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object train exists
-		 * The object train is in the instance set of class Train
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object train exists
+The object train is in the instance set of class Train
+*/
 		precondition:
 			train.oclIsUndefined() = false and
 			Train.allInstance()->includes(train)
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The object train was deleted from the instance set of class Train
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The object train was deleted from the instance set of class Train
+The return value was true
+*/
 		postcondition:
 			Train.allInstance()->excludes(train) and
 			result = true
 	}
 
 //entity create operation 
-	/* Generated by RM2Doc
-	 * create ticket
-	 * The parameter <ticketid> is used to find the ticket
-	 * null
-	 * null
-	 * null
-	 * null
-	 * Return true
-	 */
+/* Generated by RM2Doc
+create ticket
+The parameter <ticketid> is used to find the ticket
+null
+null
+null
+null
+Return true
+*/
 	Contract  ManageTicketCRUDService::createTicket(ticketid : String, routeid : String, seatid : String, price : Real, isvalid : Boolean) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * ticket is the object tic in the instance set of class Ticket. tic represents an object of class Ticket, and tic meets:
-		 *     The attribute TicketId of the object tic is equal to ticketid
-		 */
+/*
+Generated by RM2Doc - Definition
+ticket is the object tic in the instance set of class Ticket. tic represents an object of class Ticket, and tic meets:
+    The attribute TicketId of the object tic is equal to ticketid
+*/
 		definition:
 			ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketid)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object ticket doesn't exist
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object ticket doesn't exist
+*/
 		precondition:
 			ticket.oclIsUndefined() = true
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * tic represented the object of class Ticket
-		 * The object tic was created
-		 * The attribute TicketId of the object tic became ticketid
-		 * The attribute RouteId of the object tic became routeid
-		 * The attribute SeatId of the object tic became seatid
-		 * The attribute Price of the object tic became price
-		 * The attribute IsValid of the object tic became isvalid
-		 * The object tic was put into the instance set of class Ticket
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+tic represented the object of class Ticket
+The object tic was created
+The attribute TicketId of the object tic became ticketid
+The attribute RouteId of the object tic became routeid
+The attribute SeatId of the object tic became seatid
+The attribute Price of the object tic became price
+The attribute IsValid of the object tic became isvalid
+The object tic was put into the instance set of class Ticket
+The return value was true
+*/
 		postcondition:
 			let tic:Ticket in
 			tic.oclIsNew() and
@@ -704,72 +750,72 @@ UseCaseModel TrainTicket {
 	}
 
 //entity query operation 
-	/* Generated by RM2Doc
-	 * query ticket
-	 * The parameter <ticketid> is used to find the ticket
-	 * Return the ticket
-	 */
+/* Generated by RM2Doc
+query ticket
+The parameter <ticketid> is used to find the ticket
+Return the ticket
+*/
 	Contract  ManageTicketCRUDService::queryTicket(ticketid : String) : Ticket {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * ticket is the object tic in the instance set of class Ticket. tic represents an object of class Ticket, and tic meets:
-		 *     The attribute TicketId of the object tic is equal to ticketid
-		 */
+/*
+Generated by RM2Doc - Definition
+ticket is the object tic in the instance set of class Ticket. tic represents an object of class Ticket, and tic meets:
+    The attribute TicketId of the object tic is equal to ticketid
+*/
 		definition:
 			ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketid)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object ticket exists
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object ticket exists
+*/
 		precondition:
 			ticket.oclIsUndefined() = false
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The return value was ticket
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The return value was ticket
+*/
 		postcondition:
 			result = ticket
 	}
 
 //entity modify operation 
-	/* Generated by RM2Doc
-	 * modify ticket
-	 * The parameter <ticketid> is used to find the ticket
-	 * null
-	 * null
-	 * null
-	 * null
-	 * Return true
-	 */
+/* Generated by RM2Doc
+modify ticket
+The parameter <ticketid> is used to find the ticket
+null
+null
+null
+null
+Return true
+*/
 	Contract  ManageTicketCRUDService::modifyTicket(ticketid : String, routeid : String, seatid : String, price : Real, isvalid : Boolean) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * ticket is the object tic in the instance set of class Ticket. tic represents an object of class Ticket, and tic meets:
-		 *     The attribute TicketId of the object tic is equal to ticketid
-		 */
+/*
+Generated by RM2Doc - Definition
+ticket is the object tic in the instance set of class Ticket. tic represents an object of class Ticket, and tic meets:
+    The attribute TicketId of the object tic is equal to ticketid
+*/
 		definition:
 			ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketid)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object ticket exists
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object ticket exists
+*/
 		precondition:
 			ticket.oclIsUndefined() = false
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The attribute TicketId of the object ticket became ticketid
-		 * The attribute RouteId of the object ticket became routeid
-		 * The attribute SeatId of the object ticket became seatid
-		 * The attribute Price of the object ticket became price
-		 * The attribute IsValid of the object ticket became isvalid
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The attribute TicketId of the object ticket became ticketid
+The attribute RouteId of the object ticket became routeid
+The attribute SeatId of the object ticket became seatid
+The attribute Price of the object ticket became price
+The attribute IsValid of the object ticket became isvalid
+The return value was true
+*/
 		postcondition:
 			ticket.TicketId = ticketid and
 			ticket.RouteId = routeid and
@@ -780,79 +826,79 @@ UseCaseModel TrainTicket {
 	}
 
 //entity delete operation 
-	/* Generated by RM2Doc
-	 * delete ticket
-	 * The parameter <ticketid> is used to find the ticket
-	 * Return true
-	 */
+/* Generated by RM2Doc
+delete ticket
+The parameter <ticketid> is used to find the ticket
+Return true
+*/
 	Contract  ManageTicketCRUDService::deleteTicket(ticketid : String) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * ticket is the object tic in the instance set of class Ticket. tic represents an object of class Ticket, and tic meets:
-		 *     The attribute TicketId of the object tic is equal to ticketid
-		 */
+/*
+Generated by RM2Doc - Definition
+ticket is the object tic in the instance set of class Ticket. tic represents an object of class Ticket, and tic meets:
+    The attribute TicketId of the object tic is equal to ticketid
+*/
 		definition:
 			ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketid)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object ticket exists
-		 * The object ticket is in the instance set of class Ticket
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object ticket exists
+The object ticket is in the instance set of class Ticket
+*/
 		precondition:
 			ticket.oclIsUndefined() = false and
 			Ticket.allInstance()->includes(ticket)
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The object ticket was deleted from the instance set of class Ticket
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The object ticket was deleted from the instance set of class Ticket
+The return value was true
+*/
 		postcondition:
 			Ticket.allInstance()->excludes(ticket) and
 			result = true
 	}
 
 //entity create operation 
-	/* Generated by RM2Doc
-	 * create order
-	 * The parameter <orderid> is used to find the order
-	 * null
-	 * null
-	 * null
-	 * null
-	 * Return true
-	 */
+/* Generated by RM2Doc
+create order
+The parameter <orderid> is used to find the order
+null
+null
+null
+null
+Return true
+*/
 	Contract  ManageOrderCRUDService::createOrder(orderid : String, ticketid : String, accoutid : String, createtime : String, orderstatus : OrderStatus[NOTPAID|PAID|CANCELED]) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * order is the object ord in the instance set of class Order. ord represents an object of class Order, and ord meets:
-		 *     The attribute OrderId of the object ord is equal to orderid
-		 */
+/*
+Generated by RM2Doc - Definition
+order is the object ord in the instance set of class Order. ord represents an object of class Order, and ord meets:
+    The attribute OrderId of the object ord is equal to orderid
+*/
 		definition:
 			order:Order = Order.allInstance()->any(ord:Order | ord.OrderId = orderid)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object order doesn't exist
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object order doesn't exist
+*/
 		precondition:
 			order.oclIsUndefined() = true
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * ord represented the object of class Order
-		 * The object ord was created
-		 * The attribute OrderId of the object ord became orderid
-		 * The attribute TicketId of the object ord became ticketid
-		 * The attribute AccoutId of the object ord became accoutid
-		 * The attribute CreateTime of the object ord became createtime
-		 * The attribute OrderStatus of the object ord became orderstatus
-		 * The object ord was put into the instance set of class Order
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+ord represented the object of class Order
+The object ord was created
+The attribute OrderId of the object ord became orderid
+The attribute TicketId of the object ord became ticketid
+The attribute AccoutId of the object ord became accoutid
+The attribute CreateTime of the object ord became createtime
+The attribute OrderStatus of the object ord became orderstatus
+The object ord was put into the instance set of class Order
+The return value was true
+*/
 		postcondition:
 			let ord:Order in
 			ord.oclIsNew() and
@@ -866,72 +912,72 @@ UseCaseModel TrainTicket {
 	}
 
 //entity query operation 
-	/* Generated by RM2Doc
-	 * query order
-	 * The parameter <orderid> is used to find the order
-	 * Return the order
-	 */
+/* Generated by RM2Doc
+query order
+The parameter <orderid> is used to find the order
+Return the order
+*/
 	Contract  ManageOrderCRUDService::queryOrder(orderid : String) : Order {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * order is the object ord in the instance set of class Order. ord represents an object of class Order, and ord meets:
-		 *     The attribute OrderId of the object ord is equal to orderid
-		 */
+/*
+Generated by RM2Doc - Definition
+order is the object ord in the instance set of class Order. ord represents an object of class Order, and ord meets:
+    The attribute OrderId of the object ord is equal to orderid
+*/
 		definition:
 			order:Order = Order.allInstance()->any(ord:Order | ord.OrderId = orderid)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object order exists
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object order exists
+*/
 		precondition:
 			order.oclIsUndefined() = false
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The return value was order
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The return value was order
+*/
 		postcondition:
 			result = order
 	}
 
 //entity modify operation 
-	/* Generated by RM2Doc
-	 * modify order
-	 * The parameter <orderid> is used to find the order
-	 * null
-	 * null
-	 * null
-	 * null
-	 * Return true
-	 */
+/* Generated by RM2Doc
+modify order
+The parameter <orderid> is used to find the order
+null
+null
+null
+null
+Return true
+*/
 	Contract  ManageOrderCRUDService::modifyOrder(orderid : String, ticketid : String, accoutid : String, createtime : String, orderstatus : OrderStatus[NOTPAID|PAID|CANCELED]) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * order is the object ord in the instance set of class Order. ord represents an object of class Order, and ord meets:
-		 *     The attribute OrderId of the object ord is equal to orderid
-		 */
+/*
+Generated by RM2Doc - Definition
+order is the object ord in the instance set of class Order. ord represents an object of class Order, and ord meets:
+    The attribute OrderId of the object ord is equal to orderid
+*/
 		definition:
 			order:Order = Order.allInstance()->any(ord:Order | ord.OrderId = orderid)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object order exists
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object order exists
+*/
 		precondition:
 			order.oclIsUndefined() = false
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The attribute OrderId of the object order became orderid
-		 * The attribute TicketId of the object order became ticketid
-		 * The attribute AccoutId of the object order became accoutid
-		 * The attribute CreateTime of the object order became createtime
-		 * The attribute OrderStatus of the object order became orderstatus
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The attribute OrderId of the object order became orderid
+The attribute TicketId of the object order became ticketid
+The attribute AccoutId of the object order became accoutid
+The attribute CreateTime of the object order became createtime
+The attribute OrderStatus of the object order became orderstatus
+The return value was true
+*/
 		postcondition:
 			order.OrderId = orderid and
 			order.TicketId = ticketid and
@@ -942,75 +988,75 @@ UseCaseModel TrainTicket {
 	}
 
 //entity delete operation 
-	/* Generated by RM2Doc
-	 * delete order
-	 * The parameter <orderid> is used to find the order
-	 * Return true
-	 */
+/* Generated by RM2Doc
+delete order
+The parameter <orderid> is used to find the order
+Return true
+*/
 	Contract  ManageOrderCRUDService::deleteOrder(orderid : String) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * order is the object ord in the instance set of class Order. ord represents an object of class Order, and ord meets:
-		 *     The attribute OrderId of the object ord is equal to orderid
-		 */
+/*
+Generated by RM2Doc - Definition
+order is the object ord in the instance set of class Order. ord represents an object of class Order, and ord meets:
+    The attribute OrderId of the object ord is equal to orderid
+*/
 		definition:
 			order:Order = Order.allInstance()->any(ord:Order | ord.OrderId = orderid)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object order exists
-		 * The object order is in the instance set of class Order
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object order exists
+The object order is in the instance set of class Order
+*/
 		precondition:
 			order.oclIsUndefined() = false and
 			Order.allInstance()->includes(order)
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The object order was deleted from the instance set of class Order
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The object order was deleted from the instance set of class Order
+The return value was true
+*/
 		postcondition:
 			Order.allInstance()->excludes(order) and
 			result = true
 	}
 
 //entity create operation 
-	/* Generated by RM2Doc
-	 * create accout
-	 * The parameter <accoutid> is used to find the accout
-	 * null
-	 * null
-	 * Return true
-	 */
+/* Generated by RM2Doc
+create accout
+The parameter <accoutid> is used to find the accout
+null
+null
+Return true
+*/
 	Contract  ManageAccoutCRUDService::createAccout(accoutid : String, name : String, phonenumber : String) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * accout is the object acc in the instance set of class Accout. acc represents an object of class Accout, and acc meets:
-		 *     The attribute AccoutId of the object acc is equal to accoutid
-		 */
+/*
+Generated by RM2Doc - Definition
+accout is the object acc in the instance set of class Accout. acc represents an object of class Accout, and acc meets:
+    The attribute AccoutId of the object acc is equal to accoutid
+*/
 		definition:
 			accout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutid)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object accout doesn't exist
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object accout doesn't exist
+*/
 		precondition:
 			accout.oclIsUndefined() = true
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * acc represented the object of class Accout
-		 * The object acc was created
-		 * The attribute AccoutId of the object acc became accoutid
-		 * The attribute Name of the object acc became name
-		 * The attribute PhoneNumber of the object acc became phonenumber
-		 * The object acc was put into the instance set of class Accout
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+acc represented the object of class Accout
+The object acc was created
+The attribute AccoutId of the object acc became accoutid
+The attribute Name of the object acc became name
+The attribute PhoneNumber of the object acc became phonenumber
+The object acc was put into the instance set of class Accout
+The return value was true
+*/
 		postcondition:
 			let acc:Accout in
 			acc.oclIsNew() and
@@ -1022,68 +1068,68 @@ UseCaseModel TrainTicket {
 	}
 
 //entity query operation 
-	/* Generated by RM2Doc
-	 * query accout
-	 * The parameter <accoutid> is used to find the accout
-	 * Return the accout
-	 */
+/* Generated by RM2Doc
+query accout
+The parameter <accoutid> is used to find the accout
+Return the accout
+*/
 	Contract  ManageAccoutCRUDService::queryAccout(accoutid : String) : Accout {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * accout is the object acc in the instance set of class Accout. acc represents an object of class Accout, and acc meets:
-		 *     The attribute AccoutId of the object acc is equal to accoutid
-		 */
+/*
+Generated by RM2Doc - Definition
+accout is the object acc in the instance set of class Accout. acc represents an object of class Accout, and acc meets:
+    The attribute AccoutId of the object acc is equal to accoutid
+*/
 		definition:
 			accout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutid)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object accout exists
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object accout exists
+*/
 		precondition:
 			accout.oclIsUndefined() = false
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The return value was accout
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The return value was accout
+*/
 		postcondition:
 			result = accout
 	}
 
 //entity modify operation 
-	/* Generated by RM2Doc
-	 * modify accout
-	 * The parameter <accoutid> is used to find the accout
-	 * null
-	 * null
-	 * Return true
-	 */
+/* Generated by RM2Doc
+modify accout
+The parameter <accoutid> is used to find the accout
+null
+null
+Return true
+*/
 	Contract  ManageAccoutCRUDService::modifyAccout(accoutid : String, name : String, phonenumber : String) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * accout is the object acc in the instance set of class Accout. acc represents an object of class Accout, and acc meets:
-		 *     The attribute AccoutId of the object acc is equal to accoutid
-		 */
+/*
+Generated by RM2Doc - Definition
+accout is the object acc in the instance set of class Accout. acc represents an object of class Accout, and acc meets:
+    The attribute AccoutId of the object acc is equal to accoutid
+*/
 		definition:
 			accout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutid)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object accout exists
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object accout exists
+*/
 		precondition:
 			accout.oclIsUndefined() = false
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The attribute AccoutId of the object accout became accoutid
-		 * The attribute Name of the object accout became name
-		 * The attribute PhoneNumber of the object accout became phonenumber
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The attribute AccoutId of the object accout became accoutid
+The attribute Name of the object accout became name
+The attribute PhoneNumber of the object accout became phonenumber
+The return value was true
+*/
 		postcondition:
 			accout.AccoutId = accoutid and
 			accout.Name = name and
@@ -1092,80 +1138,80 @@ UseCaseModel TrainTicket {
 	}
 
 //entity delete operation 
-	/* Generated by RM2Doc
-	 * delete accout
-	 * The parameter <accoutid> is used to find the accout
-	 * Return true
-	 */
+/* Generated by RM2Doc
+delete accout
+The parameter <accoutid> is used to find the accout
+Return true
+*/
 	Contract  ManageAccoutCRUDService::deleteAccout(accoutid : String) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * accout is the object acc in the instance set of class Accout. acc represents an object of class Accout, and acc meets:
-		 *     The attribute AccoutId of the object acc is equal to accoutid
-		 */
+/*
+Generated by RM2Doc - Definition
+accout is the object acc in the instance set of class Accout. acc represents an object of class Accout, and acc meets:
+    The attribute AccoutId of the object acc is equal to accoutid
+*/
 		definition:
 			accout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutid)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object accout exists
-		 * The object accout is in the instance set of class Accout
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object accout exists
+The object accout is in the instance set of class Accout
+*/
 		precondition:
 			accout.oclIsUndefined() = false and
 			Accout.allInstance()->includes(accout)
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The object accout was deleted from the instance set of class Accout
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The object accout was deleted from the instance set of class Accout
+The return value was true
+*/
 		postcondition:
 			Accout.allInstance()->excludes(accout) and
 			result = true
 	}
 
 //entity create operation 
-	/* Generated by RM2Doc
-	 * create seat
-	 * The parameter <seatid> is used to find the seat
-	 * The parameter <trainid> is used to find the train
-	 * null
-	 * Return true
-	 */
+/* Generated by RM2Doc
+create seat
+The parameter <seatid> is used to find the seat
+The parameter <trainid> is used to find the train
+null
+Return true
+*/
 	Contract  ManageSeatCRUDService::createSeat(seatid : String, trainid : String, seattype : SeatType[HARDBED|SOFTBED|SEAT|STAND]) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * seat is the object sea in the instance set of class Seat. sea represents an object of class Seat, and sea meets:
-		 *     The attribute SeatId of the object sea is equal to seatid
-		 * train is the object tra in the instance set of class Train. tra represents an object of class Train, and tra meets:
-		 *     The attribute TrainId of the object tra is equal to trainid
-		 */
+/*
+Generated by RM2Doc - Definition
+seat is the object sea in the instance set of class Seat. sea represents an object of class Seat, and sea meets:
+    The attribute SeatId of the object sea is equal to seatid
+train is the object tra in the instance set of class Train. tra represents an object of class Train, and tra meets:
+    The attribute TrainId of the object tra is equal to trainid
+*/
 		definition:
 			seat:Seat = Seat.allInstance()->any(sea:Seat | sea.SeatId = seatid),
 			train:Train = Train.allInstance()->any(tra:Train | tra.TrainId = trainid)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object seat doesn't exist
-		 * The object train exists
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object seat doesn't exist
+The object train exists
+*/
 		precondition:
 			seat.oclIsUndefined() = true and
 			train.oclIsUndefined() = false
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * sea represented the object of class Seat
-		 * The object sea was created
-		 * The attribute SeatId of the object sea became seatid
-		 * The attribute TrainId of the object sea became trainid
-		 * The attribute SeatType of the object sea became seattype
-		 * The object sea was put into the instance set of class Seat
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+sea represented the object of class Seat
+The object sea was created
+The attribute SeatId of the object sea became seatid
+The attribute TrainId of the object sea became trainid
+The attribute SeatType of the object sea became seattype
+The object sea was put into the instance set of class Seat
+The return value was true
+*/
 		postcondition:
 			let sea:Seat in
 			sea.oclIsNew() and
@@ -1177,73 +1223,73 @@ UseCaseModel TrainTicket {
 	}
 
 //entity query operation 
-	/* Generated by RM2Doc
-	 * query seat
-	 * The parameter <seatid> is used to find the seat
-	 * Return the seat
-	 */
+/* Generated by RM2Doc
+query seat
+The parameter <seatid> is used to find the seat
+Return the seat
+*/
 	Contract  ManageSeatCRUDService::querySeat(seatid : String) : Seat {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * seat is the object sea in the instance set of class Seat. sea represents an object of class Seat, and sea meets:
-		 *     The attribute SeatId of the object sea is equal to seatid
-		 */
+/*
+Generated by RM2Doc - Definition
+seat is the object sea in the instance set of class Seat. sea represents an object of class Seat, and sea meets:
+    The attribute SeatId of the object sea is equal to seatid
+*/
 		definition:
 			seat:Seat = Seat.allInstance()->any(sea:Seat | sea.SeatId = seatid)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object seat exists
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object seat exists
+*/
 		precondition:
 			seat.oclIsUndefined() = false
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The return value was seat
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The return value was seat
+*/
 		postcondition:
 			result = seat
 	}
 
 //entity modify operation 
-	/* Generated by RM2Doc
-	 * modify seat
-	 * The parameter <seatid> is used to find the seat
-	 * The parameter <trainid> is used to find the train
-	 * null
-	 * Return true
-	 */
+/* Generated by RM2Doc
+modify seat
+The parameter <seatid> is used to find the seat
+The parameter <trainid> is used to find the train
+null
+Return true
+*/
 	Contract  ManageSeatCRUDService::modifySeat(seatid : String, trainid : String, seattype : SeatType[HARDBED|SOFTBED|SEAT|STAND]) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * seat is the object sea in the instance set of class Seat. sea represents an object of class Seat, and sea meets:
-		 *     The attribute SeatId of the object sea is equal to seatid
-		 * train is the object tra in the instance set of class Train. tra represents an object of class Train, and tra meets:
-		 *     The attribute TrainId of the object tra is equal to trainid
-		 */
+/*
+Generated by RM2Doc - Definition
+seat is the object sea in the instance set of class Seat. sea represents an object of class Seat, and sea meets:
+    The attribute SeatId of the object sea is equal to seatid
+train is the object tra in the instance set of class Train. tra represents an object of class Train, and tra meets:
+    The attribute TrainId of the object tra is equal to trainid
+*/
 		definition:
 			seat:Seat = Seat.allInstance()->any(sea:Seat | sea.SeatId = seatid),
 			train:Train = Train.allInstance()->any(tra:Train | tra.TrainId = trainid)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object seat exists
-		 * The object train exists
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object seat exists
+The object train exists
+*/
 		precondition:
 			seat.oclIsUndefined() = false and
 			train.oclIsUndefined() = false
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The attribute SeatId of the object seat became seatid
-		 * The attribute TrainId of the object seat became trainid
-		 * The attribute SeatType of the object seat became seattype
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The attribute SeatId of the object seat became seatid
+The attribute TrainId of the object seat became trainid
+The attribute SeatType of the object seat became seattype
+The return value was true
+*/
 		postcondition:
 			seat.SeatId = seatid and
 			seat.TrainId = trainid and
@@ -1252,86 +1298,79 @@ UseCaseModel TrainTicket {
 	}
 
 //entity delete operation 
-	/* Generated by RM2Doc
-	 * delete seat
-	 * The parameter <seatid> is used to find the seat
-	 * Return true
-	 */
+/* Generated by RM2Doc
+delete seat
+The parameter <seatid> is used to find the seat
+Return true
+*/
 	Contract  ManageSeatCRUDService::deleteSeat(seatid : String) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * seat is the object sea in the instance set of class Seat. sea represents an object of class Seat, and sea meets:
-		 *     The attribute SeatId of the object sea is equal to seatid
-		 */
+/*
+Generated by RM2Doc - Definition
+seat is the object sea in the instance set of class Seat. sea represents an object of class Seat, and sea meets:
+    The attribute SeatId of the object sea is equal to seatid
+*/
 		definition:
 			seat:Seat = Seat.allInstance()->any(sea:Seat | sea.SeatId = seatid)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object seat exists
-		 * The object seat is in the instance set of class Seat
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object seat exists
+The object seat is in the instance set of class Seat
+*/
 		precondition:
 			seat.oclIsUndefined() = false and
 			Seat.allInstance()->includes(seat)
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The object seat was deleted from the instance set of class Seat
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The object seat was deleted from the instance set of class Seat
+The return value was true
+*/
 		postcondition:
 			Seat.allInstance()->excludes(seat) and
 			result = true
 	}
 
-	/* Generated by RM2Doc
-	 * buy ticket
-	 * The parameter <accoutId> is used to find the accout
-	 * The parameter <routeId> is used to find the route
-	 * The parameter <ticketId> is used to find the ticket
-	 * Return true
-	 */
-	Contract CreateTripService::buyTicket(accoutId : String, routeId : String, ticketId : String) : Boolean {
+/* Generated by RM2Doc
+buy ticket
+The parameter <routeId> is used to find the route
+The parameter <ticketId> is used to find the ticket
+Return true
+*/
+	Contract CreateTripService::buyTicket(routeId : String, ticketId : String) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * route is the object rou in the instance set of class Route. rou represents an object of class Route, and rou meets:
-		 *     The attribute RouteId of the object rou is equal to routeId
-		 * accout is the object acc in the instance set of class Accout. acc represents an object of class Accout, and acc meets:
-		 *     The attribute AccoutId of the object acc is equal to accoutId
-		 * ticket is the object tic in the instance set of class Ticket. tic represents an object of class Ticket, and tic meets:
-		 *     The attribute TicketId of the object tic is equal to ticketId
-		 */
+/*
+Generated by RM2Doc - Definition
+route is the object rou in the instance set of class Route. rou represents an object of class Route, and rou meets:
+    The attribute RouteId of the object rou is equal to routeId
+ticket is the object tic in the instance set of class Ticket. tic represents an object of class Ticket, and tic meets:
+    The attribute TicketId of the object tic is equal to ticketId
+*/
 		definition:
 			route:Route = Route.allInstance()->any(rou:Route | rou.RouteId = routeId),
-			accout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutId),
 			ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketId)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object route exists
-		 * The object accout exists
-		 * The object ticket doesn't exist
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object route exists
+The object ticket doesn't exist
+*/
 		precondition:
 			route.oclIsUndefined() = false and
-			accout.oclIsUndefined() = false and
 			ticket.oclIsUndefined() = true
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * tic represented the object of class Ticket
-		 * The object tic was created
-		 * The attribute TicketId of the object tic became ticketId
-		 * The attribute RouteId of the object tic became routeId
-		 * The attribute IsValid of the object tic became false
-		 * The object tic was put into the instance set of class Ticket
-		 * ERROR12
-		 * ERROR12
-		 * ERROR12
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+tic represented the object of class Ticket
+The object tic was created
+The attribute TicketId of the object tic became ticketId
+The attribute RouteId of the object tic became routeId
+The attribute IsValid of the object tic became false
+The object tic was put into the instance set of class Ticket
+ERROR12
+ERROR12
+The return value was true
+*/
 		postcondition:
 			let tic:Ticket in
 			tic.oclIsNew() and
@@ -1340,46 +1379,45 @@ UseCaseModel TrainTicket {
 			tic.IsValid = false and
 			Ticket.allInstance()->includes(tic) and
 			CurrentTicket = tic and
-			CurrentAccout = accout and
 			CurrentRoute = route and
 			result = true
 	}
 
-	/* Generated by RM2Doc
-	 * save order
-	 * The parameter <orderId> is used to find the order
-	 * null
-	 * Return true
-	 */
+/* Generated by RM2Doc
+save order
+The parameter <orderId> is used to find the order
+null
+Return true
+*/
 	Contract CreateTripService::saveOrder(orderId : String, boughtTime : String) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * order is the object ord in the instance set of class Order. ord represents an object of class Order, and ord meets:
-		 *     The attribute OrderId of the object ord is equal to orderId
-		 */
+/*
+Generated by RM2Doc - Definition
+order is the object ord in the instance set of class Order. ord represents an object of class Order, and ord meets:
+    The attribute OrderId of the object ord is equal to orderId
+*/
 		definition:
 			order:Order = Order.allInstance()->any(ord:Order | ord.OrderId = orderId)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object order doesn't exist
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object order doesn't exist
+*/
 		precondition:
 			order.oclIsUndefined() = true
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * ord represented the object of class Order
-		 * The object ord was created
-		 * The attribute OrderId of the object ord became orderId
-		 * The attribute TicketId of the object ord became the attribute TicketId of the object CurrentTicket
-		 * The attribute AccoutId of the object ord became the attribute AccoutId of the object CurrentAccout
-		 * The attribute CreateTime of the object ord became boughtTime
-		 * The attribute OrderStatus of the object ord became NOTPAID
-		 * ERROR12
-		 * The object ord was put into the instance set of class Order
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+ord represented the object of class Order
+The object ord was created
+The attribute OrderId of the object ord became orderId
+The attribute TicketId of the object ord became the attribute TicketId of the object CurrentTicket
+The attribute AccoutId of the object ord became the attribute AccoutId of the object CurrentAccout
+The attribute CreateTime of the object ord became boughtTime
+The attribute OrderStatus of the object ord became NOTPAID
+ERROR12
+The object ord was put into the instance set of class Order
+The return value was true
+*/
 		postcondition:
 			let ord:Order in
 			ord.oclIsNew() and
@@ -1393,80 +1431,80 @@ UseCaseModel TrainTicket {
 			result = true
 	}
 
-	/* Generated by RM2Doc
-	 * show seats
-	 * Return the seat(s) whose train id is equal to <the attribute TrainId of the object CurrentRoute>
-	 */
+/* Generated by RM2Doc
+show seats
+Return the seat(s) whose train id is equal to <the attribute TrainId of the object CurrentRoute>
+*/
 	Contract CreateTripService::showSeats() : Set(Seat) {
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * None
-		 */
+/*
+Generated by RM2Doc - Precondition
+None
+*/
 		precondition:
 			true
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The return value was the set of class Seat, including all sea in the instance set of class Seat. sea represented an object of class Seat, and sea meet:
-		 *     The attribute TrainId of the object sea was equal to the attribute TrainId of the object CurrentRoute
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The return value was the set of class Seat, including all sea in the instance set of class Seat. sea represented an object of class Seat, and sea meet:
+    The attribute TrainId of the object sea was equal to the attribute TrainId of the object CurrentRoute
+*/
 		postcondition:
 			result = Seat.allInstance()->select(sea:Seat | sea.TrainId =  CurrentRoute.TrainId)
 	}
 
-	/* Generated by RM2Doc
-	 * select seat
-	 * The parameter <seatId> is used to find the seat
-	 * Return true
-	 */
+/* Generated by RM2Doc
+select seat
+The parameter <seatId> is used to find the seat
+Return true
+*/
 	Contract CreateTripService::selectSeat(seatId : String) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * seat is the object sea in the instance set of class Seat. sea represents an object of class Seat, and sea meets:
-		 *     The attribute TrainId of the object sea is equal to the attribute TrainId of the object CurrentRoute
-		 *     The attribute SeatId of the object sea is equal to seatId
-		 */
+/*
+Generated by RM2Doc - Definition
+seat is the object sea in the instance set of class Seat. sea represents an object of class Seat, and sea meets:
+    The attribute TrainId of the object sea is equal to the attribute TrainId of the object CurrentRoute
+    The attribute SeatId of the object sea is equal to seatId
+*/
 		definition:
 			seat:Seat = Seat.allInstance()->any(sea:Seat | sea.TrainId = CurrentRoute.TrainId and sea.SeatId = seatId)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object seat exists
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object seat exists
+*/
 		precondition:
 			seat.oclIsUndefined() = false
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The attribute seatId of the object CurrentTicket became seatId
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The attribute seatId of the object CurrentTicket became seatId
+The return value was true
+*/
 		postcondition:
 			CurrentTicket.seatId = seatId and
 			result = true
 	}
 
-	/* Generated by RM2Doc
-	 * pay
-	 * null
-	 * Return true
-	 */
+/* Generated by RM2Doc
+pay
+null
+Return true
+*/
 	Contract CreateTripService::pay(price : Real) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The price is greater than 0
-		 */
+/*
+Generated by RM2Doc - Precondition
+The price is greater than 0
+*/
 		precondition:
 			price > 0
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The attribute Price of the object CurrentTicket became price
-		 * The attribute IsValid of the object CurrentTicket became true
-		 * The attribute OrderStatus of the object CurrentOrder became PAID
-		 * The system operation sendNotification was executed
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The attribute Price of the object CurrentTicket became price
+The attribute IsValid of the object CurrentTicket became true
+The attribute OrderStatus of the object CurrentOrder became PAID
+The system operation sendNotification was executed
+The return value was true
+*/
 		postcondition:
 			CurrentTicket.Price = price and
 			CurrentTicket.IsValid = true and
@@ -1475,300 +1513,274 @@ UseCaseModel TrainTicket {
 			result = true
 	}
 
-	/* Generated by RM2Doc
-	 * query information
-	 * null
-	 * null
-	 * null
-	 * Return the route(s) whose start station is equal to <startStation>, end station is equal to <endStation>and time is equal to <time>
-	 */
+/* Generated by RM2Doc
+query information
+null
+null
+null
+Return the route(s) whose start station is equal to <startStation>, end station is equal to <endStation>and time is equal to <time>
+*/
 	Contract TrainTicketSystem::queryInformation(startStation : String, endStation : String, time : String) : Set(Route) {
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * None
-		 */
+/*
+Generated by RM2Doc - Precondition
+None
+*/
 		precondition:
 			true
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The return value was the set of class Route, including all route in the instance set of class Route. route represented an object of class Route, and route meet:
-		 *     The attribute StartStation of the object route was equal to startStation
-		 *     The attribute EndStation of the object route was equal to endStation
-		 *     The attribute Time of the object route was equal to time
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The return value was the set of class Route, including all route in the instance set of class Route. route represented an object of class Route, and route meet:
+    The attribute StartStation of the object route was equal to startStation
+    The attribute EndStation of the object route was equal to endStation
+    The attribute Time of the object route was equal to time
+*/
 		postcondition:
 			result = Route.allInstance()->select(route:Route | route.StartStation = startStation and route.EndStation = endStation and route.Time = time)
 	}
 
-	/* Generated by RM2Doc
-	 * cancel trip
-	 * The parameter <ticketId> is used to find the ticket
-	 * The parameter <accoutId> is used to find the accout
-	 * Return true
-	 */
+/* Generated by RM2Doc
+cancel trip
+The parameter <ticketId> is used to find the ticket
+The parameter <accoutId> is used to find the accout
+Return true
+*/
 	Contract TrainTicketSystem::cancelTrip(ticketId : String, accoutId : String) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * ticket is the object tic in the instance set of class Ticket. tic represents an object of class Ticket, and tic meets:
-		 *     The attribute TicketId of the object tic is equal to ticketId
-		 * accout is the object acc in the instance set of class Accout. acc represents an object of class Accout, and acc meets:
-		 *     The attribute AccoutId of the object acc is equal to accoutId
-		 * order is the object ord in the instance set of class Order. ord represents an object of class Order, and ord meets:
-		 *     The attribute TicketId of the object ord is equal to ticketId
-		 *     The attribute AccoutId of the object ord is equal to accoutId
-		 *     The attribute OrderStatus of the object ord is equal to PAID
-		 */
+/*
+Generated by RM2Doc - Definition
+ticket is the object tic in the instance set of class Ticket. tic represents an object of class Ticket, and tic meets:
+    The attribute TicketId of the object tic is equal to ticketId
+accout is the object acc in the instance set of class Accout. acc represents an object of class Accout, and acc meets:
+    The attribute AccoutId of the object acc is equal to accoutId
+order is the object ord in the instance set of class Order. ord represents an object of class Order, and ord meets:
+    The attribute TicketId of the object ord is equal to ticketId
+    The attribute AccoutId of the object ord is equal to accoutId
+    The attribute OrderStatus of the object ord is equal to PAID
+*/
 		definition:
 			ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketId),
 			accout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutId),
 			order:Order = Order.allInstance()->any(ord:Order | ord.TicketId = ticketId and ord.AccoutId = accoutId and ord.OrderStatus = OrderStatus::PAID)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object ticket exists
-		 * The object accout exists
-		 * The object order exists
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object ticket exists
+The object accout exists
+The object order exists
+*/
 		precondition:
 //			true
 			ticket.oclIsUndefined() = false and
 			accout.oclIsUndefined() = false and
 			order.oclIsUndefined() = false
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The attribute IsValid of the object ticket became false
-		 * The attribute OrderStatus of the object order became CANCELED
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The attribute IsValid of the object ticket became false
+The attribute OrderStatus of the object order became CANCELED
+The return value was true
+*/
 		postcondition:
 			ticket.IsValid = false and
 			order.OrderStatus = OrderStatus::CANCELED and
 			result = true
 	}
 
-	/* Generated by RM2Doc
-	 * query by accout id
-	 * The parameter <accoutId> is used to find the accout
-	 * Return the order(s) whose accout id is equal to <accoutId>
-	 */
+/* Generated by RM2Doc
+query by accout id
+The parameter <accoutId> is used to find the accout
+Return the order(s) whose accout id is equal to <accoutId>
+*/
 	Contract QueryOrderService::queryByAccoutId(accoutId : String) : Set(Order) {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * accout is the object acc in the instance set of class Accout. acc represents an object of class Accout, and acc meets:
-		 *     The attribute AccoutId of the object acc is equal to accoutId
-		 */
+/*
+Generated by RM2Doc - Definition
+accout is the object acc in the instance set of class Accout. acc represents an object of class Accout, and acc meets:
+    The attribute AccoutId of the object acc is equal to accoutId
+*/
 		definition:
 			accout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutId)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object accout exists
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object accout exists
+*/
 		precondition:
 			accout.oclIsUndefined() = false
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The return value was the set of class Order, including all order in the instance set of class Order. order represented an object of class Order, and order meet:
-		 *     The attribute AccoutId of the object order was equal to accoutId
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The return value was the set of class Order, including all order in the instance set of class Order. order represented an object of class Order, and order meet:
+    The attribute AccoutId of the object order was equal to accoutId
+*/
 		postcondition:
 			result = Order.allInstance()->select(order:Order | order.AccoutId = accoutId)
 	}
 
-	/* Generated by RM2Doc
-	 * query ticket id
-	 * The parameter <ticketId> is used to find the ticket
-	 * Return the order(s) whose ticket id is equal to <ticketId>
-	 */
+/* Generated by RM2Doc
+query ticket id
+The parameter <ticketId> is used to find the ticket
+Return the order(s) whose ticket id is equal to <ticketId>
+*/
 	Contract QueryOrderService::queryTicketId(ticketId : String) : Set(Order) {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * ticket is the object tic in the instance set of class Ticket. tic represents an object of class Ticket, and tic meets:
-		 *     The attribute TicketId of the object tic is equal to ticketId
-		 */
+/*
+Generated by RM2Doc - Definition
+ticket is the object tic in the instance set of class Ticket. tic represents an object of class Ticket, and tic meets:
+    The attribute TicketId of the object tic is equal to ticketId
+*/
 		definition:
 			ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketId)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object ticket exists
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object ticket exists
+*/
 		precondition:
 			ticket.oclIsUndefined() = false
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The return value was the set of class Order, including all order in the instance set of class Order. order represented an object of class Order, and order meet:
-		 *     The attribute TicketId of the object order was equal to ticketId
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The return value was the set of class Order, including all order in the instance set of class Order. order represented an object of class Order, and order meet:
+    The attribute TicketId of the object order was equal to ticketId
+*/
 		postcondition:
 			result = Order.allInstance()->select(order:Order | order.TicketId = ticketId)
 	}
 
-	/* Generated by RM2Doc
-	 * update ticket
-	 * The parameter <accoutId> is used to find the accout
-	 * null
-	 * The parameter <newRouteId> is used to find the route
-	 * Return true
-	 */
-	Contract ModifyTripService::updateTicket(accoutId : String, ticketId : String, newRouteId : String): Boolean {
+/* Generated by RM2Doc
+update ticket
+The parameter <newRouteId> is used to find the route
+Return true
+*/
+	Contract ModifyTripService::updateTicket(newRouteId : String): Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * ticket is the object tic in the instance set of class Ticket. tic represents an object of class Ticket, and tic meets:
-		 *     The attribute TicketId of the object tic is equal to ticketId
-		 *     The attribute IsValid of the object tic is equal to true
-		 * accout is the object acc in the instance set of class Accout. acc represents an object of class Accout, and acc meets:
-		 *     The attribute AccoutId of the object acc is equal to accoutId
-		 * route is the object rou in the instance set of class Route. rou represents an object of class Route, and rou meets:
-		 *     The attribute RouteId of the object rou is equal to newRouteId
-		 * order is the object ord in the instance set of class Order. ord represents an object of class Order, and ord meets:
-		 *     The attribute AccoutId of the object ord is equal to accoutId
-		 *     The attribute TicketId of the object ord is equal to ticketId
-		 *     The attribute OrderStatus of the object ord is equal to PAID
-		 */
+/*
+Generated by RM2Doc - Definition
+route is the object rou in the instance set of class Route. rou represents an object of class Route, and rou meets:
+    The attribute RouteId of the object rou is equal to newRouteId
+*/
 		definition:
-			ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketId and tic.IsValid = true),
-			accout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutId),
-			route:Route = Route.allInstance()->any(rou:Route | rou.RouteId = newRouteId),
-			order:Order = Order.allInstance()->any(ord:Order | ord.AccoutId = accoutId and ord.TicketId = ticketId and ord.OrderStatus = OrderStatus::PAID)
+			route:Route = Route.allInstance()->any(rou:Route | rou.RouteId = newRouteId)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object ticket exists
-		 * The object accout exists
-		 * The object route exists
-		 * The object order exists
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object route exists
+*/
 		precondition:
-			ticket.oclIsUndefined() = false and
-			accout.oclIsUndefined() = false and
-			route.oclIsUndefined() = false and
-			order.oclIsUndefined() = false
+			route.oclIsUndefined() = false
 
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The attribute RouteId of the object ticket became newRouteId
-		 * The attribute IsValid of the object ticket became false
-		 * ERROR12
-		 * ERROR12
-		 * ERROR12
-		 * ERROR12
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The attribute RouteId of the object CurrentTicket became newRouteId
+The attribute IsValid of the object CurrentTicket became false
+ERROR12
+The return value was true
+*/
 		postcondition:
-			ticket.RouteId = newRouteId and
-			ticket.IsValid = false and
-			CurrentTicket = ticket and
-			CurrentOrder = order and
-			CurrentAccout = accout and
+			CurrentTicket.RouteId = newRouteId and
+			CurrentTicket.IsValid = false and
 			CurrentRoute = route and
 			result = true
 	}
 
-	/* Generated by RM2Doc
-	 * update order
-	 * null
-	 * Return true
-	 */
+/* Generated by RM2Doc
+update order
+null
+Return true
+*/
 	Contract ModifyTripService::updateOrder(time : String) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * None
-		 */
+/*
+Generated by RM2Doc - Precondition
+None
+*/
 		precondition:
 			true
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The attribute CreateTime of the object CurrentOrder became time
-		 * The attribute OrderStatus of the object CurrentOrder became NOTPAID
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The attribute CreateTime of the object CurrentOrder became time
+The attribute OrderStatus of the object CurrentOrder became NOTPAID
+The return value was true
+*/
 		postcondition:
 			CurrentOrder.CreateTime = time and
 			CurrentOrder.OrderStatus = OrderStatus::NOTPAID and
 			result = true
 	}
 
-	/* Generated by RM2Doc
-	 * show seats by route id
-	 * Return the seat(s) whose train id is equal to <the attribute TrainId of the object CurrentRoute>
-	 */
+/* Generated by RM2Doc
+show seats by route id
+Return the seat(s) whose train id is equal to <the attribute TrainId of the object CurrentRoute>
+*/
 	Contract ModifyTripService::showSeatsByRouteId() : Set(Seat) {
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * None
-		 */
+/*
+Generated by RM2Doc - Precondition
+None
+*/
 		precondition:
 			true
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The return value was the set of class Seat, including all sea in the instance set of class Seat. sea represented an object of class Seat, and sea meet:
-		 *     The attribute TrainId of the object sea was equal to the attribute TrainId of the object CurrentRoute
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The return value was the set of class Seat, including all sea in the instance set of class Seat. sea represented an object of class Seat, and sea meet:
+    The attribute TrainId of the object sea was equal to the attribute TrainId of the object CurrentRoute
+*/
 		postcondition:
 			result = Seat.allInstance()->select(sea:Seat | sea.TrainId =  CurrentRoute.TrainId)
 	}
 
-	/* Generated by RM2Doc
-	 * select new seat
-	 * null
-	 * Return true
-	 */
+/* Generated by RM2Doc
+select new seat
+null
+Return true
+*/
 	Contract ModifyTripService::selectNewSeat(seatId : String) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * seat is the object sea in the instance set of class Seat. sea represents an object of class Seat, and sea meets:
-		 *     The attribute SeatId of the object sea is equal to seatId
-		 *     The attribute TrainId of the object sea is equal to the attribute TrainId of the object CurrentRoute
-		 */
+/*
+Generated by RM2Doc - Definition
+seat is the object sea in the instance set of class Seat. sea represents an object of class Seat, and sea meets:
+    The attribute SeatId of the object sea is equal to seatId
+    The attribute TrainId of the object sea is equal to the attribute TrainId of the object CurrentRoute
+*/
 		definition:
 			seat:Seat = Seat.allInstance()->any(sea:Seat | sea.SeatId = seatId and sea.TrainId = CurrentRoute.TrainId)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object seat exists
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object seat exists
+*/
 		precondition:
 			seat.oclIsUndefined() = false
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The attribute SeatId of the object CurrentTicket became seatId
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The attribute SeatId of the object CurrentTicket became seatId
+The return value was true
+*/
 		postcondition:
 			self.CurrentTicket.SeatId = seatId and
 			result = true
 	}
 
-	/* Generated by RM2Doc
-	 * pay difference
-	 * null
-	 * Return true
-	 */
+/* Generated by RM2Doc
+pay difference
+null
+Return true
+*/
 	Contract ModifyTripService::payDifference(difference : Real) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * None
-		 */
+/*
+Generated by RM2Doc - Precondition
+None
+*/
 		precondition:
 			true
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The attribute IsValid of the object CurrentTicket became true
-		 * The attribute Price of the object CurrentTicket became the attribute Price of the object CurrentTicket plus difference
-		 * The attribute OrderStatus of the object CurrentOrder became PAID
-		 * The system operation sendNotification was executed
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The attribute IsValid of the object CurrentTicket became true
+The attribute Price of the object CurrentTicket became the attribute Price of the object CurrentTicket plus difference
+The attribute OrderStatus of the object CurrentOrder became PAID
+The system operation sendNotification was executed
+The return value was true
+*/
 		postcondition:
 			CurrentTicket.IsValid = true and
 			CurrentTicket.Price = CurrentTicket.Price + difference and
@@ -1777,113 +1789,256 @@ UseCaseModel TrainTicket {
 			result = true
 	}
 
-	/* Generated by RM2Doc
-	 * delete overdue ticket
-	 * null
-	 * Return true
-	 */
+/* Generated by RM2Doc
+delete overdue ticket
+null
+Return true
+*/
 	Contract DeleteOverdueOrderService::deleteOverdueTicket(ticketId : String) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * ticket is the object tic in the instance set of class Ticket. tic represents an object of class Ticket, and tic meets:
-		 *     The attribute TicketId of the object tic is equal to ticketId
-		 *     The attribute IsValid of the object tic is equal to false
-		 */
+/*
+Generated by RM2Doc - Definition
+ticket is the object tic in the instance set of class Ticket. tic represents an object of class Ticket, and tic meets:
+    The attribute TicketId of the object tic is equal to ticketId
+    The attribute IsValid of the object tic is equal to false
+*/
 		definition:
 			ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketId and tic.IsValid = false)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object ticket exists
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object ticket exists
+*/
 		precondition:
 			ticket.oclIsUndefined() = false
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The value of temporary variable CurrentTicketId became ticketId
-		 * The object ticket was deleted from the instance set of class Ticket
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The value of temporary variable CurrentTicketId became ticketId
+The object ticket was deleted from the instance set of class Ticket
+The return value was true
+*/
 		postcondition:
 			self.CurrentTicketId = ticketId and
 			Ticket.allInstance()->excludes(ticket) and
 			result = true
 	}
 
-	/* Generated by RM2Doc
-	 * delete overdue order
-	 * Return true
-	 */
+/* Generated by RM2Doc
+delete overdue order
+Return true
+*/
 	Contract DeleteOverdueOrderService::deleteOverdueOrder() : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Definition
-		 * order is the object ord in the instance set of class Order. ord represents an object of class Order, and ord meets:
-		 *     The attribute TicketId of the object ord is equal to CurrentTicketId
-		 *     The attribute OrderStatus of the object ord is equal to CANCELED
-		 */
+/*
+Generated by RM2Doc - Definition
+order is the object ord in the instance set of class Order. ord represents an object of class Order, and ord meets:
+    The attribute TicketId of the object ord is equal to CurrentTicketId
+    The attribute OrderStatus of the object ord is equal to CANCELED
+*/
 		definition:
 			order:Order = Order.allInstance()->any(ord:Order | ord.TicketId = CurrentTicketId and ord.OrderStatus = OrderStatus::CANCELED)
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * The object order exists
-		 */
+/*
+Generated by RM2Doc - Precondition
+The object order exists
+*/
 		precondition:
 			order.oclIsUndefined() = false
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The object order was deleted from the instance set of class Order
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The object order was deleted from the instance set of class Order
+The return value was true
+*/
 		postcondition:
 			Order.allInstance()->excludes(order) and
 			result = true
 
 	}
 
-	/* Generated by RM2Doc
-	 * send notification
-	 * null
-	 * Return true
-	 */
+/* Generated by RM2Doc
+send notification
+null
+Return true
+*/
 	Contract ThirdPartyServices::sendNotification(phoneNumber : String) : Boolean {
 
-		/*
-		 * Generated by RM2Doc - Precondition
-		 * None
-		 */
+/*
+Generated by RM2Doc - Precondition
+None
+*/
 		precondition:
 			true
-		/*
-		 * Generated by RM2Doc - Postcondition
-		 * The return value was true
-		 */
+/*
+Generated by RM2Doc - Postcondition
+The return value was true
+*/
 		postcondition:
 			result = true
 	}
 
+/* Generated by RM2Doc
+check
+The parameter <accoutId> is used to find the accout
+Return true
+*/
 	Contract CreateTripService::check(accoutId : String) : Boolean {
 
+/*
+Generated by RM2Doc - Definition
+accout is the object acc in the instance set of class Accout. acc represents an object of class Accout, and acc meets:
+    The attribute AccoutId of the object acc is equal to accoutId
+*/
 		definition:
 			accout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutId)
 
+/*
+Generated by RM2Doc - Precondition
+The object accout exists
+*/
 		precondition:
 			accout.oclIsUndefined() = false
+/*
+Generated by RM2Doc - Postcondition
+The return value was true
+*/
 		postcondition:
-			true
+			result = true
 	}
 
+/* Generated by RM2Doc
+check ticket
+The parameter <accoutId> is used to find the accout
+null
+Return true
+*/
 	Contract ModifyTripService::checkTicket(accoutId : String, ticketId : String) : Boolean {
 
+/*
+Generated by RM2Doc - Definition
+order is the object ord in the instance set of class Order. ord represents an object of class Order, and ord meets:
+    The attribute AccoutId of the object ord is equal to accoutId
+    The attribute TicketId of the object ord is equal to ticketId
+    The attribute OrderStatus of the object ord is equal to PAID
+ticket is the object tic in the instance set of class Ticket. tic represents an object of class Ticket, and tic meets:
+    The attribute TicketId of the object tic is equal to ticketId
+    The attribute IsValid of the object tic is equal to true
+accout is the object acc in the instance set of class Accout. acc represents an object of class Accout, and acc meets:
+    The attribute AccoutId of the object acc is equal to accoutId
+*/
 		definition:
-			order:Order = Order.allInstance()->any(ord:Order | ord.AccoutId = accoutId and ord.TicketId = ticketId)
+			order:Order = Order.allInstance()->any(ord:Order | ord.AccoutId = accoutId and ord.TicketId = ticketId and ord.OrderStatus = OrderStatus::PAID),
+			ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketId and tic.IsValid = true),
+			accout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutId)
 
+/*
+Generated by RM2Doc - Precondition
+The object order exists
+The object ticket exists
+The object accout exists
+*/
 		precondition:
-			order.oclIsUndefined() = false
+			order.oclIsUndefined() = false and
+			ticket.oclIsUndefined() = false and
+			accout.oclIsUndefined() = false
+
+/*
+Generated by RM2Doc - Postcondition
+ERROR12
+ERROR12
+ERROR12
+The return value was true
+*/
 		postcondition:
+			CurrentOrder = order and
+			CurrentTicket = ticket and
+			CurrentAccout = accout and
+			result = true
+	}
+
+/* Generated by RM2Doc
+check cancel trip
+null
+null
+Return true
+*/
+	Contract CancelTripService::checkCancelTrip(accoutId : String, ticketId : String) : Boolean {
+
+/*
+Generated by RM2Doc - Definition
+order is the object ord in the instance set of class Order. ord represents an object of class Order, and ord meets:
+    The attribute AccoutId of the object ord is equal to accoutId
+    The attribute TicketId of the object ord is equal to ticketId
+    The attribute OrderStatus of the object ord is equal to PAID
+ticket is the object tic in the instance set of class Ticket. tic represents an object of class Ticket, and tic meets:
+    The attribute TicketId of the object tic is equal to ticketId
+    The attribute IsValid of the object tic is equal to true
+*/
+		definition:
+			order:Order = Order.allInstance()->any(ord:Order | ord.AccoutId = accoutId and ord.TicketId = ticketId and ord.OrderStatus = OrderStatus::PAID),
+			ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketId and tic.IsValid = true)
+
+/*
+Generated by RM2Doc - Precondition
+The object order exists
+The object ticket exists
+*/
+		precondition:
+			order.oclIsUndefined() = false and
+			ticket.oclIsUndefined() = false
+/*
+Generated by RM2Doc - Postcondition
+ERROR12
+ERROR12
+The return value was true
+*/
+		postcondition:
+			CurrentOrder = order and
+			CurrentTicket = ticket and
+			result = true
+	}
+
+/* Generated by RM2Doc
+cancel ticket
+Return true
+*/
+	Contract CancelTripService::cancelTicket() : Boolean {
+
+/*
+Generated by RM2Doc - Precondition
+None
+*/
+		precondition:
 			true
+/*
+Generated by RM2Doc - Postcondition
+The attribute OrderStatus of the object CurrentOrder became CANCELED
+The attribute IsValid of the object CurrentTicket became false
+The return value was true
+*/
+		postcondition:
+			CurrentOrder.OrderStatus = OrderStatus::CANCELED and
+			CurrentTicket.IsValid = false and
+			result = true
+	}
+
+/* Generated by RM2Doc
+refund
+Return the price of  current ticket
+*/
+	Contract CancelTripService::refund() : Real {
+
+/*
+Generated by RM2Doc - Precondition
+None
+*/
+		precondition:
+			true
+/*
+Generated by RM2Doc - Postcondition
+The return value was the attribute Price of the object CurrentTicket
+*/
+		postcondition:
+			result = CurrentTicket.Price
 	}
 
 }

@@ -28,8 +28,8 @@ public class TrainTicketSystemImpl implements TrainTicketSystem, Serializable {
 	}
 
 	public void refresh() {
-		BuyTicketService buyticketservice_service = (BuyTicketService) ServiceManager
-				.getAllInstancesOf("BuyTicketService").get(0);
+		CreateTripService createtripservice_service = (CreateTripService) ServiceManager
+				.getAllInstancesOf("CreateTripService").get(0);
 		QueryOrderService queryorderservice_service = (QueryOrderService) ServiceManager
 				.getAllInstancesOf("QueryOrderService").get(0);
 		ManageRouteCRUDService manageroutecrudservice_service = (ManageRouteCRUDService) ServiceManager
@@ -48,6 +48,8 @@ public class TrainTicketSystemImpl implements TrainTicketSystem, Serializable {
 				.getAllInstancesOf("ModifyTripService").get(0);
 		DeleteOverdueOrderService deleteoverdueorderservice_service = (DeleteOverdueOrderService) ServiceManager
 				.getAllInstancesOf("DeleteOverdueOrderService").get(0);
+		CancelTripService canceltripservice_service = (CancelTripService) ServiceManager
+				.getAllInstancesOf("CancelTripService").get(0);
 	}			
 	
 	/* Generate buiness logic according to functional requirement */

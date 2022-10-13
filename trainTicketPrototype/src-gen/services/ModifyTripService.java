@@ -8,7 +8,8 @@ import java.time.LocalDate;
 public interface ModifyTripService {
 
 	/* all system operations of the use case*/
-	boolean updateTicket(String accoutId, String ticketId, String newRouteId) throws PreconditionException, PostconditionException, ThirdPartyServiceException;
+	boolean checkTicket(String accoutId, String ticketId) throws PreconditionException, PostconditionException, ThirdPartyServiceException;
+	boolean updateTicket(String newRouteId) throws PreconditionException, PostconditionException, ThirdPartyServiceException;
 	boolean updateOrder(String time) throws PreconditionException, PostconditionException, ThirdPartyServiceException;
 	List<Seat> showSeatsByRouteId() throws PreconditionException, PostconditionException, ThirdPartyServiceException;
 	boolean selectNewSeat(String seatId) throws PreconditionException, PostconditionException, ThirdPartyServiceException;

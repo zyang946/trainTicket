@@ -43,10 +43,23 @@ public class ModifyTripServiceImpl implements ModifyTripService, Serializable {
 	
 	/* Generate buiness logic according to functional requirement */
 	@SuppressWarnings("unchecked")
-	public boolean updateTicket(String accoutId, String ticketId, String newRouteId) throws PreconditionException, PostconditionException, ThirdPartyServiceException {
+	public boolean checkTicket(String accoutId, String ticketId) throws PreconditionException, PostconditionException, ThirdPartyServiceException {
 		
 		
 		/* Code generated for contract definition */
+		//Get order
+		Order order = null;
+		//no nested iterator --  iterator: any previous:any
+		for (Order ord : (List<Order>)EntityManager.getAllInstancesOf("Order"))
+		{
+			if (ord.getAccoutId().equals(accoutId) && ord.getTicketId().equals(ticketId) && ord.getOrderStatus() == OrderStatus.PAID)
+			{
+				order = ord;
+				break;
+			}
+				
+			
+		}
 		//Get ticket
 		Ticket ticket = null;
 		//no nested iterator --  iterator: any previous:any
@@ -73,6 +86,47 @@ public class ModifyTripServiceImpl implements ModifyTripService, Serializable {
 				
 			
 		}
+		/* previous state in post-condition*/
+ 
+		/* check precondition */
+		if (StandardOPs.oclIsundefined(order) == false && StandardOPs.oclIsundefined(ticket) == false && StandardOPs.oclIsundefined(accout) == false) 
+		{ 
+			/* Logic here */
+			CurrentOrder = order;
+			CurrentTicket = ticket;
+			CurrentAccout = accout;
+			
+			
+			refresh();
+			// post-condition checking
+			if (!(CurrentOrder == order
+			 && 
+			CurrentTicket == ticket
+			 && 
+			CurrentAccout == accout
+			 && 
+			true)) {
+				throw new PostconditionException();
+			}
+			
+		
+			//return primitive type
+			refresh();				
+			return true;
+		}
+		else
+		{
+			throw new PreconditionException();
+		}
+		//string parameters: [accoutId, ticketId] 
+	}  
+	
+	 
+	@SuppressWarnings("unchecked")
+	public boolean updateTicket(String newRouteId) throws PreconditionException, PostconditionException, ThirdPartyServiceException {
+		
+		
+		/* Code generated for contract definition */
 		//Get route
 		Route route = null;
 		//no nested iterator --  iterator: any previous:any
@@ -86,44 +140,22 @@ public class ModifyTripServiceImpl implements ModifyTripService, Serializable {
 				
 			
 		}
-		//Get order
-		Order order = null;
-		//no nested iterator --  iterator: any previous:any
-		for (Order ord : (List<Order>)EntityManager.getAllInstancesOf("Order"))
-		{
-			if (ord.getAccoutId().equals(accoutId) && ord.getTicketId().equals(ticketId) && ord.getOrderStatus() == OrderStatus.PAID)
-			{
-				order = ord;
-				break;
-			}
-				
-			
-		}
 		/* previous state in post-condition*/
  
 		/* check precondition */
-		if (StandardOPs.oclIsundefined(ticket) == false && StandardOPs.oclIsundefined(accout) == false && StandardOPs.oclIsundefined(route) == false && StandardOPs.oclIsundefined(order) == false) 
+		if (StandardOPs.oclIsundefined(route) == false) 
 		{ 
 			/* Logic here */
-			ticket.setRouteId(newRouteId);
-			ticket.setIsValid(false);
-			CurrentTicket = ticket;
-			CurrentOrder = order;
-			CurrentAccout = accout;
+			CurrentTicket.setRouteId(newRouteId);
+			CurrentTicket.setIsValid(false);
 			CurrentRoute = route;
 			
 			
 			refresh();
 			// post-condition checking
-			if (!(ticket.getRouteId() == newRouteId
+			if (!(CurrentTicket.getRouteId() == newRouteId
 			 && 
-			ticket.getIsValid() == false
-			 && 
-			CurrentTicket == ticket
-			 && 
-			CurrentOrder == order
-			 && 
-			CurrentAccout == accout
+			CurrentTicket.getIsValid() == false
 			 && 
 			CurrentRoute == route
 			 && 
@@ -140,12 +172,12 @@ public class ModifyTripServiceImpl implements ModifyTripService, Serializable {
 		{
 			throw new PreconditionException();
 		}
-		//string parameters: [accoutId, ticketId, newRouteId] 
-		//all relevant vars : ticket
-		//all relevant entities : Ticket
+		//string parameters: [newRouteId] 
+		//all relevant vars : CurrentTicket
+		//all relevant entities : 
 	}  
 	
-	static {opINVRelatedEntity.put("updateTicket", Arrays.asList("Ticket"));}
+	static {opINVRelatedEntity.put("updateTicket", Arrays.asList(""));}
 	 
 	@SuppressWarnings("unchecked")
 	public boolean updateOrder(String time) throws PreconditionException, PostconditionException, ThirdPartyServiceException {

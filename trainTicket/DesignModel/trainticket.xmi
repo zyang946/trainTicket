@@ -431,6 +431,7 @@
         <reference name="service" isReverseAssociation="true" type="Association" class="/1/@classdiagram/@class.16"/>
         <reference name="service" isReverseAssociation="true" type="Association" class="/1/@classdiagram/@class.17"/>
         <reference name="service" isReverseAssociation="true" type="Association" class="/1/@classdiagram/@class.18"/>
+        <reference name="service" isReverseAssociation="true" type="Association" class="/1/@classdiagram/@class.19"/>
       </class>
       <class description="TrainTicketSystem" name="TrainTicketSystem">
         <operation name="queryInformation">
@@ -475,9 +476,6 @@
           <returntype xsi:type="designModel:PrimitiveTypeCS" name="Boolean"/>
         </operation>
         <operation name="buyTicket">
-          <parameter name="accoutId">
-            <type xsi:type="designModel:PrimitiveTypeCS" name="String"/>
-          </parameter>
           <parameter name="routeId">
             <type xsi:type="designModel:PrimitiveTypeCS" name="String"/>
           </parameter>
@@ -864,12 +862,6 @@
           <returntype xsi:type="designModel:PrimitiveTypeCS" name="Boolean"/>
         </operation>
         <operation name="updateTicket">
-          <parameter name="accoutId">
-            <type xsi:type="designModel:PrimitiveTypeCS" name="String"/>
-          </parameter>
-          <parameter name="ticketId">
-            <type xsi:type="designModel:PrimitiveTypeCS" name="String"/>
-          </parameter>
           <parameter name="newRouteId">
             <type xsi:type="designModel:PrimitiveTypeCS" name="String"/>
           </parameter>
@@ -925,6 +917,30 @@
         <reference name="manager" type="Association" class="/1/@classdiagram/@class.6"/>
         <attribute name="CurrentTicketId">
           <type xsi:type="designModel:PrimitiveTypeCS" name="String"/>
+        </attribute>
+      </class>
+      <class description="CancelTripService" name="CancelTripService">
+        <operation name="checkCancelTrip">
+          <parameter name="accoutId">
+            <type xsi:type="designModel:PrimitiveTypeCS" name="String"/>
+          </parameter>
+          <parameter name="ticketId">
+            <type xsi:type="designModel:PrimitiveTypeCS" name="String"/>
+          </parameter>
+          <returntype xsi:type="designModel:PrimitiveTypeCS" name="Boolean"/>
+        </operation>
+        <operation name="cancelTicket">
+          <returntype xsi:type="designModel:PrimitiveTypeCS" name="Boolean"/>
+        </operation>
+        <operation name="refund">
+          <returntype xsi:type="designModel:PrimitiveTypeCS" name="Real"/>
+        </operation>
+        <reference name="manager" type="Association" class="/1/@classdiagram/@class.6"/>
+        <attribute name="CurrentOrder">
+          <type xsi:type="designModel:EntityType" name="Order"/>
+        </attribute>
+        <attribute name="CurrentTicket">
+          <type xsi:type="designModel:EntityType" name="Ticket"/>
         </attribute>
       </class>
     </classdiagram>
@@ -2129,26 +2145,24 @@
         <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.23/@abstractend.4" end="/1/@sequencediagram.0/@interaction.23/@abstractend.9" name="execution28"/>
         <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.23/@abstractend.10" end="/1/@sequencediagram.0/@interaction.23/@abstractend.15" name="execution138"/>
       </interaction>
-      <interaction name="buyTicket" participants="/0 /1/@classdiagram/@class.9 /1/@classdiagram/@class.6 /30 /31 /32 /55">
-        <message xsi:type="designModel:callMessage" name="buyTicket(accoutId,routeId,ticketId)" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.2" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.3"/>
+      <interaction name="buyTicket" participants="/0 /1/@classdiagram/@class.9 /1/@classdiagram/@class.6 /30 /31 /55">
+        <message xsi:type="designModel:callMessage" name="buyTicket(routeId,ticketId)" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.2" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.3"/>
         <message xsi:type="designModel:callMessage" name="findObject(Route,rou.RouteId=routeId)" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.5" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.6"/>
         <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.7" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.8" invocationmessage="/1/@sequencediagram.0/@interaction.24/@message.1"/>
-        <message xsi:type="designModel:callMessage" name="findObject(Accout,acc.AccoutId=accoutId)" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.11" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.12"/>
+        <message xsi:type="designModel:callMessage" name="findObject(Ticket,tic.TicketId=ticketId)" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.11" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.12"/>
         <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.13" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.14" invocationmessage="/1/@sequencediagram.0/@interaction.24/@message.3"/>
-        <message xsi:type="designModel:callMessage" name="findObject(Ticket,tic.TicketId=ticketId)" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.17" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.18"/>
-        <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.19" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.20" invocationmessage="/1/@sequencediagram.0/@interaction.24/@message.5"/>
-        <message xsi:type="designModel:callMessage" name="createObject(Ticket)" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.23" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.24"/>
-        <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.27" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.28" invocationmessage="/1/@sequencediagram.0/@interaction.24/@message.7"/>
-        <message xsi:type="designModel:createMessage" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.25" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.26"/>
-        <message xsi:type="designModel:callMessage" name="addLinkOnetoOne(TicketId,ticketId)" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.31" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.32"/>
+        <message xsi:type="designModel:callMessage" name="createObject(Ticket)" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.17" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.18"/>
+        <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.21" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.22" invocationmessage="/1/@sequencediagram.0/@interaction.24/@message.5"/>
+        <message xsi:type="designModel:createMessage" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.19" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.20"/>
+        <message xsi:type="designModel:callMessage" name="addLinkOnetoOne(TicketId,ticketId)" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.25" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.26"/>
+        <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.27" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.28" invocationmessage="/1/@sequencediagram.0/@interaction.24/@message.8"/>
+        <message xsi:type="designModel:callMessage" name="addLinkOnetoOne(RouteId,routeId)" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.31" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.32"/>
         <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.33" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.34" invocationmessage="/1/@sequencediagram.0/@interaction.24/@message.10"/>
-        <message xsi:type="designModel:callMessage" name="addLinkOnetoOne(RouteId,routeId)" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.37" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.38"/>
+        <message xsi:type="designModel:callMessage" name="setIsValid(false)" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.37" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.38"/>
         <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.39" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.40" invocationmessage="/1/@sequencediagram.0/@interaction.24/@message.12"/>
-        <message xsi:type="designModel:callMessage" name="setIsValid(false)" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.43" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.44"/>
+        <message xsi:type="designModel:callMessage" name="addObject(Ticket,tic)" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.43" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.44"/>
         <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.45" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.46" invocationmessage="/1/@sequencediagram.0/@interaction.24/@message.14"/>
-        <message xsi:type="designModel:callMessage" name="addObject(Ticket,tic)" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.49" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.50"/>
-        <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.51" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.52" invocationmessage="/1/@sequencediagram.0/@interaction.24/@message.16"/>
-        <message xsi:type="designModel:ReturnMessage" name="result = true" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.54" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.55" invocationmessage="/1/@sequencediagram.0/@interaction.24/@message.0"/>
+        <message xsi:type="designModel:ReturnMessage" name="result = true" sendingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.48" receivingEnd="/1/@sequencediagram.0/@interaction.24/@abstractend.49" invocationmessage="/1/@sequencediagram.0/@interaction.24/@message.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndS" context="/0" execution="/1/@sequencediagram.0/@interaction.24/@execution.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndS" context="/1/@classdiagram/@class.9" execution="/1/@sequencediagram.0/@interaction.24/@execution.1"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageStart" context="/1/@sequencediagram.0/@interaction.24/@execution.0"/>
@@ -2165,60 +2179,53 @@
         <abstractend xsi:type="designModel:MixEnd" name="message30SER" context="/1/@sequencediagram.0/@interaction.24/@execution.3"/>
         <abstractend xsi:type="designModel:MixEnd" name="message30RER" context="/1/@sequencediagram.0/@interaction.24/@execution.1"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="message30EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.24/@execution.3"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message31EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.24/@execution.4"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message31SE" context="/1/@sequencediagram.0/@interaction.24/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message31RE" context="/1/@sequencediagram.0/@interaction.24/@execution.4"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message31SER" context="/1/@sequencediagram.0/@interaction.24/@execution.4"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message31RER" context="/1/@sequencediagram.0/@interaction.24/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message31EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.24/@execution.4"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message54EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.24/@execution.5"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message54EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.24/@execution.4"/>
         <abstractend xsi:type="designModel:MixEnd" name="message54SE" context="/1/@sequencediagram.0/@interaction.24/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message54RE" context="/1/@sequencediagram.0/@interaction.24/@execution.5"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message54SEC" context="/1/@sequencediagram.0/@interaction.24/@execution.5"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message54RE" context="/1/@sequencediagram.0/@interaction.24/@execution.4"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message54SEC" context="/1/@sequencediagram.0/@interaction.24/@execution.4"/>
         <abstractend xsi:type="designModel:MixEnd" name="message54REC" context="/55"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message54SER" context="/1/@sequencediagram.0/@interaction.24/@execution.5"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message54SER" context="/1/@sequencediagram.0/@interaction.24/@execution.4"/>
         <abstractend xsi:type="designModel:MixEnd" name="message54RER" context="/1/@sequencediagram.0/@interaction.24/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message54EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.24/@execution.5"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message140EES" context="/32" execution="/1/@sequencediagram.0/@interaction.24/@execution.6"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message54EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.24/@execution.4"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message140EES" context="/31" execution="/1/@sequencediagram.0/@interaction.24/@execution.5"/>
         <abstractend xsi:type="designModel:MixEnd" name="message140SE" context="/1/@sequencediagram.0/@interaction.24/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message140RE" context="/1/@sequencediagram.0/@interaction.24/@execution.6"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message140SER" context="/1/@sequencediagram.0/@interaction.24/@execution.6"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message140RE" context="/1/@sequencediagram.0/@interaction.24/@execution.5"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message140SER" context="/1/@sequencediagram.0/@interaction.24/@execution.5"/>
         <abstractend xsi:type="designModel:MixEnd" name="message140RER" context="/1/@sequencediagram.0/@interaction.24/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message140EEE" context="/32" execution="/1/@sequencediagram.0/@interaction.24/@execution.6"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message141EES" context="/32" execution="/1/@sequencediagram.0/@interaction.24/@execution.7"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message140EEE" context="/31" execution="/1/@sequencediagram.0/@interaction.24/@execution.5"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message141EES" context="/31" execution="/1/@sequencediagram.0/@interaction.24/@execution.6"/>
         <abstractend xsi:type="designModel:MixEnd" name="message141SE" context="/1/@sequencediagram.0/@interaction.24/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message141RE" context="/1/@sequencediagram.0/@interaction.24/@execution.7"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message141SER" context="/1/@sequencediagram.0/@interaction.24/@execution.7"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message141RE" context="/1/@sequencediagram.0/@interaction.24/@execution.6"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message141SER" context="/1/@sequencediagram.0/@interaction.24/@execution.6"/>
         <abstractend xsi:type="designModel:MixEnd" name="message141RER" context="/1/@sequencediagram.0/@interaction.24/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message141EEE" context="/32" execution="/1/@sequencediagram.0/@interaction.24/@execution.7"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message142EES" context="/32" execution="/1/@sequencediagram.0/@interaction.24/@execution.8"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message141EEE" context="/31" execution="/1/@sequencediagram.0/@interaction.24/@execution.6"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message142EES" context="/31" execution="/1/@sequencediagram.0/@interaction.24/@execution.7"/>
         <abstractend xsi:type="designModel:MixEnd" name="message142SE" context="/1/@sequencediagram.0/@interaction.24/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message142RE" context="/1/@sequencediagram.0/@interaction.24/@execution.8"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message142SER" context="/1/@sequencediagram.0/@interaction.24/@execution.8"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message142RE" context="/1/@sequencediagram.0/@interaction.24/@execution.7"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message142SER" context="/1/@sequencediagram.0/@interaction.24/@execution.7"/>
         <abstractend xsi:type="designModel:MixEnd" name="message142RER" context="/1/@sequencediagram.0/@interaction.24/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message142EEE" context="/32" execution="/1/@sequencediagram.0/@interaction.24/@execution.8"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message143EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.24/@execution.9"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message142EEE" context="/31" execution="/1/@sequencediagram.0/@interaction.24/@execution.7"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message143EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.24/@execution.8"/>
         <abstractend xsi:type="designModel:MixEnd" name="message143SE" context="/1/@sequencediagram.0/@interaction.24/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message143RE" context="/1/@sequencediagram.0/@interaction.24/@execution.9"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message143SER" context="/1/@sequencediagram.0/@interaction.24/@execution.9"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message143RE" context="/1/@sequencediagram.0/@interaction.24/@execution.8"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message143SER" context="/1/@sequencediagram.0/@interaction.24/@execution.8"/>
         <abstractend xsi:type="designModel:MixEnd" name="message143RER" context="/1/@sequencediagram.0/@interaction.24/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message143EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.24/@execution.9"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message147SER" context="/1/@sequencediagram.0/@interaction.24/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message147RER" context="/1/@sequencediagram.0/@interaction.24/@execution.0"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message143EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.24/@execution.8"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message146SER" context="/1/@sequencediagram.0/@interaction.24/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message146RER" context="/1/@sequencediagram.0/@interaction.24/@execution.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndE" context="/1/@classdiagram/@class.9" execution="/1/@sequencediagram.0/@interaction.24/@execution.1"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndE" context="/0" execution="/1/@sequencediagram.0/@interaction.24/@execution.0"/>
-        <execution participant="/0" start="/1/@sequencediagram.0/@interaction.24/@abstractend.0" end="/1/@sequencediagram.0/@interaction.24/@abstractend.57" name="controller"/>
-        <execution participant="/1/@classdiagram/@class.9" start="/1/@sequencediagram.0/@interaction.24/@abstractend.1" end="/1/@sequencediagram.0/@interaction.24/@abstractend.56" name="CreateTripService"/>
+        <execution participant="/0" start="/1/@sequencediagram.0/@interaction.24/@abstractend.0" end="/1/@sequencediagram.0/@interaction.24/@abstractend.51" name="controller"/>
+        <execution participant="/1/@classdiagram/@class.9" start="/1/@sequencediagram.0/@interaction.24/@abstractend.1" end="/1/@sequencediagram.0/@interaction.24/@abstractend.50" name="CreateTripService"/>
         <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.24/@abstractend.4" end="/1/@sequencediagram.0/@interaction.24/@abstractend.9" name="execution29"/>
         <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.24/@abstractend.10" end="/1/@sequencediagram.0/@interaction.24/@abstractend.15" name="execution30"/>
-        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.24/@abstractend.16" end="/1/@sequencediagram.0/@interaction.24/@abstractend.21" name="execution31"/>
-        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.24/@abstractend.22" end="/1/@sequencediagram.0/@interaction.24/@abstractend.29" name="createexecution54"/>
-        <execution participant="/32" start="/1/@sequencediagram.0/@interaction.24/@abstractend.30" end="/1/@sequencediagram.0/@interaction.24/@abstractend.35" name="execution140"/>
-        <execution participant="/32" start="/1/@sequencediagram.0/@interaction.24/@abstractend.36" end="/1/@sequencediagram.0/@interaction.24/@abstractend.41" name="execution141"/>
-        <execution participant="/32" start="/1/@sequencediagram.0/@interaction.24/@abstractend.42" end="/1/@sequencediagram.0/@interaction.24/@abstractend.47" name="execution142"/>
-        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.24/@abstractend.48" end="/1/@sequencediagram.0/@interaction.24/@abstractend.53" name="execution143"/>
+        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.24/@abstractend.16" end="/1/@sequencediagram.0/@interaction.24/@abstractend.23" name="createexecution54"/>
+        <execution participant="/31" start="/1/@sequencediagram.0/@interaction.24/@abstractend.24" end="/1/@sequencediagram.0/@interaction.24/@abstractend.29" name="execution140"/>
+        <execution participant="/31" start="/1/@sequencediagram.0/@interaction.24/@abstractend.30" end="/1/@sequencediagram.0/@interaction.24/@abstractend.35" name="execution141"/>
+        <execution participant="/31" start="/1/@sequencediagram.0/@interaction.24/@abstractend.36" end="/1/@sequencediagram.0/@interaction.24/@abstractend.41" name="execution142"/>
+        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.24/@abstractend.42" end="/1/@sequencediagram.0/@interaction.24/@abstractend.47" name="execution143"/>
       </interaction>
-      <interaction name="saveOrder" participants="/0 /1/@classdiagram/@class.9 /1/@classdiagram/@class.6 /33 /56">
+      <interaction name="saveOrder" participants="/0 /1/@classdiagram/@class.9 /1/@classdiagram/@class.6 /32 /56">
         <message xsi:type="designModel:callMessage" name="saveOrder(orderId,boughtTime)" sendingEnd="/1/@sequencediagram.0/@interaction.25/@abstractend.2" receivingEnd="/1/@sequencediagram.0/@interaction.25/@abstractend.3"/>
         <message xsi:type="designModel:callMessage" name="findObject(Order,ord.OrderId=orderId)" sendingEnd="/1/@sequencediagram.0/@interaction.25/@abstractend.5" receivingEnd="/1/@sequencediagram.0/@interaction.25/@abstractend.6"/>
         <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.25/@abstractend.7" receivingEnd="/1/@sequencediagram.0/@interaction.25/@abstractend.8" invocationmessage="/1/@sequencediagram.0/@interaction.25/@message.1"/>
@@ -2242,12 +2249,12 @@
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndS" context="/1/@classdiagram/@class.9" execution="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageStart" context="/1/@sequencediagram.0/@interaction.25/@execution.0"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageEnd" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message32EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.25/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message32SE" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message32RE" context="/1/@sequencediagram.0/@interaction.25/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message32SER" context="/1/@sequencediagram.0/@interaction.25/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message32RER" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message32EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.25/@execution.2"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message31EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.25/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message31SE" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message31RE" context="/1/@sequencediagram.0/@interaction.25/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message31SER" context="/1/@sequencediagram.0/@interaction.25/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message31RER" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message31EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.25/@execution.2"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="message55EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.25/@execution.3"/>
         <abstractend xsi:type="designModel:MixEnd" name="message55SE" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
         <abstractend xsi:type="designModel:MixEnd" name="message55RE" context="/1/@sequencediagram.0/@interaction.25/@execution.3"/>
@@ -2256,56 +2263,56 @@
         <abstractend xsi:type="designModel:MixEnd" name="message55SER" context="/1/@sequencediagram.0/@interaction.25/@execution.3"/>
         <abstractend xsi:type="designModel:MixEnd" name="message55RER" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="message55EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.25/@execution.3"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message148EES" context="/33" execution="/1/@sequencediagram.0/@interaction.25/@execution.4"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message147EES" context="/32" execution="/1/@sequencediagram.0/@interaction.25/@execution.4"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message147SE" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message147RE" context="/1/@sequencediagram.0/@interaction.25/@execution.4"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message147SER" context="/1/@sequencediagram.0/@interaction.25/@execution.4"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message147RER" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message147EEE" context="/32" execution="/1/@sequencediagram.0/@interaction.25/@execution.4"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message148EES" context="/32" execution="/1/@sequencediagram.0/@interaction.25/@execution.5"/>
         <abstractend xsi:type="designModel:MixEnd" name="message148SE" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message148RE" context="/1/@sequencediagram.0/@interaction.25/@execution.4"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message148SER" context="/1/@sequencediagram.0/@interaction.25/@execution.4"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message148RE" context="/1/@sequencediagram.0/@interaction.25/@execution.5"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message148SER" context="/1/@sequencediagram.0/@interaction.25/@execution.5"/>
         <abstractend xsi:type="designModel:MixEnd" name="message148RER" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message148EEE" context="/33" execution="/1/@sequencediagram.0/@interaction.25/@execution.4"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message149EES" context="/33" execution="/1/@sequencediagram.0/@interaction.25/@execution.5"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message148EEE" context="/32" execution="/1/@sequencediagram.0/@interaction.25/@execution.5"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message149EES" context="/32" execution="/1/@sequencediagram.0/@interaction.25/@execution.6"/>
         <abstractend xsi:type="designModel:MixEnd" name="message149SE" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message149RE" context="/1/@sequencediagram.0/@interaction.25/@execution.5"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message149SER" context="/1/@sequencediagram.0/@interaction.25/@execution.5"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message149RE" context="/1/@sequencediagram.0/@interaction.25/@execution.6"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message149SER" context="/1/@sequencediagram.0/@interaction.25/@execution.6"/>
         <abstractend xsi:type="designModel:MixEnd" name="message149RER" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message149EEE" context="/33" execution="/1/@sequencediagram.0/@interaction.25/@execution.5"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message150EES" context="/33" execution="/1/@sequencediagram.0/@interaction.25/@execution.6"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message149EEE" context="/32" execution="/1/@sequencediagram.0/@interaction.25/@execution.6"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message150EES" context="/32" execution="/1/@sequencediagram.0/@interaction.25/@execution.7"/>
         <abstractend xsi:type="designModel:MixEnd" name="message150SE" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message150RE" context="/1/@sequencediagram.0/@interaction.25/@execution.6"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message150SER" context="/1/@sequencediagram.0/@interaction.25/@execution.6"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message150RE" context="/1/@sequencediagram.0/@interaction.25/@execution.7"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message150SER" context="/1/@sequencediagram.0/@interaction.25/@execution.7"/>
         <abstractend xsi:type="designModel:MixEnd" name="message150RER" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message150EEE" context="/33" execution="/1/@sequencediagram.0/@interaction.25/@execution.6"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message151EES" context="/33" execution="/1/@sequencediagram.0/@interaction.25/@execution.7"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message150EEE" context="/32" execution="/1/@sequencediagram.0/@interaction.25/@execution.7"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message151EES" context="/32" execution="/1/@sequencediagram.0/@interaction.25/@execution.8"/>
         <abstractend xsi:type="designModel:MixEnd" name="message151SE" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message151RE" context="/1/@sequencediagram.0/@interaction.25/@execution.7"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message151SER" context="/1/@sequencediagram.0/@interaction.25/@execution.7"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message151RE" context="/1/@sequencediagram.0/@interaction.25/@execution.8"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message151SER" context="/1/@sequencediagram.0/@interaction.25/@execution.8"/>
         <abstractend xsi:type="designModel:MixEnd" name="message151RER" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message151EEE" context="/33" execution="/1/@sequencediagram.0/@interaction.25/@execution.7"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message152EES" context="/33" execution="/1/@sequencediagram.0/@interaction.25/@execution.8"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message152SE" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message152RE" context="/1/@sequencediagram.0/@interaction.25/@execution.8"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message152SER" context="/1/@sequencediagram.0/@interaction.25/@execution.8"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message152RER" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message152EEE" context="/33" execution="/1/@sequencediagram.0/@interaction.25/@execution.8"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message154EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.25/@execution.9"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message154SE" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message154RE" context="/1/@sequencediagram.0/@interaction.25/@execution.9"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message154SER" context="/1/@sequencediagram.0/@interaction.25/@execution.9"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message154RER" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message154EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.25/@execution.9"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message155SER" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message155RER" context="/1/@sequencediagram.0/@interaction.25/@execution.0"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message151EEE" context="/32" execution="/1/@sequencediagram.0/@interaction.25/@execution.8"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message153EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.25/@execution.9"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message153SE" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message153RE" context="/1/@sequencediagram.0/@interaction.25/@execution.9"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message153SER" context="/1/@sequencediagram.0/@interaction.25/@execution.9"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message153RER" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message153EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.25/@execution.9"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message154SER" context="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message154RER" context="/1/@sequencediagram.0/@interaction.25/@execution.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndE" context="/1/@classdiagram/@class.9" execution="/1/@sequencediagram.0/@interaction.25/@execution.1"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndE" context="/0" execution="/1/@sequencediagram.0/@interaction.25/@execution.0"/>
         <execution participant="/0" start="/1/@sequencediagram.0/@interaction.25/@abstractend.0" end="/1/@sequencediagram.0/@interaction.25/@abstractend.57" name="controller"/>
         <execution participant="/1/@classdiagram/@class.9" start="/1/@sequencediagram.0/@interaction.25/@abstractend.1" end="/1/@sequencediagram.0/@interaction.25/@abstractend.56" name="CreateTripService"/>
-        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.25/@abstractend.4" end="/1/@sequencediagram.0/@interaction.25/@abstractend.9" name="execution32"/>
+        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.25/@abstractend.4" end="/1/@sequencediagram.0/@interaction.25/@abstractend.9" name="execution31"/>
         <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.25/@abstractend.10" end="/1/@sequencediagram.0/@interaction.25/@abstractend.17" name="createexecution55"/>
-        <execution participant="/33" start="/1/@sequencediagram.0/@interaction.25/@abstractend.18" end="/1/@sequencediagram.0/@interaction.25/@abstractend.23" name="execution148"/>
-        <execution participant="/33" start="/1/@sequencediagram.0/@interaction.25/@abstractend.24" end="/1/@sequencediagram.0/@interaction.25/@abstractend.29" name="execution149"/>
-        <execution participant="/33" start="/1/@sequencediagram.0/@interaction.25/@abstractend.30" end="/1/@sequencediagram.0/@interaction.25/@abstractend.35" name="execution150"/>
-        <execution participant="/33" start="/1/@sequencediagram.0/@interaction.25/@abstractend.36" end="/1/@sequencediagram.0/@interaction.25/@abstractend.41" name="execution151"/>
-        <execution participant="/33" start="/1/@sequencediagram.0/@interaction.25/@abstractend.42" end="/1/@sequencediagram.0/@interaction.25/@abstractend.47" name="execution152"/>
-        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.25/@abstractend.48" end="/1/@sequencediagram.0/@interaction.25/@abstractend.53" name="execution154"/>
+        <execution participant="/32" start="/1/@sequencediagram.0/@interaction.25/@abstractend.18" end="/1/@sequencediagram.0/@interaction.25/@abstractend.23" name="execution147"/>
+        <execution participant="/32" start="/1/@sequencediagram.0/@interaction.25/@abstractend.24" end="/1/@sequencediagram.0/@interaction.25/@abstractend.29" name="execution148"/>
+        <execution participant="/32" start="/1/@sequencediagram.0/@interaction.25/@abstractend.30" end="/1/@sequencediagram.0/@interaction.25/@abstractend.35" name="execution149"/>
+        <execution participant="/32" start="/1/@sequencediagram.0/@interaction.25/@abstractend.36" end="/1/@sequencediagram.0/@interaction.25/@abstractend.41" name="execution150"/>
+        <execution participant="/32" start="/1/@sequencediagram.0/@interaction.25/@abstractend.42" end="/1/@sequencediagram.0/@interaction.25/@abstractend.47" name="execution151"/>
+        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.25/@abstractend.48" end="/1/@sequencediagram.0/@interaction.25/@abstractend.53" name="execution153"/>
       </interaction>
       <interaction name="showSeats" participants="/0 /1/@classdiagram/@class.9 /1/@classdiagram/@class.6">
         <message xsi:type="designModel:callMessage" name="showSeats(" sendingEnd="/1/@sequencediagram.0/@interaction.26/@abstractend.2" receivingEnd="/1/@sequencediagram.0/@interaction.26/@abstractend.3"/>
@@ -2314,14 +2321,14 @@
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndS" context="/1/@classdiagram/@class.9" execution="/1/@sequencediagram.0/@interaction.26/@execution.1"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageStart" context="/1/@sequencediagram.0/@interaction.26/@execution.0"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageEnd" context="/1/@sequencediagram.0/@interaction.26/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message156SER" context="/1/@sequencediagram.0/@interaction.26/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message156RER" context="/1/@sequencediagram.0/@interaction.26/@execution.0"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message155SER" context="/1/@sequencediagram.0/@interaction.26/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message155RER" context="/1/@sequencediagram.0/@interaction.26/@execution.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndE" context="/1/@classdiagram/@class.9" execution="/1/@sequencediagram.0/@interaction.26/@execution.1"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndE" context="/0" execution="/1/@sequencediagram.0/@interaction.26/@execution.0"/>
         <execution participant="/0" start="/1/@sequencediagram.0/@interaction.26/@abstractend.0" end="/1/@sequencediagram.0/@interaction.26/@abstractend.7" name="controller"/>
         <execution participant="/1/@classdiagram/@class.9" start="/1/@sequencediagram.0/@interaction.26/@abstractend.1" end="/1/@sequencediagram.0/@interaction.26/@abstractend.6" name="CreateTripService"/>
       </interaction>
-      <interaction name="selectSeat" participants="/0 /1/@classdiagram/@class.9 /1/@classdiagram/@class.6 /34 /57">
+      <interaction name="selectSeat" participants="/0 /1/@classdiagram/@class.9 /1/@classdiagram/@class.6 /33 /57">
         <message xsi:type="designModel:callMessage" name="selectSeat(seatId)" sendingEnd="/1/@sequencediagram.0/@interaction.27/@abstractend.2" receivingEnd="/1/@sequencediagram.0/@interaction.27/@abstractend.3"/>
         <message xsi:type="designModel:callMessage" name="findObject(Seat,sea.TrainId=CurrentRoute.TrainId[and]sea.SeatId=seatId)" sendingEnd="/1/@sequencediagram.0/@interaction.27/@abstractend.5" receivingEnd="/1/@sequencediagram.0/@interaction.27/@abstractend.6"/>
         <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.27/@abstractend.7" receivingEnd="/1/@sequencediagram.0/@interaction.27/@abstractend.8" invocationmessage="/1/@sequencediagram.0/@interaction.27/@message.1"/>
@@ -2332,26 +2339,26 @@
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndS" context="/1/@classdiagram/@class.9" execution="/1/@sequencediagram.0/@interaction.27/@execution.1"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageStart" context="/1/@sequencediagram.0/@interaction.27/@execution.0"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageEnd" context="/1/@sequencediagram.0/@interaction.27/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message33EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.27/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message33SE" context="/1/@sequencediagram.0/@interaction.27/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message33RE" context="/1/@sequencediagram.0/@interaction.27/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message33SER" context="/1/@sequencediagram.0/@interaction.27/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message33RER" context="/1/@sequencediagram.0/@interaction.27/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message33EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.27/@execution.2"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message157EES" context="/57" execution="/1/@sequencediagram.0/@interaction.27/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message157SE" context="/1/@sequencediagram.0/@interaction.27/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message157RE" context="/1/@sequencediagram.0/@interaction.27/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message157SER" context="/1/@sequencediagram.0/@interaction.27/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message157RER" context="/1/@sequencediagram.0/@interaction.27/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message157EEE" context="/57" execution="/1/@sequencediagram.0/@interaction.27/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message158SER" context="/1/@sequencediagram.0/@interaction.27/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message158RER" context="/1/@sequencediagram.0/@interaction.27/@execution.0"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message32EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.27/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message32SE" context="/1/@sequencediagram.0/@interaction.27/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message32RE" context="/1/@sequencediagram.0/@interaction.27/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message32SER" context="/1/@sequencediagram.0/@interaction.27/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message32RER" context="/1/@sequencediagram.0/@interaction.27/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message32EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.27/@execution.2"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message156EES" context="/57" execution="/1/@sequencediagram.0/@interaction.27/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message156SE" context="/1/@sequencediagram.0/@interaction.27/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message156RE" context="/1/@sequencediagram.0/@interaction.27/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message156SER" context="/1/@sequencediagram.0/@interaction.27/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message156RER" context="/1/@sequencediagram.0/@interaction.27/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message156EEE" context="/57" execution="/1/@sequencediagram.0/@interaction.27/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message157SER" context="/1/@sequencediagram.0/@interaction.27/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message157RER" context="/1/@sequencediagram.0/@interaction.27/@execution.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndE" context="/1/@classdiagram/@class.9" execution="/1/@sequencediagram.0/@interaction.27/@execution.1"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndE" context="/0" execution="/1/@sequencediagram.0/@interaction.27/@execution.0"/>
         <execution participant="/0" start="/1/@sequencediagram.0/@interaction.27/@abstractend.0" end="/1/@sequencediagram.0/@interaction.27/@abstractend.19" name="controller"/>
         <execution participant="/1/@classdiagram/@class.9" start="/1/@sequencediagram.0/@interaction.27/@abstractend.1" end="/1/@sequencediagram.0/@interaction.27/@abstractend.18" name="CreateTripService"/>
-        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.27/@abstractend.4" end="/1/@sequencediagram.0/@interaction.27/@abstractend.9" name="execution33"/>
-        <execution participant="/57" start="/1/@sequencediagram.0/@interaction.27/@abstractend.10" end="/1/@sequencediagram.0/@interaction.27/@abstractend.15" name="execution157"/>
+        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.27/@abstractend.4" end="/1/@sequencediagram.0/@interaction.27/@abstractend.9" name="execution32"/>
+        <execution participant="/57" start="/1/@sequencediagram.0/@interaction.27/@abstractend.10" end="/1/@sequencediagram.0/@interaction.27/@abstractend.15" name="execution156"/>
       </interaction>
       <interaction name="pay" participants="/0 /1/@classdiagram/@class.9 /1/@classdiagram/@class.6 /58 /59">
         <message xsi:type="designModel:callMessage" name="pay(price)" sendingEnd="/1/@sequencediagram.0/@interaction.28/@abstractend.2" receivingEnd="/1/@sequencediagram.0/@interaction.28/@abstractend.3"/>
@@ -2368,40 +2375,40 @@
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndS" context="/1/@classdiagram/@class.9" execution="/1/@sequencediagram.0/@interaction.28/@execution.1"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageStart" context="/1/@sequencediagram.0/@interaction.28/@execution.0"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageEnd" context="/1/@sequencediagram.0/@interaction.28/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message159EES" context="/58" execution="/1/@sequencediagram.0/@interaction.28/@execution.2"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message158EES" context="/58" execution="/1/@sequencediagram.0/@interaction.28/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message158SE" context="/1/@sequencediagram.0/@interaction.28/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message158RE" context="/1/@sequencediagram.0/@interaction.28/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message158SER" context="/1/@sequencediagram.0/@interaction.28/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message158RER" context="/1/@sequencediagram.0/@interaction.28/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message158EEE" context="/58" execution="/1/@sequencediagram.0/@interaction.28/@execution.2"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message159EES" context="/58" execution="/1/@sequencediagram.0/@interaction.28/@execution.3"/>
         <abstractend xsi:type="designModel:MixEnd" name="message159SE" context="/1/@sequencediagram.0/@interaction.28/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message159RE" context="/1/@sequencediagram.0/@interaction.28/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message159SER" context="/1/@sequencediagram.0/@interaction.28/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message159RE" context="/1/@sequencediagram.0/@interaction.28/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message159SER" context="/1/@sequencediagram.0/@interaction.28/@execution.3"/>
         <abstractend xsi:type="designModel:MixEnd" name="message159RER" context="/1/@sequencediagram.0/@interaction.28/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message159EEE" context="/58" execution="/1/@sequencediagram.0/@interaction.28/@execution.2"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message160EES" context="/58" execution="/1/@sequencediagram.0/@interaction.28/@execution.3"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message159EEE" context="/58" execution="/1/@sequencediagram.0/@interaction.28/@execution.3"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message160EES" context="/59" execution="/1/@sequencediagram.0/@interaction.28/@execution.4"/>
         <abstractend xsi:type="designModel:MixEnd" name="message160SE" context="/1/@sequencediagram.0/@interaction.28/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message160RE" context="/1/@sequencediagram.0/@interaction.28/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message160SER" context="/1/@sequencediagram.0/@interaction.28/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message160RE" context="/1/@sequencediagram.0/@interaction.28/@execution.4"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message160SER" context="/1/@sequencediagram.0/@interaction.28/@execution.4"/>
         <abstractend xsi:type="designModel:MixEnd" name="message160RER" context="/1/@sequencediagram.0/@interaction.28/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message160EEE" context="/58" execution="/1/@sequencediagram.0/@interaction.28/@execution.3"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message161EES" context="/59" execution="/1/@sequencediagram.0/@interaction.28/@execution.4"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message160EEE" context="/59" execution="/1/@sequencediagram.0/@interaction.28/@execution.4"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message161EES" execution="/1/@sequencediagram.0/@interaction.28/@execution.5"/>
         <abstractend xsi:type="designModel:MixEnd" name="message161SE" context="/1/@sequencediagram.0/@interaction.28/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message161RE" context="/1/@sequencediagram.0/@interaction.28/@execution.4"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message161SER" context="/1/@sequencediagram.0/@interaction.28/@execution.4"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message161RE" context="/1/@sequencediagram.0/@interaction.28/@execution.5"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message161SER" context="/1/@sequencediagram.0/@interaction.28/@execution.5"/>
         <abstractend xsi:type="designModel:MixEnd" name="message161RER" context="/1/@sequencediagram.0/@interaction.28/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message161EEE" context="/59" execution="/1/@sequencediagram.0/@interaction.28/@execution.4"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message162EES" execution="/1/@sequencediagram.0/@interaction.28/@execution.5"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message162SE" context="/1/@sequencediagram.0/@interaction.28/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message162RE" context="/1/@sequencediagram.0/@interaction.28/@execution.5"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message162SER" context="/1/@sequencediagram.0/@interaction.28/@execution.5"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message162RER" context="/1/@sequencediagram.0/@interaction.28/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message162EEE" execution="/1/@sequencediagram.0/@interaction.28/@execution.5"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message163SER" context="/1/@sequencediagram.0/@interaction.28/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message163RER" context="/1/@sequencediagram.0/@interaction.28/@execution.0"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message161EEE" execution="/1/@sequencediagram.0/@interaction.28/@execution.5"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message162SER" context="/1/@sequencediagram.0/@interaction.28/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message162RER" context="/1/@sequencediagram.0/@interaction.28/@execution.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndE" context="/1/@classdiagram/@class.9" execution="/1/@sequencediagram.0/@interaction.28/@execution.1"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndE" context="/0" execution="/1/@sequencediagram.0/@interaction.28/@execution.0"/>
         <execution participant="/0" start="/1/@sequencediagram.0/@interaction.28/@abstractend.0" end="/1/@sequencediagram.0/@interaction.28/@abstractend.31" name="controller"/>
         <execution participant="/1/@classdiagram/@class.9" start="/1/@sequencediagram.0/@interaction.28/@abstractend.1" end="/1/@sequencediagram.0/@interaction.28/@abstractend.30" name="CreateTripService"/>
-        <execution participant="/58" start="/1/@sequencediagram.0/@interaction.28/@abstractend.4" end="/1/@sequencediagram.0/@interaction.28/@abstractend.9" name="execution159"/>
-        <execution participant="/58" start="/1/@sequencediagram.0/@interaction.28/@abstractend.10" end="/1/@sequencediagram.0/@interaction.28/@abstractend.15" name="execution160"/>
-        <execution participant="/59" start="/1/@sequencediagram.0/@interaction.28/@abstractend.16" end="/1/@sequencediagram.0/@interaction.28/@abstractend.21" name="execution161"/>
-        <execution start="/1/@sequencediagram.0/@interaction.28/@abstractend.22" end="/1/@sequencediagram.0/@interaction.28/@abstractend.27" name="execution162"/>
+        <execution participant="/58" start="/1/@sequencediagram.0/@interaction.28/@abstractend.4" end="/1/@sequencediagram.0/@interaction.28/@abstractend.9" name="execution158"/>
+        <execution participant="/58" start="/1/@sequencediagram.0/@interaction.28/@abstractend.10" end="/1/@sequencediagram.0/@interaction.28/@abstractend.15" name="execution159"/>
+        <execution participant="/59" start="/1/@sequencediagram.0/@interaction.28/@abstractend.16" end="/1/@sequencediagram.0/@interaction.28/@abstractend.21" name="execution160"/>
+        <execution start="/1/@sequencediagram.0/@interaction.28/@abstractend.22" end="/1/@sequencediagram.0/@interaction.28/@abstractend.27" name="execution161"/>
       </interaction>
       <interaction name="queryInformation" participants="/0 /1/@classdiagram/@class.7 /1/@classdiagram/@class.6">
         <message xsi:type="designModel:callMessage" name="queryInformation(startStation,endStation,time)" sendingEnd="/1/@sequencediagram.0/@interaction.29/@abstractend.2" receivingEnd="/1/@sequencediagram.0/@interaction.29/@abstractend.3"/>
@@ -2410,14 +2417,14 @@
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndS" context="/1/@classdiagram/@class.7" execution="/1/@sequencediagram.0/@interaction.29/@execution.1"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageStart" context="/1/@sequencediagram.0/@interaction.29/@execution.0"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageEnd" context="/1/@sequencediagram.0/@interaction.29/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message164SER" context="/1/@sequencediagram.0/@interaction.29/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message164RER" context="/1/@sequencediagram.0/@interaction.29/@execution.0"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message163SER" context="/1/@sequencediagram.0/@interaction.29/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message163RER" context="/1/@sequencediagram.0/@interaction.29/@execution.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndE" context="/1/@classdiagram/@class.7" execution="/1/@sequencediagram.0/@interaction.29/@execution.1"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndE" context="/0" execution="/1/@sequencediagram.0/@interaction.29/@execution.0"/>
         <execution participant="/0" start="/1/@sequencediagram.0/@interaction.29/@abstractend.0" end="/1/@sequencediagram.0/@interaction.29/@abstractend.7" name="controller"/>
         <execution participant="/1/@classdiagram/@class.7" start="/1/@sequencediagram.0/@interaction.29/@abstractend.1" end="/1/@sequencediagram.0/@interaction.29/@abstractend.6" name="TrainTicketSystem"/>
       </interaction>
-      <interaction name="cancelTrip" participants="/0 /1/@classdiagram/@class.7 /1/@classdiagram/@class.6 /35 /36 /37">
+      <interaction name="cancelTrip" participants="/0 /1/@classdiagram/@class.7 /1/@classdiagram/@class.6 /34 /35 /36">
         <message xsi:type="designModel:callMessage" name="cancelTrip(ticketId,accoutId)" sendingEnd="/1/@sequencediagram.0/@interaction.30/@abstractend.2" receivingEnd="/1/@sequencediagram.0/@interaction.30/@abstractend.3"/>
         <message xsi:type="designModel:callMessage" name="findObject(Ticket,tic.TicketId=ticketId)" sendingEnd="/1/@sequencediagram.0/@interaction.30/@abstractend.5" receivingEnd="/1/@sequencediagram.0/@interaction.30/@abstractend.6"/>
         <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.30/@abstractend.7" receivingEnd="/1/@sequencediagram.0/@interaction.30/@abstractend.8" invocationmessage="/1/@sequencediagram.0/@interaction.30/@message.1"/>
@@ -2434,49 +2441,49 @@
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndS" context="/1/@classdiagram/@class.7" execution="/1/@sequencediagram.0/@interaction.30/@execution.1"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageStart" context="/1/@sequencediagram.0/@interaction.30/@execution.0"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageEnd" context="/1/@sequencediagram.0/@interaction.30/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message34EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.30/@execution.2"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message33EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.30/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message33SE" context="/1/@sequencediagram.0/@interaction.30/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message33RE" context="/1/@sequencediagram.0/@interaction.30/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message33SER" context="/1/@sequencediagram.0/@interaction.30/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message33RER" context="/1/@sequencediagram.0/@interaction.30/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message33EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.30/@execution.2"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message34EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.30/@execution.3"/>
         <abstractend xsi:type="designModel:MixEnd" name="message34SE" context="/1/@sequencediagram.0/@interaction.30/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message34RE" context="/1/@sequencediagram.0/@interaction.30/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message34SER" context="/1/@sequencediagram.0/@interaction.30/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message34RE" context="/1/@sequencediagram.0/@interaction.30/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message34SER" context="/1/@sequencediagram.0/@interaction.30/@execution.3"/>
         <abstractend xsi:type="designModel:MixEnd" name="message34RER" context="/1/@sequencediagram.0/@interaction.30/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message34EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.30/@execution.2"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message35EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.30/@execution.3"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message34EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.30/@execution.3"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message35EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.30/@execution.4"/>
         <abstractend xsi:type="designModel:MixEnd" name="message35SE" context="/1/@sequencediagram.0/@interaction.30/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message35RE" context="/1/@sequencediagram.0/@interaction.30/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message35SER" context="/1/@sequencediagram.0/@interaction.30/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message35RE" context="/1/@sequencediagram.0/@interaction.30/@execution.4"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message35SER" context="/1/@sequencediagram.0/@interaction.30/@execution.4"/>
         <abstractend xsi:type="designModel:MixEnd" name="message35RER" context="/1/@sequencediagram.0/@interaction.30/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message35EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.30/@execution.3"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message36EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.30/@execution.4"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message36SE" context="/1/@sequencediagram.0/@interaction.30/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message36RE" context="/1/@sequencediagram.0/@interaction.30/@execution.4"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message36SER" context="/1/@sequencediagram.0/@interaction.30/@execution.4"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message36RER" context="/1/@sequencediagram.0/@interaction.30/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message36EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.30/@execution.4"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message165EES" context="/35" execution="/1/@sequencediagram.0/@interaction.30/@execution.5"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message35EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.30/@execution.4"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message164EES" context="/34" execution="/1/@sequencediagram.0/@interaction.30/@execution.5"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message164SE" context="/1/@sequencediagram.0/@interaction.30/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message164RE" context="/1/@sequencediagram.0/@interaction.30/@execution.5"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message164SER" context="/1/@sequencediagram.0/@interaction.30/@execution.5"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message164RER" context="/1/@sequencediagram.0/@interaction.30/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message164EEE" context="/34" execution="/1/@sequencediagram.0/@interaction.30/@execution.5"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message165EES" context="/36" execution="/1/@sequencediagram.0/@interaction.30/@execution.6"/>
         <abstractend xsi:type="designModel:MixEnd" name="message165SE" context="/1/@sequencediagram.0/@interaction.30/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message165RE" context="/1/@sequencediagram.0/@interaction.30/@execution.5"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message165SER" context="/1/@sequencediagram.0/@interaction.30/@execution.5"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message165RE" context="/1/@sequencediagram.0/@interaction.30/@execution.6"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message165SER" context="/1/@sequencediagram.0/@interaction.30/@execution.6"/>
         <abstractend xsi:type="designModel:MixEnd" name="message165RER" context="/1/@sequencediagram.0/@interaction.30/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message165EEE" context="/35" execution="/1/@sequencediagram.0/@interaction.30/@execution.5"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message166EES" context="/37" execution="/1/@sequencediagram.0/@interaction.30/@execution.6"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message166SE" context="/1/@sequencediagram.0/@interaction.30/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message166RE" context="/1/@sequencediagram.0/@interaction.30/@execution.6"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message166SER" context="/1/@sequencediagram.0/@interaction.30/@execution.6"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message166RER" context="/1/@sequencediagram.0/@interaction.30/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message166EEE" context="/37" execution="/1/@sequencediagram.0/@interaction.30/@execution.6"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message167SER" context="/1/@sequencediagram.0/@interaction.30/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message167RER" context="/1/@sequencediagram.0/@interaction.30/@execution.0"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message165EEE" context="/36" execution="/1/@sequencediagram.0/@interaction.30/@execution.6"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message166SER" context="/1/@sequencediagram.0/@interaction.30/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message166RER" context="/1/@sequencediagram.0/@interaction.30/@execution.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndE" context="/1/@classdiagram/@class.7" execution="/1/@sequencediagram.0/@interaction.30/@execution.1"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndE" context="/0" execution="/1/@sequencediagram.0/@interaction.30/@execution.0"/>
         <execution participant="/0" start="/1/@sequencediagram.0/@interaction.30/@abstractend.0" end="/1/@sequencediagram.0/@interaction.30/@abstractend.37" name="controller"/>
         <execution participant="/1/@classdiagram/@class.7" start="/1/@sequencediagram.0/@interaction.30/@abstractend.1" end="/1/@sequencediagram.0/@interaction.30/@abstractend.36" name="TrainTicketSystem"/>
-        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.30/@abstractend.4" end="/1/@sequencediagram.0/@interaction.30/@abstractend.9" name="execution34"/>
-        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.30/@abstractend.10" end="/1/@sequencediagram.0/@interaction.30/@abstractend.15" name="execution35"/>
-        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.30/@abstractend.16" end="/1/@sequencediagram.0/@interaction.30/@abstractend.21" name="execution36"/>
-        <execution participant="/35" start="/1/@sequencediagram.0/@interaction.30/@abstractend.22" end="/1/@sequencediagram.0/@interaction.30/@abstractend.27" name="execution165"/>
-        <execution participant="/37" start="/1/@sequencediagram.0/@interaction.30/@abstractend.28" end="/1/@sequencediagram.0/@interaction.30/@abstractend.33" name="execution166"/>
+        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.30/@abstractend.4" end="/1/@sequencediagram.0/@interaction.30/@abstractend.9" name="execution33"/>
+        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.30/@abstractend.10" end="/1/@sequencediagram.0/@interaction.30/@abstractend.15" name="execution34"/>
+        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.30/@abstractend.16" end="/1/@sequencediagram.0/@interaction.30/@abstractend.21" name="execution35"/>
+        <execution participant="/34" start="/1/@sequencediagram.0/@interaction.30/@abstractend.22" end="/1/@sequencediagram.0/@interaction.30/@abstractend.27" name="execution164"/>
+        <execution participant="/36" start="/1/@sequencediagram.0/@interaction.30/@abstractend.28" end="/1/@sequencediagram.0/@interaction.30/@abstractend.33" name="execution165"/>
       </interaction>
-      <interaction name="queryByAccoutId" participants="/0 /1/@classdiagram/@class.10 /1/@classdiagram/@class.6 /38">
+      <interaction name="queryByAccoutId" participants="/0 /1/@classdiagram/@class.10 /1/@classdiagram/@class.6 /37">
         <message xsi:type="designModel:callMessage" name="queryByAccoutId(accoutId)" sendingEnd="/1/@sequencediagram.0/@interaction.31/@abstractend.2" receivingEnd="/1/@sequencediagram.0/@interaction.31/@abstractend.3"/>
         <message xsi:type="designModel:callMessage" name="findObject(Accout,acc.AccoutId=accoutId)" sendingEnd="/1/@sequencediagram.0/@interaction.31/@abstractend.5" receivingEnd="/1/@sequencediagram.0/@interaction.31/@abstractend.6"/>
         <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.31/@abstractend.7" receivingEnd="/1/@sequencediagram.0/@interaction.31/@abstractend.8" invocationmessage="/1/@sequencediagram.0/@interaction.31/@message.1"/>
@@ -2485,21 +2492,21 @@
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndS" context="/1/@classdiagram/@class.10" execution="/1/@sequencediagram.0/@interaction.31/@execution.1"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageStart" context="/1/@sequencediagram.0/@interaction.31/@execution.0"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageEnd" context="/1/@sequencediagram.0/@interaction.31/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message37EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.31/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message37SE" context="/1/@sequencediagram.0/@interaction.31/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message37RE" context="/1/@sequencediagram.0/@interaction.31/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message37SER" context="/1/@sequencediagram.0/@interaction.31/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message37RER" context="/1/@sequencediagram.0/@interaction.31/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message37EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.31/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message168SER" context="/1/@sequencediagram.0/@interaction.31/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message168RER" context="/1/@sequencediagram.0/@interaction.31/@execution.0"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message36EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.31/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message36SE" context="/1/@sequencediagram.0/@interaction.31/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message36RE" context="/1/@sequencediagram.0/@interaction.31/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message36SER" context="/1/@sequencediagram.0/@interaction.31/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message36RER" context="/1/@sequencediagram.0/@interaction.31/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message36EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.31/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message167SER" context="/1/@sequencediagram.0/@interaction.31/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message167RER" context="/1/@sequencediagram.0/@interaction.31/@execution.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndE" context="/1/@classdiagram/@class.10" execution="/1/@sequencediagram.0/@interaction.31/@execution.1"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndE" context="/0" execution="/1/@sequencediagram.0/@interaction.31/@execution.0"/>
         <execution participant="/0" start="/1/@sequencediagram.0/@interaction.31/@abstractend.0" end="/1/@sequencediagram.0/@interaction.31/@abstractend.13" name="controller"/>
         <execution participant="/1/@classdiagram/@class.10" start="/1/@sequencediagram.0/@interaction.31/@abstractend.1" end="/1/@sequencediagram.0/@interaction.31/@abstractend.12" name="QueryOrderService"/>
-        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.31/@abstractend.4" end="/1/@sequencediagram.0/@interaction.31/@abstractend.9" name="execution37"/>
+        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.31/@abstractend.4" end="/1/@sequencediagram.0/@interaction.31/@abstractend.9" name="execution36"/>
       </interaction>
-      <interaction name="queryTicketId" participants="/0 /1/@classdiagram/@class.10 /1/@classdiagram/@class.6 /39">
+      <interaction name="queryTicketId" participants="/0 /1/@classdiagram/@class.10 /1/@classdiagram/@class.6 /38">
         <message xsi:type="designModel:callMessage" name="queryTicketId(ticketId)" sendingEnd="/1/@sequencediagram.0/@interaction.32/@abstractend.2" receivingEnd="/1/@sequencediagram.0/@interaction.32/@abstractend.3"/>
         <message xsi:type="designModel:callMessage" name="findObject(Ticket,tic.TicketId=ticketId)" sendingEnd="/1/@sequencediagram.0/@interaction.32/@abstractend.5" receivingEnd="/1/@sequencediagram.0/@interaction.32/@abstractend.6"/>
         <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.32/@abstractend.7" receivingEnd="/1/@sequencediagram.0/@interaction.32/@abstractend.8" invocationmessage="/1/@sequencediagram.0/@interaction.32/@message.1"/>
@@ -2508,89 +2515,62 @@
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndS" context="/1/@classdiagram/@class.10" execution="/1/@sequencediagram.0/@interaction.32/@execution.1"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageStart" context="/1/@sequencediagram.0/@interaction.32/@execution.0"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageEnd" context="/1/@sequencediagram.0/@interaction.32/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message38EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.32/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message38SE" context="/1/@sequencediagram.0/@interaction.32/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message38RE" context="/1/@sequencediagram.0/@interaction.32/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message38SER" context="/1/@sequencediagram.0/@interaction.32/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message38RER" context="/1/@sequencediagram.0/@interaction.32/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message38EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.32/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message169SER" context="/1/@sequencediagram.0/@interaction.32/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message169RER" context="/1/@sequencediagram.0/@interaction.32/@execution.0"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message37EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.32/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message37SE" context="/1/@sequencediagram.0/@interaction.32/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message37RE" context="/1/@sequencediagram.0/@interaction.32/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message37SER" context="/1/@sequencediagram.0/@interaction.32/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message37RER" context="/1/@sequencediagram.0/@interaction.32/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message37EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.32/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message168SER" context="/1/@sequencediagram.0/@interaction.32/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message168RER" context="/1/@sequencediagram.0/@interaction.32/@execution.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndE" context="/1/@classdiagram/@class.10" execution="/1/@sequencediagram.0/@interaction.32/@execution.1"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndE" context="/0" execution="/1/@sequencediagram.0/@interaction.32/@execution.0"/>
         <execution participant="/0" start="/1/@sequencediagram.0/@interaction.32/@abstractend.0" end="/1/@sequencediagram.0/@interaction.32/@abstractend.13" name="controller"/>
         <execution participant="/1/@classdiagram/@class.10" start="/1/@sequencediagram.0/@interaction.32/@abstractend.1" end="/1/@sequencediagram.0/@interaction.32/@abstractend.12" name="QueryOrderService"/>
-        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.32/@abstractend.4" end="/1/@sequencediagram.0/@interaction.32/@abstractend.9" name="execution38"/>
+        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.32/@abstractend.4" end="/1/@sequencediagram.0/@interaction.32/@abstractend.9" name="execution37"/>
       </interaction>
-      <interaction name="updateTicket" participants="/0 /1/@classdiagram/@class.17 /1/@classdiagram/@class.6 /40 /41 /42 /43">
-        <message xsi:type="designModel:callMessage" name="updateTicket(accoutId,ticketId,newRouteId)" sendingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.2" receivingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.3"/>
-        <message xsi:type="designModel:callMessage" name="findObject(Ticket,tic.TicketId=ticketId[and]tic.IsValid=true)" sendingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.5" receivingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.6"/>
+      <interaction name="updateTicket" participants="/0 /1/@classdiagram/@class.17 /1/@classdiagram/@class.6 /39 /60">
+        <message xsi:type="designModel:callMessage" name="updateTicket(newRouteId)" sendingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.2" receivingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.3"/>
+        <message xsi:type="designModel:callMessage" name="findObject(Route,rou.RouteId=newRouteId)" sendingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.5" receivingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.6"/>
         <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.7" receivingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.8" invocationmessage="/1/@sequencediagram.0/@interaction.33/@message.1"/>
-        <message xsi:type="designModel:callMessage" name="findObject(Accout,acc.AccoutId=accoutId)" sendingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.11" receivingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.12"/>
+        <message xsi:type="designModel:callMessage" name="addLinkOnetoOne(RouteId,newRouteId)" sendingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.11" receivingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.12"/>
         <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.13" receivingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.14" invocationmessage="/1/@sequencediagram.0/@interaction.33/@message.3"/>
-        <message xsi:type="designModel:callMessage" name="findObject(Route,rou.RouteId=newRouteId)" sendingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.17" receivingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.18"/>
+        <message xsi:type="designModel:callMessage" name="setIsValid(false)" sendingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.17" receivingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.18"/>
         <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.19" receivingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.20" invocationmessage="/1/@sequencediagram.0/@interaction.33/@message.5"/>
-        <message xsi:type="designModel:callMessage" name="findObject(Order,ord.AccoutId=accoutId[and, and]ord.TicketId=ticketId[and, and]ord.OrderStatus=OrderStatus::PAID)" sendingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.23" receivingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.24"/>
-        <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.25" receivingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.26" invocationmessage="/1/@sequencediagram.0/@interaction.33/@message.7"/>
-        <message xsi:type="designModel:callMessage" name="addLinkOnetoOne(RouteId,newRouteId)" sendingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.29" receivingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.30"/>
-        <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.31" receivingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.32" invocationmessage="/1/@sequencediagram.0/@interaction.33/@message.9"/>
-        <message xsi:type="designModel:callMessage" name="setIsValid(false)" sendingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.35" receivingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.36"/>
-        <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.37" receivingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.38" invocationmessage="/1/@sequencediagram.0/@interaction.33/@message.11"/>
-        <message xsi:type="designModel:ReturnMessage" name="result = true" sendingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.40" receivingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.41" invocationmessage="/1/@sequencediagram.0/@interaction.33/@message.0"/>
+        <message xsi:type="designModel:ReturnMessage" name="result = true" sendingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.22" receivingEnd="/1/@sequencediagram.0/@interaction.33/@abstractend.23" invocationmessage="/1/@sequencediagram.0/@interaction.33/@message.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndS" context="/0" execution="/1/@sequencediagram.0/@interaction.33/@execution.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndS" context="/1/@classdiagram/@class.17" execution="/1/@sequencediagram.0/@interaction.33/@execution.1"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageStart" context="/1/@sequencediagram.0/@interaction.33/@execution.0"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageEnd" context="/1/@sequencediagram.0/@interaction.33/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message39EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.33/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message39SE" context="/1/@sequencediagram.0/@interaction.33/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message39RE" context="/1/@sequencediagram.0/@interaction.33/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message39SER" context="/1/@sequencediagram.0/@interaction.33/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message39RER" context="/1/@sequencediagram.0/@interaction.33/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message39EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.33/@execution.2"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message40EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.33/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message40SE" context="/1/@sequencediagram.0/@interaction.33/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message40RE" context="/1/@sequencediagram.0/@interaction.33/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message40SER" context="/1/@sequencediagram.0/@interaction.33/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message40RER" context="/1/@sequencediagram.0/@interaction.33/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message40EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.33/@execution.3"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message41EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.33/@execution.4"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message41SE" context="/1/@sequencediagram.0/@interaction.33/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message41RE" context="/1/@sequencediagram.0/@interaction.33/@execution.4"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message41SER" context="/1/@sequencediagram.0/@interaction.33/@execution.4"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message41RER" context="/1/@sequencediagram.0/@interaction.33/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message41EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.33/@execution.4"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message42EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.33/@execution.5"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message42SE" context="/1/@sequencediagram.0/@interaction.33/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message42RE" context="/1/@sequencediagram.0/@interaction.33/@execution.5"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message42SER" context="/1/@sequencediagram.0/@interaction.33/@execution.5"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message42RER" context="/1/@sequencediagram.0/@interaction.33/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message42EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.33/@execution.5"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message170EES" context="/40" execution="/1/@sequencediagram.0/@interaction.33/@execution.6"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message38EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.33/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message38SE" context="/1/@sequencediagram.0/@interaction.33/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message38RE" context="/1/@sequencediagram.0/@interaction.33/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message38SER" context="/1/@sequencediagram.0/@interaction.33/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message38RER" context="/1/@sequencediagram.0/@interaction.33/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message38EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.33/@execution.2"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message169EES" context="/60" execution="/1/@sequencediagram.0/@interaction.33/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message169SE" context="/1/@sequencediagram.0/@interaction.33/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message169RE" context="/1/@sequencediagram.0/@interaction.33/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message169SER" context="/1/@sequencediagram.0/@interaction.33/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message169RER" context="/1/@sequencediagram.0/@interaction.33/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message169EEE" context="/60" execution="/1/@sequencediagram.0/@interaction.33/@execution.3"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message170EES" context="/60" execution="/1/@sequencediagram.0/@interaction.33/@execution.4"/>
         <abstractend xsi:type="designModel:MixEnd" name="message170SE" context="/1/@sequencediagram.0/@interaction.33/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message170RE" context="/1/@sequencediagram.0/@interaction.33/@execution.6"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message170SER" context="/1/@sequencediagram.0/@interaction.33/@execution.6"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message170RE" context="/1/@sequencediagram.0/@interaction.33/@execution.4"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message170SER" context="/1/@sequencediagram.0/@interaction.33/@execution.4"/>
         <abstractend xsi:type="designModel:MixEnd" name="message170RER" context="/1/@sequencediagram.0/@interaction.33/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message170EEE" context="/40" execution="/1/@sequencediagram.0/@interaction.33/@execution.6"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message171EES" context="/40" execution="/1/@sequencediagram.0/@interaction.33/@execution.7"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message171SE" context="/1/@sequencediagram.0/@interaction.33/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message171RE" context="/1/@sequencediagram.0/@interaction.33/@execution.7"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message171SER" context="/1/@sequencediagram.0/@interaction.33/@execution.7"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message171RER" context="/1/@sequencediagram.0/@interaction.33/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message171EEE" context="/40" execution="/1/@sequencediagram.0/@interaction.33/@execution.7"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message176SER" context="/1/@sequencediagram.0/@interaction.33/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message176RER" context="/1/@sequencediagram.0/@interaction.33/@execution.0"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message170EEE" context="/60" execution="/1/@sequencediagram.0/@interaction.33/@execution.4"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message172SER" context="/1/@sequencediagram.0/@interaction.33/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message172RER" context="/1/@sequencediagram.0/@interaction.33/@execution.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndE" context="/1/@classdiagram/@class.17" execution="/1/@sequencediagram.0/@interaction.33/@execution.1"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndE" context="/0" execution="/1/@sequencediagram.0/@interaction.33/@execution.0"/>
-        <execution participant="/0" start="/1/@sequencediagram.0/@interaction.33/@abstractend.0" end="/1/@sequencediagram.0/@interaction.33/@abstractend.43" name="controller"/>
-        <execution participant="/1/@classdiagram/@class.17" start="/1/@sequencediagram.0/@interaction.33/@abstractend.1" end="/1/@sequencediagram.0/@interaction.33/@abstractend.42" name="ModifyTripService"/>
-        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.33/@abstractend.4" end="/1/@sequencediagram.0/@interaction.33/@abstractend.9" name="execution39"/>
-        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.33/@abstractend.10" end="/1/@sequencediagram.0/@interaction.33/@abstractend.15" name="execution40"/>
-        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.33/@abstractend.16" end="/1/@sequencediagram.0/@interaction.33/@abstractend.21" name="execution41"/>
-        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.33/@abstractend.22" end="/1/@sequencediagram.0/@interaction.33/@abstractend.27" name="execution42"/>
-        <execution participant="/40" start="/1/@sequencediagram.0/@interaction.33/@abstractend.28" end="/1/@sequencediagram.0/@interaction.33/@abstractend.33" name="execution170"/>
-        <execution participant="/40" start="/1/@sequencediagram.0/@interaction.33/@abstractend.34" end="/1/@sequencediagram.0/@interaction.33/@abstractend.39" name="execution171"/>
+        <execution participant="/0" start="/1/@sequencediagram.0/@interaction.33/@abstractend.0" end="/1/@sequencediagram.0/@interaction.33/@abstractend.25" name="controller"/>
+        <execution participant="/1/@classdiagram/@class.17" start="/1/@sequencediagram.0/@interaction.33/@abstractend.1" end="/1/@sequencediagram.0/@interaction.33/@abstractend.24" name="ModifyTripService"/>
+        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.33/@abstractend.4" end="/1/@sequencediagram.0/@interaction.33/@abstractend.9" name="execution38"/>
+        <execution participant="/60" start="/1/@sequencediagram.0/@interaction.33/@abstractend.10" end="/1/@sequencediagram.0/@interaction.33/@abstractend.15" name="execution169"/>
+        <execution participant="/60" start="/1/@sequencediagram.0/@interaction.33/@abstractend.16" end="/1/@sequencediagram.0/@interaction.33/@abstractend.21" name="execution170"/>
       </interaction>
-      <interaction name="updateOrder" participants="/0 /1/@classdiagram/@class.17 /1/@classdiagram/@class.6 /60">
+      <interaction name="updateOrder" participants="/0 /1/@classdiagram/@class.17 /1/@classdiagram/@class.6 /61">
         <message xsi:type="designModel:callMessage" name="updateOrder(time)" sendingEnd="/1/@sequencediagram.0/@interaction.34/@abstractend.2" receivingEnd="/1/@sequencediagram.0/@interaction.34/@abstractend.3"/>
         <message xsi:type="designModel:callMessage" name="addLinkOnetoOne(CreateTime,time)" sendingEnd="/1/@sequencediagram.0/@interaction.34/@abstractend.5" receivingEnd="/1/@sequencediagram.0/@interaction.34/@abstractend.6"/>
         <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.34/@abstractend.7" receivingEnd="/1/@sequencediagram.0/@interaction.34/@abstractend.8" invocationmessage="/1/@sequencediagram.0/@interaction.34/@message.1"/>
@@ -2601,26 +2581,26 @@
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndS" context="/1/@classdiagram/@class.17" execution="/1/@sequencediagram.0/@interaction.34/@execution.1"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageStart" context="/1/@sequencediagram.0/@interaction.34/@execution.0"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageEnd" context="/1/@sequencediagram.0/@interaction.34/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message177EES" context="/60" execution="/1/@sequencediagram.0/@interaction.34/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message177SE" context="/1/@sequencediagram.0/@interaction.34/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message177RE" context="/1/@sequencediagram.0/@interaction.34/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message177SER" context="/1/@sequencediagram.0/@interaction.34/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message177RER" context="/1/@sequencediagram.0/@interaction.34/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message177EEE" context="/60" execution="/1/@sequencediagram.0/@interaction.34/@execution.2"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message178EES" context="/60" execution="/1/@sequencediagram.0/@interaction.34/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message178SE" context="/1/@sequencediagram.0/@interaction.34/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message178RE" context="/1/@sequencediagram.0/@interaction.34/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message178SER" context="/1/@sequencediagram.0/@interaction.34/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message178RER" context="/1/@sequencediagram.0/@interaction.34/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message178EEE" context="/60" execution="/1/@sequencediagram.0/@interaction.34/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message179SER" context="/1/@sequencediagram.0/@interaction.34/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message179RER" context="/1/@sequencediagram.0/@interaction.34/@execution.0"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message173EES" context="/61" execution="/1/@sequencediagram.0/@interaction.34/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message173SE" context="/1/@sequencediagram.0/@interaction.34/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message173RE" context="/1/@sequencediagram.0/@interaction.34/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message173SER" context="/1/@sequencediagram.0/@interaction.34/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message173RER" context="/1/@sequencediagram.0/@interaction.34/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message173EEE" context="/61" execution="/1/@sequencediagram.0/@interaction.34/@execution.2"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message174EES" context="/61" execution="/1/@sequencediagram.0/@interaction.34/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message174SE" context="/1/@sequencediagram.0/@interaction.34/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message174RE" context="/1/@sequencediagram.0/@interaction.34/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message174SER" context="/1/@sequencediagram.0/@interaction.34/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message174RER" context="/1/@sequencediagram.0/@interaction.34/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message174EEE" context="/61" execution="/1/@sequencediagram.0/@interaction.34/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message175SER" context="/1/@sequencediagram.0/@interaction.34/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message175RER" context="/1/@sequencediagram.0/@interaction.34/@execution.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndE" context="/1/@classdiagram/@class.17" execution="/1/@sequencediagram.0/@interaction.34/@execution.1"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndE" context="/0" execution="/1/@sequencediagram.0/@interaction.34/@execution.0"/>
         <execution participant="/0" start="/1/@sequencediagram.0/@interaction.34/@abstractend.0" end="/1/@sequencediagram.0/@interaction.34/@abstractend.19" name="controller"/>
         <execution participant="/1/@classdiagram/@class.17" start="/1/@sequencediagram.0/@interaction.34/@abstractend.1" end="/1/@sequencediagram.0/@interaction.34/@abstractend.18" name="ModifyTripService"/>
-        <execution participant="/60" start="/1/@sequencediagram.0/@interaction.34/@abstractend.4" end="/1/@sequencediagram.0/@interaction.34/@abstractend.9" name="execution177"/>
-        <execution participant="/60" start="/1/@sequencediagram.0/@interaction.34/@abstractend.10" end="/1/@sequencediagram.0/@interaction.34/@abstractend.15" name="execution178"/>
+        <execution participant="/61" start="/1/@sequencediagram.0/@interaction.34/@abstractend.4" end="/1/@sequencediagram.0/@interaction.34/@abstractend.9" name="execution173"/>
+        <execution participant="/61" start="/1/@sequencediagram.0/@interaction.34/@abstractend.10" end="/1/@sequencediagram.0/@interaction.34/@abstractend.15" name="execution174"/>
       </interaction>
       <interaction name="showSeatsByRouteId" participants="/0 /1/@classdiagram/@class.17 /1/@classdiagram/@class.6">
         <message xsi:type="designModel:callMessage" name="showSeatsByRouteId(" sendingEnd="/1/@sequencediagram.0/@interaction.35/@abstractend.2" receivingEnd="/1/@sequencediagram.0/@interaction.35/@abstractend.3"/>
@@ -2629,14 +2609,14 @@
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndS" context="/1/@classdiagram/@class.17" execution="/1/@sequencediagram.0/@interaction.35/@execution.1"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageStart" context="/1/@sequencediagram.0/@interaction.35/@execution.0"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageEnd" context="/1/@sequencediagram.0/@interaction.35/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message180SER" context="/1/@sequencediagram.0/@interaction.35/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message180RER" context="/1/@sequencediagram.0/@interaction.35/@execution.0"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message176SER" context="/1/@sequencediagram.0/@interaction.35/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message176RER" context="/1/@sequencediagram.0/@interaction.35/@execution.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndE" context="/1/@classdiagram/@class.17" execution="/1/@sequencediagram.0/@interaction.35/@execution.1"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndE" context="/0" execution="/1/@sequencediagram.0/@interaction.35/@execution.0"/>
         <execution participant="/0" start="/1/@sequencediagram.0/@interaction.35/@abstractend.0" end="/1/@sequencediagram.0/@interaction.35/@abstractend.7" name="controller"/>
         <execution participant="/1/@classdiagram/@class.17" start="/1/@sequencediagram.0/@interaction.35/@abstractend.1" end="/1/@sequencediagram.0/@interaction.35/@abstractend.6" name="ModifyTripService"/>
       </interaction>
-      <interaction name="selectNewSeat" participants="/0 /1/@classdiagram/@class.17 /1/@classdiagram/@class.6 /44">
+      <interaction name="selectNewSeat" participants="/0 /1/@classdiagram/@class.17 /1/@classdiagram/@class.6 /40">
         <message xsi:type="designModel:callMessage" name="selectNewSeat(seatId)" sendingEnd="/1/@sequencediagram.0/@interaction.36/@abstractend.2" receivingEnd="/1/@sequencediagram.0/@interaction.36/@abstractend.3"/>
         <message xsi:type="designModel:callMessage" name="findObject(Seat,sea.SeatId=seatId[and]sea.TrainId=CurrentRoute.TrainId)" sendingEnd="/1/@sequencediagram.0/@interaction.36/@abstractend.5" receivingEnd="/1/@sequencediagram.0/@interaction.36/@abstractend.6"/>
         <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.36/@abstractend.7" receivingEnd="/1/@sequencediagram.0/@interaction.36/@abstractend.8" invocationmessage="/1/@sequencediagram.0/@interaction.36/@message.1"/>
@@ -2647,28 +2627,28 @@
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndS" context="/1/@classdiagram/@class.17" execution="/1/@sequencediagram.0/@interaction.36/@execution.1"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageStart" context="/1/@sequencediagram.0/@interaction.36/@execution.0"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageEnd" context="/1/@sequencediagram.0/@interaction.36/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message43EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.36/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message43SE" context="/1/@sequencediagram.0/@interaction.36/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message43RE" context="/1/@sequencediagram.0/@interaction.36/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message43SER" context="/1/@sequencediagram.0/@interaction.36/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message43RER" context="/1/@sequencediagram.0/@interaction.36/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message43EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.36/@execution.2"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message181EES" execution="/1/@sequencediagram.0/@interaction.36/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message181SE" context="/1/@sequencediagram.0/@interaction.36/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message181RE" context="/1/@sequencediagram.0/@interaction.36/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message181SER" context="/1/@sequencediagram.0/@interaction.36/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message181RER" context="/1/@sequencediagram.0/@interaction.36/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message181EEE" execution="/1/@sequencediagram.0/@interaction.36/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message182SER" context="/1/@sequencediagram.0/@interaction.36/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message182RER" context="/1/@sequencediagram.0/@interaction.36/@execution.0"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message39EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.36/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message39SE" context="/1/@sequencediagram.0/@interaction.36/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message39RE" context="/1/@sequencediagram.0/@interaction.36/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message39SER" context="/1/@sequencediagram.0/@interaction.36/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message39RER" context="/1/@sequencediagram.0/@interaction.36/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message39EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.36/@execution.2"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message177EES" execution="/1/@sequencediagram.0/@interaction.36/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message177SE" context="/1/@sequencediagram.0/@interaction.36/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message177RE" context="/1/@sequencediagram.0/@interaction.36/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message177SER" context="/1/@sequencediagram.0/@interaction.36/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message177RER" context="/1/@sequencediagram.0/@interaction.36/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message177EEE" execution="/1/@sequencediagram.0/@interaction.36/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message178SER" context="/1/@sequencediagram.0/@interaction.36/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message178RER" context="/1/@sequencediagram.0/@interaction.36/@execution.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndE" context="/1/@classdiagram/@class.17" execution="/1/@sequencediagram.0/@interaction.36/@execution.1"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndE" context="/0" execution="/1/@sequencediagram.0/@interaction.36/@execution.0"/>
         <execution participant="/0" start="/1/@sequencediagram.0/@interaction.36/@abstractend.0" end="/1/@sequencediagram.0/@interaction.36/@abstractend.19" name="controller"/>
         <execution participant="/1/@classdiagram/@class.17" start="/1/@sequencediagram.0/@interaction.36/@abstractend.1" end="/1/@sequencediagram.0/@interaction.36/@abstractend.18" name="ModifyTripService"/>
-        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.36/@abstractend.4" end="/1/@sequencediagram.0/@interaction.36/@abstractend.9" name="execution43"/>
-        <execution start="/1/@sequencediagram.0/@interaction.36/@abstractend.10" end="/1/@sequencediagram.0/@interaction.36/@abstractend.15" name="execution181"/>
+        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.36/@abstractend.4" end="/1/@sequencediagram.0/@interaction.36/@abstractend.9" name="execution39"/>
+        <execution start="/1/@sequencediagram.0/@interaction.36/@abstractend.10" end="/1/@sequencediagram.0/@interaction.36/@abstractend.15" name="execution177"/>
       </interaction>
-      <interaction name="payDifference" participants="/0 /1/@classdiagram/@class.17 /1/@classdiagram/@class.6 /61 /62">
+      <interaction name="payDifference" participants="/0 /1/@classdiagram/@class.17 /1/@classdiagram/@class.6 /62 /63">
         <message xsi:type="designModel:callMessage" name="payDifference(difference)" sendingEnd="/1/@sequencediagram.0/@interaction.37/@abstractend.2" receivingEnd="/1/@sequencediagram.0/@interaction.37/@abstractend.3"/>
         <message xsi:type="designModel:callMessage" name="setIsValid(true)" sendingEnd="/1/@sequencediagram.0/@interaction.37/@abstractend.5" receivingEnd="/1/@sequencediagram.0/@interaction.37/@abstractend.6"/>
         <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.37/@abstractend.7" receivingEnd="/1/@sequencediagram.0/@interaction.37/@abstractend.8" invocationmessage="/1/@sequencediagram.0/@interaction.37/@message.1"/>
@@ -2683,42 +2663,42 @@
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndS" context="/1/@classdiagram/@class.17" execution="/1/@sequencediagram.0/@interaction.37/@execution.1"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageStart" context="/1/@sequencediagram.0/@interaction.37/@execution.0"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageEnd" context="/1/@sequencediagram.0/@interaction.37/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message183EES" context="/61" execution="/1/@sequencediagram.0/@interaction.37/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message183SE" context="/1/@sequencediagram.0/@interaction.37/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message183RE" context="/1/@sequencediagram.0/@interaction.37/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message183SER" context="/1/@sequencediagram.0/@interaction.37/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message183RER" context="/1/@sequencediagram.0/@interaction.37/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message183EEE" context="/61" execution="/1/@sequencediagram.0/@interaction.37/@execution.2"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message184EES" context="/61" execution="/1/@sequencediagram.0/@interaction.37/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message184SE" context="/1/@sequencediagram.0/@interaction.37/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message184RE" context="/1/@sequencediagram.0/@interaction.37/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message184SER" context="/1/@sequencediagram.0/@interaction.37/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message184RER" context="/1/@sequencediagram.0/@interaction.37/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message184EEE" context="/61" execution="/1/@sequencediagram.0/@interaction.37/@execution.3"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message185EES" context="/62" execution="/1/@sequencediagram.0/@interaction.37/@execution.4"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message185SE" context="/1/@sequencediagram.0/@interaction.37/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message185RE" context="/1/@sequencediagram.0/@interaction.37/@execution.4"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message185SER" context="/1/@sequencediagram.0/@interaction.37/@execution.4"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message185RER" context="/1/@sequencediagram.0/@interaction.37/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message185EEE" context="/62" execution="/1/@sequencediagram.0/@interaction.37/@execution.4"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message186EES" execution="/1/@sequencediagram.0/@interaction.37/@execution.5"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message186SE" context="/1/@sequencediagram.0/@interaction.37/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message186RE" context="/1/@sequencediagram.0/@interaction.37/@execution.5"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message186SER" context="/1/@sequencediagram.0/@interaction.37/@execution.5"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message186RER" context="/1/@sequencediagram.0/@interaction.37/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message186EEE" execution="/1/@sequencediagram.0/@interaction.37/@execution.5"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message187SER" context="/1/@sequencediagram.0/@interaction.37/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message187RER" context="/1/@sequencediagram.0/@interaction.37/@execution.0"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message179EES" context="/62" execution="/1/@sequencediagram.0/@interaction.37/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message179SE" context="/1/@sequencediagram.0/@interaction.37/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message179RE" context="/1/@sequencediagram.0/@interaction.37/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message179SER" context="/1/@sequencediagram.0/@interaction.37/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message179RER" context="/1/@sequencediagram.0/@interaction.37/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message179EEE" context="/62" execution="/1/@sequencediagram.0/@interaction.37/@execution.2"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message180EES" context="/62" execution="/1/@sequencediagram.0/@interaction.37/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message180SE" context="/1/@sequencediagram.0/@interaction.37/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message180RE" context="/1/@sequencediagram.0/@interaction.37/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message180SER" context="/1/@sequencediagram.0/@interaction.37/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message180RER" context="/1/@sequencediagram.0/@interaction.37/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message180EEE" context="/62" execution="/1/@sequencediagram.0/@interaction.37/@execution.3"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message181EES" context="/63" execution="/1/@sequencediagram.0/@interaction.37/@execution.4"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message181SE" context="/1/@sequencediagram.0/@interaction.37/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message181RE" context="/1/@sequencediagram.0/@interaction.37/@execution.4"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message181SER" context="/1/@sequencediagram.0/@interaction.37/@execution.4"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message181RER" context="/1/@sequencediagram.0/@interaction.37/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message181EEE" context="/63" execution="/1/@sequencediagram.0/@interaction.37/@execution.4"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message182EES" execution="/1/@sequencediagram.0/@interaction.37/@execution.5"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message182SE" context="/1/@sequencediagram.0/@interaction.37/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message182RE" context="/1/@sequencediagram.0/@interaction.37/@execution.5"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message182SER" context="/1/@sequencediagram.0/@interaction.37/@execution.5"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message182RER" context="/1/@sequencediagram.0/@interaction.37/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message182EEE" execution="/1/@sequencediagram.0/@interaction.37/@execution.5"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message183SER" context="/1/@sequencediagram.0/@interaction.37/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message183RER" context="/1/@sequencediagram.0/@interaction.37/@execution.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndE" context="/1/@classdiagram/@class.17" execution="/1/@sequencediagram.0/@interaction.37/@execution.1"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndE" context="/0" execution="/1/@sequencediagram.0/@interaction.37/@execution.0"/>
         <execution participant="/0" start="/1/@sequencediagram.0/@interaction.37/@abstractend.0" end="/1/@sequencediagram.0/@interaction.37/@abstractend.31" name="controller"/>
         <execution participant="/1/@classdiagram/@class.17" start="/1/@sequencediagram.0/@interaction.37/@abstractend.1" end="/1/@sequencediagram.0/@interaction.37/@abstractend.30" name="ModifyTripService"/>
-        <execution participant="/61" start="/1/@sequencediagram.0/@interaction.37/@abstractend.4" end="/1/@sequencediagram.0/@interaction.37/@abstractend.9" name="execution183"/>
-        <execution participant="/61" start="/1/@sequencediagram.0/@interaction.37/@abstractend.10" end="/1/@sequencediagram.0/@interaction.37/@abstractend.15" name="execution184"/>
-        <execution participant="/62" start="/1/@sequencediagram.0/@interaction.37/@abstractend.16" end="/1/@sequencediagram.0/@interaction.37/@abstractend.21" name="execution185"/>
-        <execution start="/1/@sequencediagram.0/@interaction.37/@abstractend.22" end="/1/@sequencediagram.0/@interaction.37/@abstractend.27" name="execution186"/>
+        <execution participant="/62" start="/1/@sequencediagram.0/@interaction.37/@abstractend.4" end="/1/@sequencediagram.0/@interaction.37/@abstractend.9" name="execution179"/>
+        <execution participant="/62" start="/1/@sequencediagram.0/@interaction.37/@abstractend.10" end="/1/@sequencediagram.0/@interaction.37/@abstractend.15" name="execution180"/>
+        <execution participant="/63" start="/1/@sequencediagram.0/@interaction.37/@abstractend.16" end="/1/@sequencediagram.0/@interaction.37/@abstractend.21" name="execution181"/>
+        <execution start="/1/@sequencediagram.0/@interaction.37/@abstractend.22" end="/1/@sequencediagram.0/@interaction.37/@abstractend.27" name="execution182"/>
       </interaction>
-      <interaction name="deleteOverdueTicket" participants="/0 /1/@classdiagram/@class.18 /1/@classdiagram/@class.6 /45">
+      <interaction name="deleteOverdueTicket" participants="/0 /1/@classdiagram/@class.18 /1/@classdiagram/@class.6 /41">
         <message xsi:type="designModel:callMessage" name="deleteOverdueTicket(ticketId)" sendingEnd="/1/@sequencediagram.0/@interaction.38/@abstractend.2" receivingEnd="/1/@sequencediagram.0/@interaction.38/@abstractend.3"/>
         <message xsi:type="designModel:callMessage" name="findObject(Ticket,tic.TicketId=ticketId[and]tic.IsValid=false)" sendingEnd="/1/@sequencediagram.0/@interaction.38/@abstractend.5" receivingEnd="/1/@sequencediagram.0/@interaction.38/@abstractend.6"/>
         <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.38/@abstractend.7" receivingEnd="/1/@sequencediagram.0/@interaction.38/@abstractend.8" invocationmessage="/1/@sequencediagram.0/@interaction.38/@message.1"/>
@@ -2731,35 +2711,35 @@
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndS" context="/1/@classdiagram/@class.18" execution="/1/@sequencediagram.0/@interaction.38/@execution.1"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageStart" context="/1/@sequencediagram.0/@interaction.38/@execution.0"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageEnd" context="/1/@sequencediagram.0/@interaction.38/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message44EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.38/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message44SE" context="/1/@sequencediagram.0/@interaction.38/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message44RE" context="/1/@sequencediagram.0/@interaction.38/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message44SER" context="/1/@sequencediagram.0/@interaction.38/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message44RER" context="/1/@sequencediagram.0/@interaction.38/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message44EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.38/@execution.2"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message188EES" execution="/1/@sequencediagram.0/@interaction.38/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message188SE" context="/1/@sequencediagram.0/@interaction.38/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message188RE" context="/1/@sequencediagram.0/@interaction.38/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message188SER" context="/1/@sequencediagram.0/@interaction.38/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message188RER" context="/1/@sequencediagram.0/@interaction.38/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message188EEE" execution="/1/@sequencediagram.0/@interaction.38/@execution.3"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message189EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.38/@execution.4"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message189SE" context="/1/@sequencediagram.0/@interaction.38/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message189RE" context="/1/@sequencediagram.0/@interaction.38/@execution.4"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message189SER" context="/1/@sequencediagram.0/@interaction.38/@execution.4"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message189RER" context="/1/@sequencediagram.0/@interaction.38/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message189EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.38/@execution.4"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message190SER" context="/1/@sequencediagram.0/@interaction.38/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message190RER" context="/1/@sequencediagram.0/@interaction.38/@execution.0"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message40EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.38/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message40SE" context="/1/@sequencediagram.0/@interaction.38/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message40RE" context="/1/@sequencediagram.0/@interaction.38/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message40SER" context="/1/@sequencediagram.0/@interaction.38/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message40RER" context="/1/@sequencediagram.0/@interaction.38/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message40EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.38/@execution.2"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message184EES" execution="/1/@sequencediagram.0/@interaction.38/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message184SE" context="/1/@sequencediagram.0/@interaction.38/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message184RE" context="/1/@sequencediagram.0/@interaction.38/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message184SER" context="/1/@sequencediagram.0/@interaction.38/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message184RER" context="/1/@sequencediagram.0/@interaction.38/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message184EEE" execution="/1/@sequencediagram.0/@interaction.38/@execution.3"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message185EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.38/@execution.4"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message185SE" context="/1/@sequencediagram.0/@interaction.38/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message185RE" context="/1/@sequencediagram.0/@interaction.38/@execution.4"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message185SER" context="/1/@sequencediagram.0/@interaction.38/@execution.4"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message185RER" context="/1/@sequencediagram.0/@interaction.38/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message185EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.38/@execution.4"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message186SER" context="/1/@sequencediagram.0/@interaction.38/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message186RER" context="/1/@sequencediagram.0/@interaction.38/@execution.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndE" context="/1/@classdiagram/@class.18" execution="/1/@sequencediagram.0/@interaction.38/@execution.1"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndE" context="/0" execution="/1/@sequencediagram.0/@interaction.38/@execution.0"/>
         <execution participant="/0" start="/1/@sequencediagram.0/@interaction.38/@abstractend.0" end="/1/@sequencediagram.0/@interaction.38/@abstractend.25" name="controller"/>
         <execution participant="/1/@classdiagram/@class.18" start="/1/@sequencediagram.0/@interaction.38/@abstractend.1" end="/1/@sequencediagram.0/@interaction.38/@abstractend.24" name="DeleteOverdueOrderService"/>
-        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.38/@abstractend.4" end="/1/@sequencediagram.0/@interaction.38/@abstractend.9" name="execution44"/>
-        <execution start="/1/@sequencediagram.0/@interaction.38/@abstractend.10" end="/1/@sequencediagram.0/@interaction.38/@abstractend.15" name="execution188"/>
-        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.38/@abstractend.16" end="/1/@sequencediagram.0/@interaction.38/@abstractend.21" name="execution189"/>
+        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.38/@abstractend.4" end="/1/@sequencediagram.0/@interaction.38/@abstractend.9" name="execution40"/>
+        <execution start="/1/@sequencediagram.0/@interaction.38/@abstractend.10" end="/1/@sequencediagram.0/@interaction.38/@abstractend.15" name="execution184"/>
+        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.38/@abstractend.16" end="/1/@sequencediagram.0/@interaction.38/@abstractend.21" name="execution185"/>
       </interaction>
-      <interaction name="deleteOverdueOrder" participants="/0 /1/@classdiagram/@class.18 /1/@classdiagram/@class.6 /46">
+      <interaction name="deleteOverdueOrder" participants="/0 /1/@classdiagram/@class.18 /1/@classdiagram/@class.6 /42">
         <message xsi:type="designModel:callMessage" name="deleteOverdueOrder(" sendingEnd="/1/@sequencediagram.0/@interaction.39/@abstractend.2" receivingEnd="/1/@sequencediagram.0/@interaction.39/@abstractend.3"/>
         <message xsi:type="designModel:callMessage" name="findObject(Order,ord.TicketId=CurrentTicketId[and]ord.OrderStatus=OrderStatus::CANCELED)" sendingEnd="/1/@sequencediagram.0/@interaction.39/@abstractend.5" receivingEnd="/1/@sequencediagram.0/@interaction.39/@abstractend.6"/>
         <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.39/@abstractend.7" receivingEnd="/1/@sequencediagram.0/@interaction.39/@abstractend.8" invocationmessage="/1/@sequencediagram.0/@interaction.39/@message.1"/>
@@ -2770,26 +2750,26 @@
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndS" context="/1/@classdiagram/@class.18" execution="/1/@sequencediagram.0/@interaction.39/@execution.1"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageStart" context="/1/@sequencediagram.0/@interaction.39/@execution.0"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageEnd" context="/1/@sequencediagram.0/@interaction.39/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message45EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.39/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message45SE" context="/1/@sequencediagram.0/@interaction.39/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message45RE" context="/1/@sequencediagram.0/@interaction.39/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message45SER" context="/1/@sequencediagram.0/@interaction.39/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message45RER" context="/1/@sequencediagram.0/@interaction.39/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message45EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.39/@execution.2"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message191EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.39/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message191SE" context="/1/@sequencediagram.0/@interaction.39/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message191RE" context="/1/@sequencediagram.0/@interaction.39/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message191SER" context="/1/@sequencediagram.0/@interaction.39/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message191RER" context="/1/@sequencediagram.0/@interaction.39/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message191EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.39/@execution.3"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message192SER" context="/1/@sequencediagram.0/@interaction.39/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message192RER" context="/1/@sequencediagram.0/@interaction.39/@execution.0"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message41EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.39/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message41SE" context="/1/@sequencediagram.0/@interaction.39/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message41RE" context="/1/@sequencediagram.0/@interaction.39/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message41SER" context="/1/@sequencediagram.0/@interaction.39/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message41RER" context="/1/@sequencediagram.0/@interaction.39/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message41EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.39/@execution.2"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message187EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.39/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message187SE" context="/1/@sequencediagram.0/@interaction.39/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message187RE" context="/1/@sequencediagram.0/@interaction.39/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message187SER" context="/1/@sequencediagram.0/@interaction.39/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message187RER" context="/1/@sequencediagram.0/@interaction.39/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message187EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.39/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message188SER" context="/1/@sequencediagram.0/@interaction.39/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message188RER" context="/1/@sequencediagram.0/@interaction.39/@execution.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndE" context="/1/@classdiagram/@class.18" execution="/1/@sequencediagram.0/@interaction.39/@execution.1"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndE" context="/0" execution="/1/@sequencediagram.0/@interaction.39/@execution.0"/>
         <execution participant="/0" start="/1/@sequencediagram.0/@interaction.39/@abstractend.0" end="/1/@sequencediagram.0/@interaction.39/@abstractend.19" name="controller"/>
         <execution participant="/1/@classdiagram/@class.18" start="/1/@sequencediagram.0/@interaction.39/@abstractend.1" end="/1/@sequencediagram.0/@interaction.39/@abstractend.18" name="DeleteOverdueOrderService"/>
-        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.39/@abstractend.4" end="/1/@sequencediagram.0/@interaction.39/@abstractend.9" name="execution45"/>
-        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.39/@abstractend.10" end="/1/@sequencediagram.0/@interaction.39/@abstractend.15" name="execution191"/>
+        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.39/@abstractend.4" end="/1/@sequencediagram.0/@interaction.39/@abstractend.9" name="execution41"/>
+        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.39/@abstractend.10" end="/1/@sequencediagram.0/@interaction.39/@abstractend.15" name="execution187"/>
       </interaction>
       <interaction name="sendNotification" participants="/0 /1/@classdiagram/@class.8 /1/@classdiagram/@class.6">
         <message xsi:type="designModel:callMessage" name="sendNotification(phoneNumber)" sendingEnd="/1/@sequencediagram.0/@interaction.40/@abstractend.2" receivingEnd="/1/@sequencediagram.0/@interaction.40/@abstractend.3"/>
@@ -2798,52 +2778,154 @@
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndS" context="/1/@classdiagram/@class.8" execution="/1/@sequencediagram.0/@interaction.40/@execution.1"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageStart" context="/1/@sequencediagram.0/@interaction.40/@execution.0"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageEnd" context="/1/@sequencediagram.0/@interaction.40/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message193SER" context="/1/@sequencediagram.0/@interaction.40/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message193RER" context="/1/@sequencediagram.0/@interaction.40/@execution.0"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message189SER" context="/1/@sequencediagram.0/@interaction.40/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message189RER" context="/1/@sequencediagram.0/@interaction.40/@execution.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndE" context="/1/@classdiagram/@class.8" execution="/1/@sequencediagram.0/@interaction.40/@execution.1"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndE" context="/0" execution="/1/@sequencediagram.0/@interaction.40/@execution.0"/>
         <execution participant="/0" start="/1/@sequencediagram.0/@interaction.40/@abstractend.0" end="/1/@sequencediagram.0/@interaction.40/@abstractend.7" name="controller"/>
         <execution participant="/1/@classdiagram/@class.8" start="/1/@sequencediagram.0/@interaction.40/@abstractend.1" end="/1/@sequencediagram.0/@interaction.40/@abstractend.6" name="ThirdPartyServices"/>
       </interaction>
-      <interaction name="check" participants="/0 /1/@classdiagram/@class.9 /1/@classdiagram/@class.6 /47">
+      <interaction name="check" participants="/0 /1/@classdiagram/@class.9 /1/@classdiagram/@class.6 /43">
         <message xsi:type="designModel:callMessage" name="check(accoutId)" sendingEnd="/1/@sequencediagram.0/@interaction.41/@abstractend.2" receivingEnd="/1/@sequencediagram.0/@interaction.41/@abstractend.3"/>
         <message xsi:type="designModel:callMessage" name="findObject(Accout,acc.AccoutId=accoutId)" sendingEnd="/1/@sequencediagram.0/@interaction.41/@abstractend.5" receivingEnd="/1/@sequencediagram.0/@interaction.41/@abstractend.6"/>
         <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.41/@abstractend.7" receivingEnd="/1/@sequencediagram.0/@interaction.41/@abstractend.8" invocationmessage="/1/@sequencediagram.0/@interaction.41/@message.1"/>
+        <message xsi:type="designModel:ReturnMessage" name="result = true" sendingEnd="/1/@sequencediagram.0/@interaction.41/@abstractend.10" receivingEnd="/1/@sequencediagram.0/@interaction.41/@abstractend.11" invocationmessage="/1/@sequencediagram.0/@interaction.41/@message.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndS" context="/0" execution="/1/@sequencediagram.0/@interaction.41/@execution.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndS" context="/1/@classdiagram/@class.9" execution="/1/@sequencediagram.0/@interaction.41/@execution.1"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageStart" context="/1/@sequencediagram.0/@interaction.41/@execution.0"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageEnd" context="/1/@sequencediagram.0/@interaction.41/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message46EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.41/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message46SE" context="/1/@sequencediagram.0/@interaction.41/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message46RE" context="/1/@sequencediagram.0/@interaction.41/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message46SER" context="/1/@sequencediagram.0/@interaction.41/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message46RER" context="/1/@sequencediagram.0/@interaction.41/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message46EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.41/@execution.2"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message42EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.41/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message42SE" context="/1/@sequencediagram.0/@interaction.41/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message42RE" context="/1/@sequencediagram.0/@interaction.41/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message42SER" context="/1/@sequencediagram.0/@interaction.41/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message42RER" context="/1/@sequencediagram.0/@interaction.41/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message42EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.41/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message190SER" context="/1/@sequencediagram.0/@interaction.41/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message190RER" context="/1/@sequencediagram.0/@interaction.41/@execution.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndE" context="/1/@classdiagram/@class.9" execution="/1/@sequencediagram.0/@interaction.41/@execution.1"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndE" context="/0" execution="/1/@sequencediagram.0/@interaction.41/@execution.0"/>
-        <execution participant="/0" start="/1/@sequencediagram.0/@interaction.41/@abstractend.0" end="/1/@sequencediagram.0/@interaction.41/@abstractend.11" name="controller"/>
-        <execution participant="/1/@classdiagram/@class.9" start="/1/@sequencediagram.0/@interaction.41/@abstractend.1" end="/1/@sequencediagram.0/@interaction.41/@abstractend.10" name="CreateTripService"/>
-        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.41/@abstractend.4" end="/1/@sequencediagram.0/@interaction.41/@abstractend.9" name="execution46"/>
+        <execution participant="/0" start="/1/@sequencediagram.0/@interaction.41/@abstractend.0" end="/1/@sequencediagram.0/@interaction.41/@abstractend.13" name="controller"/>
+        <execution participant="/1/@classdiagram/@class.9" start="/1/@sequencediagram.0/@interaction.41/@abstractend.1" end="/1/@sequencediagram.0/@interaction.41/@abstractend.12" name="CreateTripService"/>
+        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.41/@abstractend.4" end="/1/@sequencediagram.0/@interaction.41/@abstractend.9" name="execution42"/>
       </interaction>
-      <interaction name="checkTicket" participants="/0 /1/@classdiagram/@class.17 /1/@classdiagram/@class.6 /48">
+      <interaction name="checkTicket" participants="/0 /1/@classdiagram/@class.17 /1/@classdiagram/@class.6 /44 /45 /46">
         <message xsi:type="designModel:callMessage" name="checkTicket(accoutId,ticketId)" sendingEnd="/1/@sequencediagram.0/@interaction.42/@abstractend.2" receivingEnd="/1/@sequencediagram.0/@interaction.42/@abstractend.3"/>
-        <message xsi:type="designModel:callMessage" name="findObject(Order,ord.AccoutId=accoutId[and]ord.TicketId=ticketId)" sendingEnd="/1/@sequencediagram.0/@interaction.42/@abstractend.5" receivingEnd="/1/@sequencediagram.0/@interaction.42/@abstractend.6"/>
+        <message xsi:type="designModel:callMessage" name="findObject(Order,ord.AccoutId=accoutId[and, and]ord.TicketId=ticketId[and, and]ord.OrderStatus=OrderStatus::PAID)" sendingEnd="/1/@sequencediagram.0/@interaction.42/@abstractend.5" receivingEnd="/1/@sequencediagram.0/@interaction.42/@abstractend.6"/>
         <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.42/@abstractend.7" receivingEnd="/1/@sequencediagram.0/@interaction.42/@abstractend.8" invocationmessage="/1/@sequencediagram.0/@interaction.42/@message.1"/>
+        <message xsi:type="designModel:callMessage" name="findObject(Ticket,tic.TicketId=ticketId[and]tic.IsValid=true)" sendingEnd="/1/@sequencediagram.0/@interaction.42/@abstractend.11" receivingEnd="/1/@sequencediagram.0/@interaction.42/@abstractend.12"/>
+        <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.42/@abstractend.13" receivingEnd="/1/@sequencediagram.0/@interaction.42/@abstractend.14" invocationmessage="/1/@sequencediagram.0/@interaction.42/@message.3"/>
+        <message xsi:type="designModel:callMessage" name="findObject(Accout,acc.AccoutId=accoutId)" sendingEnd="/1/@sequencediagram.0/@interaction.42/@abstractend.17" receivingEnd="/1/@sequencediagram.0/@interaction.42/@abstractend.18"/>
+        <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.42/@abstractend.19" receivingEnd="/1/@sequencediagram.0/@interaction.42/@abstractend.20" invocationmessage="/1/@sequencediagram.0/@interaction.42/@message.5"/>
+        <message xsi:type="designModel:ReturnMessage" name="result = true" sendingEnd="/1/@sequencediagram.0/@interaction.42/@abstractend.22" receivingEnd="/1/@sequencediagram.0/@interaction.42/@abstractend.23" invocationmessage="/1/@sequencediagram.0/@interaction.42/@message.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndS" context="/0" execution="/1/@sequencediagram.0/@interaction.42/@execution.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndS" context="/1/@classdiagram/@class.17" execution="/1/@sequencediagram.0/@interaction.42/@execution.1"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageStart" context="/1/@sequencediagram.0/@interaction.42/@execution.0"/>
         <abstractend xsi:type="designModel:MixEnd" name="callMessageEnd" context="/1/@sequencediagram.0/@interaction.42/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message47EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.42/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message47SE" context="/1/@sequencediagram.0/@interaction.42/@execution.1"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message47RE" context="/1/@sequencediagram.0/@interaction.42/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message47SER" context="/1/@sequencediagram.0/@interaction.42/@execution.2"/>
-        <abstractend xsi:type="designModel:MixEnd" name="message47RER" context="/1/@sequencediagram.0/@interaction.42/@execution.1"/>
-        <abstractend xsi:type="designModel:ExecutionEnd" name="message47EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.42/@execution.2"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message43EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.42/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message43SE" context="/1/@sequencediagram.0/@interaction.42/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message43RE" context="/1/@sequencediagram.0/@interaction.42/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message43SER" context="/1/@sequencediagram.0/@interaction.42/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message43RER" context="/1/@sequencediagram.0/@interaction.42/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message43EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.42/@execution.2"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message44EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.42/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message44SE" context="/1/@sequencediagram.0/@interaction.42/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message44RE" context="/1/@sequencediagram.0/@interaction.42/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message44SER" context="/1/@sequencediagram.0/@interaction.42/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message44RER" context="/1/@sequencediagram.0/@interaction.42/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message44EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.42/@execution.3"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message45EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.42/@execution.4"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message45SE" context="/1/@sequencediagram.0/@interaction.42/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message45RE" context="/1/@sequencediagram.0/@interaction.42/@execution.4"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message45SER" context="/1/@sequencediagram.0/@interaction.42/@execution.4"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message45RER" context="/1/@sequencediagram.0/@interaction.42/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message45EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.42/@execution.4"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message194SER" context="/1/@sequencediagram.0/@interaction.42/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message194RER" context="/1/@sequencediagram.0/@interaction.42/@execution.0"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndE" context="/1/@classdiagram/@class.17" execution="/1/@sequencediagram.0/@interaction.42/@execution.1"/>
         <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndE" context="/0" execution="/1/@sequencediagram.0/@interaction.42/@execution.0"/>
-        <execution participant="/0" start="/1/@sequencediagram.0/@interaction.42/@abstractend.0" end="/1/@sequencediagram.0/@interaction.42/@abstractend.11" name="controller"/>
-        <execution participant="/1/@classdiagram/@class.17" start="/1/@sequencediagram.0/@interaction.42/@abstractend.1" end="/1/@sequencediagram.0/@interaction.42/@abstractend.10" name="ModifyTripService"/>
-        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.42/@abstractend.4" end="/1/@sequencediagram.0/@interaction.42/@abstractend.9" name="execution47"/>
+        <execution participant="/0" start="/1/@sequencediagram.0/@interaction.42/@abstractend.0" end="/1/@sequencediagram.0/@interaction.42/@abstractend.25" name="controller"/>
+        <execution participant="/1/@classdiagram/@class.17" start="/1/@sequencediagram.0/@interaction.42/@abstractend.1" end="/1/@sequencediagram.0/@interaction.42/@abstractend.24" name="ModifyTripService"/>
+        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.42/@abstractend.4" end="/1/@sequencediagram.0/@interaction.42/@abstractend.9" name="execution43"/>
+        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.42/@abstractend.10" end="/1/@sequencediagram.0/@interaction.42/@abstractend.15" name="execution44"/>
+        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.42/@abstractend.16" end="/1/@sequencediagram.0/@interaction.42/@abstractend.21" name="execution45"/>
+      </interaction>
+      <interaction name="checkCancelTrip" participants="/0 /1/@classdiagram/@class.19 /1/@classdiagram/@class.6 /47 /48">
+        <message xsi:type="designModel:callMessage" name="checkCancelTrip(accoutId,ticketId)" sendingEnd="/1/@sequencediagram.0/@interaction.43/@abstractend.2" receivingEnd="/1/@sequencediagram.0/@interaction.43/@abstractend.3"/>
+        <message xsi:type="designModel:callMessage" name="findObject(Order,ord.AccoutId=accoutId[and, and]ord.TicketId=ticketId[and, and]ord.OrderStatus=OrderStatus::PAID)" sendingEnd="/1/@sequencediagram.0/@interaction.43/@abstractend.5" receivingEnd="/1/@sequencediagram.0/@interaction.43/@abstractend.6"/>
+        <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.43/@abstractend.7" receivingEnd="/1/@sequencediagram.0/@interaction.43/@abstractend.8" invocationmessage="/1/@sequencediagram.0/@interaction.43/@message.1"/>
+        <message xsi:type="designModel:callMessage" name="findObject(Ticket,tic.TicketId=ticketId[and]tic.IsValid=true)" sendingEnd="/1/@sequencediagram.0/@interaction.43/@abstractend.11" receivingEnd="/1/@sequencediagram.0/@interaction.43/@abstractend.12"/>
+        <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.43/@abstractend.13" receivingEnd="/1/@sequencediagram.0/@interaction.43/@abstractend.14" invocationmessage="/1/@sequencediagram.0/@interaction.43/@message.3"/>
+        <message xsi:type="designModel:ReturnMessage" name="result = true" sendingEnd="/1/@sequencediagram.0/@interaction.43/@abstractend.16" receivingEnd="/1/@sequencediagram.0/@interaction.43/@abstractend.17" invocationmessage="/1/@sequencediagram.0/@interaction.43/@message.0"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndS" context="/0" execution="/1/@sequencediagram.0/@interaction.43/@execution.0"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndS" context="/1/@classdiagram/@class.19" execution="/1/@sequencediagram.0/@interaction.43/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="callMessageStart" context="/1/@sequencediagram.0/@interaction.43/@execution.0"/>
+        <abstractend xsi:type="designModel:MixEnd" name="callMessageEnd" context="/1/@sequencediagram.0/@interaction.43/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message46EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.43/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message46SE" context="/1/@sequencediagram.0/@interaction.43/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message46RE" context="/1/@sequencediagram.0/@interaction.43/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message46SER" context="/1/@sequencediagram.0/@interaction.43/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message46RER" context="/1/@sequencediagram.0/@interaction.43/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message46EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.43/@execution.2"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message47EES" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.43/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message47SE" context="/1/@sequencediagram.0/@interaction.43/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message47RE" context="/1/@sequencediagram.0/@interaction.43/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message47SER" context="/1/@sequencediagram.0/@interaction.43/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message47RER" context="/1/@sequencediagram.0/@interaction.43/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message47EEE" context="/1/@classdiagram/@class.6" execution="/1/@sequencediagram.0/@interaction.43/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message197SER" context="/1/@sequencediagram.0/@interaction.43/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message197RER" context="/1/@sequencediagram.0/@interaction.43/@execution.0"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndE" context="/1/@classdiagram/@class.19" execution="/1/@sequencediagram.0/@interaction.43/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndE" context="/0" execution="/1/@sequencediagram.0/@interaction.43/@execution.0"/>
+        <execution participant="/0" start="/1/@sequencediagram.0/@interaction.43/@abstractend.0" end="/1/@sequencediagram.0/@interaction.43/@abstractend.19" name="controller"/>
+        <execution participant="/1/@classdiagram/@class.19" start="/1/@sequencediagram.0/@interaction.43/@abstractend.1" end="/1/@sequencediagram.0/@interaction.43/@abstractend.18" name="CancelTripService"/>
+        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.43/@abstractend.4" end="/1/@sequencediagram.0/@interaction.43/@abstractend.9" name="execution46"/>
+        <execution participant="/1/@classdiagram/@class.6" start="/1/@sequencediagram.0/@interaction.43/@abstractend.10" end="/1/@sequencediagram.0/@interaction.43/@abstractend.15" name="execution47"/>
+      </interaction>
+      <interaction name="cancelTicket" participants="/0 /1/@classdiagram/@class.19 /1/@classdiagram/@class.6 /64 /65">
+        <message xsi:type="designModel:callMessage" name="cancelTicket(" sendingEnd="/1/@sequencediagram.0/@interaction.44/@abstractend.2" receivingEnd="/1/@sequencediagram.0/@interaction.44/@abstractend.3"/>
+        <message xsi:type="designModel:callMessage" name="setOrderStatus(OrderStatus::CANCELED)" sendingEnd="/1/@sequencediagram.0/@interaction.44/@abstractend.5" receivingEnd="/1/@sequencediagram.0/@interaction.44/@abstractend.6"/>
+        <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.44/@abstractend.7" receivingEnd="/1/@sequencediagram.0/@interaction.44/@abstractend.8" invocationmessage="/1/@sequencediagram.0/@interaction.44/@message.1"/>
+        <message xsi:type="designModel:callMessage" name="setIsValid(false)" sendingEnd="/1/@sequencediagram.0/@interaction.44/@abstractend.11" receivingEnd="/1/@sequencediagram.0/@interaction.44/@abstractend.12"/>
+        <message xsi:type="designModel:ReturnMessage" sendingEnd="/1/@sequencediagram.0/@interaction.44/@abstractend.13" receivingEnd="/1/@sequencediagram.0/@interaction.44/@abstractend.14" invocationmessage="/1/@sequencediagram.0/@interaction.44/@message.3"/>
+        <message xsi:type="designModel:ReturnMessage" name="result = true" sendingEnd="/1/@sequencediagram.0/@interaction.44/@abstractend.16" receivingEnd="/1/@sequencediagram.0/@interaction.44/@abstractend.17" invocationmessage="/1/@sequencediagram.0/@interaction.44/@message.0"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndS" context="/0" execution="/1/@sequencediagram.0/@interaction.44/@execution.0"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndS" context="/1/@classdiagram/@class.19" execution="/1/@sequencediagram.0/@interaction.44/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="callMessageStart" context="/1/@sequencediagram.0/@interaction.44/@execution.0"/>
+        <abstractend xsi:type="designModel:MixEnd" name="callMessageEnd" context="/1/@sequencediagram.0/@interaction.44/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message198EES" context="/64" execution="/1/@sequencediagram.0/@interaction.44/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message198SE" context="/1/@sequencediagram.0/@interaction.44/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message198RE" context="/1/@sequencediagram.0/@interaction.44/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message198SER" context="/1/@sequencediagram.0/@interaction.44/@execution.2"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message198RER" context="/1/@sequencediagram.0/@interaction.44/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message198EEE" context="/64" execution="/1/@sequencediagram.0/@interaction.44/@execution.2"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message199EES" context="/65" execution="/1/@sequencediagram.0/@interaction.44/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message199SE" context="/1/@sequencediagram.0/@interaction.44/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message199RE" context="/1/@sequencediagram.0/@interaction.44/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message199SER" context="/1/@sequencediagram.0/@interaction.44/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message199RER" context="/1/@sequencediagram.0/@interaction.44/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="message199EEE" context="/65" execution="/1/@sequencediagram.0/@interaction.44/@execution.3"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message200SER" context="/1/@sequencediagram.0/@interaction.44/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message200RER" context="/1/@sequencediagram.0/@interaction.44/@execution.0"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndE" context="/1/@classdiagram/@class.19" execution="/1/@sequencediagram.0/@interaction.44/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndE" context="/0" execution="/1/@sequencediagram.0/@interaction.44/@execution.0"/>
+        <execution participant="/0" start="/1/@sequencediagram.0/@interaction.44/@abstractend.0" end="/1/@sequencediagram.0/@interaction.44/@abstractend.19" name="controller"/>
+        <execution participant="/1/@classdiagram/@class.19" start="/1/@sequencediagram.0/@interaction.44/@abstractend.1" end="/1/@sequencediagram.0/@interaction.44/@abstractend.18" name="CancelTripService"/>
+        <execution participant="/64" start="/1/@sequencediagram.0/@interaction.44/@abstractend.4" end="/1/@sequencediagram.0/@interaction.44/@abstractend.9" name="execution198"/>
+        <execution participant="/65" start="/1/@sequencediagram.0/@interaction.44/@abstractend.10" end="/1/@sequencediagram.0/@interaction.44/@abstractend.15" name="execution199"/>
+      </interaction>
+      <interaction name="refund" participants="/0 /1/@classdiagram/@class.19 /1/@classdiagram/@class.6">
+        <message xsi:type="designModel:callMessage" name="refund(" sendingEnd="/1/@sequencediagram.0/@interaction.45/@abstractend.2" receivingEnd="/1/@sequencediagram.0/@interaction.45/@abstractend.3"/>
+        <message xsi:type="designModel:ReturnMessage" name="result = CurrentTicket.Price" sendingEnd="/1/@sequencediagram.0/@interaction.45/@abstractend.4" receivingEnd="/1/@sequencediagram.0/@interaction.45/@abstractend.5" invocationmessage="/1/@sequencediagram.0/@interaction.45/@message.0"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndS" context="/0" execution="/1/@sequencediagram.0/@interaction.45/@execution.0"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndS" context="/1/@classdiagram/@class.19" execution="/1/@sequencediagram.0/@interaction.45/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="callMessageStart" context="/1/@sequencediagram.0/@interaction.45/@execution.0"/>
+        <abstractend xsi:type="designModel:MixEnd" name="callMessageEnd" context="/1/@sequencediagram.0/@interaction.45/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message201SER" context="/1/@sequencediagram.0/@interaction.45/@execution.1"/>
+        <abstractend xsi:type="designModel:MixEnd" name="message201RER" context="/1/@sequencediagram.0/@interaction.45/@execution.0"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="serviceExecutionEndE" context="/1/@classdiagram/@class.19" execution="/1/@sequencediagram.0/@interaction.45/@execution.1"/>
+        <abstractend xsi:type="designModel:ExecutionEnd" name="controllerExecutionEndE" context="/0" execution="/1/@sequencediagram.0/@interaction.45/@execution.0"/>
+        <execution participant="/0" start="/1/@sequencediagram.0/@interaction.45/@abstractend.0" end="/1/@sequencediagram.0/@interaction.45/@abstractend.7" name="controller"/>
+        <execution participant="/1/@classdiagram/@class.19" start="/1/@sequencediagram.0/@interaction.45/@abstractend.1" end="/1/@sequencediagram.0/@interaction.45/@abstractend.6" name="CancelTripService"/>
       </interaction>
     </sequencediagram>
   </designModel:DesignModel>
@@ -2876,7 +2958,6 @@
   <designModel:Participant description="train:Train"/>
   <designModel:Participant description="seat:Seat"/>
   <designModel:Participant description="route:Route"/>
-  <designModel:Participant description="accout:Accout"/>
   <designModel:Participant description="ticket:Ticket"/>
   <designModel:Participant description="order:Order"/>
   <designModel:Participant description="seat:Seat"/>
@@ -2885,15 +2966,16 @@
   <designModel:Participant description="order:Order"/>
   <designModel:Participant description="accout:Accout"/>
   <designModel:Participant description="ticket:Ticket"/>
-  <designModel:Participant description="ticket:Ticket"/>
-  <designModel:Participant description="accout:Accout"/>
   <designModel:Participant description="route:Route"/>
-  <designModel:Participant description="order:Order"/>
   <designModel:Participant description="seat:Seat"/>
   <designModel:Participant description="ticket:Ticket"/>
   <designModel:Participant description="order:Order"/>
   <designModel:Participant description="accout:Accout"/>
   <designModel:Participant description="order:Order"/>
+  <designModel:Participant description="ticket:Ticket"/>
+  <designModel:Participant description="accout:Accout"/>
+  <designModel:Participant description="order:Order"/>
+  <designModel:Participant description="ticket:Ticket"/>
   <designModel:Participant description="rou : Route"/>
   <designModel:Participant description="tra : Train"/>
   <designModel:Participant description="tic : Ticket"/>
@@ -2905,7 +2987,10 @@
   <designModel:Participant description="CurrentTicket : Ticket"/>
   <designModel:Participant description="CurrentTicket : Ticket"/>
   <designModel:Participant description="CurrentOrder : Order"/>
+  <designModel:Participant description="CurrentTicket : Ticket"/>
   <designModel:Participant description="CurrentOrder : Order"/>
   <designModel:Participant description="CurrentTicket : Ticket"/>
   <designModel:Participant description="CurrentOrder : Order"/>
+  <designModel:Participant description="CurrentOrder : Order"/>
+  <designModel:Participant description="CurrentTicket : Ticket"/>
 </xmi:XMI>

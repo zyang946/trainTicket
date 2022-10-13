@@ -67,7 +67,7 @@ public class PrototypeController implements Initializable {
 	
 		trainticketsystem_service = ServiceManager.createTrainTicketSystem();
 		thirdpartyservices_service = ServiceManager.createThirdPartyServices();
-		buyticketservice_service = ServiceManager.createBuyTicketService();
+		createtripservice_service = ServiceManager.createCreateTripService();
 		queryorderservice_service = ServiceManager.createQueryOrderService();
 		manageroutecrudservice_service = ServiceManager.createManageRouteCRUDService();
 		managetraincrudservice_service = ServiceManager.createManageTrainCRUDService();
@@ -77,6 +77,7 @@ public class PrototypeController implements Initializable {
 		manageseatcrudservice_service = ServiceManager.createManageSeatCRUDService();
 		modifytripservice_service = ServiceManager.createModifyTripService();
 		deleteoverdueorderservice_service = ServiceManager.createDeleteOverdueOrderService();
+		canceltripservice_service = ServiceManager.createCancelTripService();
 				
 		this.dateformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		
@@ -1619,7 +1620,7 @@ public class PrototypeController implements Initializable {
 		v = new VBox();
 		
 		//entities invariants
-		entities = BuyTicketServiceImpl.opINVRelatedEntity.get("buyTicket");
+		entities = CreateTripServiceImpl.opINVRelatedEntity.get("buyTicket");
 		if (entities != null) {
 			for (String opRelatedEntities : entities) {
 				for (Entry<String, String> inv : entity_invariants_map.entrySet()) {
@@ -1657,7 +1658,7 @@ public class PrototypeController implements Initializable {
 			String[] invt = invname.split("_");
 			String serviceName = invt[0];
 			
-			if (serviceName.equals("BuyTicketService")) {
+			if (serviceName.equals("CreateTripService")) {
 				Label l = new Label(invname);
 				l.setStyle("-fx-max-width: Infinity;" + 
 						   "-fx-background-color: linear-gradient(to right, #7FFF00 0%, #F0FFFF 100%);" +
@@ -1677,7 +1678,7 @@ public class PrototypeController implements Initializable {
 		v = new VBox();
 		
 		//entities invariants
-		entities = BuyTicketServiceImpl.opINVRelatedEntity.get("saveOrder");
+		entities = CreateTripServiceImpl.opINVRelatedEntity.get("saveOrder");
 		if (entities != null) {
 			for (String opRelatedEntities : entities) {
 				for (Entry<String, String> inv : entity_invariants_map.entrySet()) {
@@ -1715,7 +1716,7 @@ public class PrototypeController implements Initializable {
 			String[] invt = invname.split("_");
 			String serviceName = invt[0];
 			
-			if (serviceName.equals("BuyTicketService")) {
+			if (serviceName.equals("CreateTripService")) {
 				Label l = new Label(invname);
 				l.setStyle("-fx-max-width: Infinity;" + 
 						   "-fx-background-color: linear-gradient(to right, #7FFF00 0%, #F0FFFF 100%);" +
@@ -1735,7 +1736,7 @@ public class PrototypeController implements Initializable {
 		v = new VBox();
 		
 		//entities invariants
-		entities = BuyTicketServiceImpl.opINVRelatedEntity.get("showSeats");
+		entities = CreateTripServiceImpl.opINVRelatedEntity.get("showSeats");
 		if (entities != null) {
 			for (String opRelatedEntities : entities) {
 				for (Entry<String, String> inv : entity_invariants_map.entrySet()) {
@@ -1773,7 +1774,7 @@ public class PrototypeController implements Initializable {
 			String[] invt = invname.split("_");
 			String serviceName = invt[0];
 			
-			if (serviceName.equals("BuyTicketService")) {
+			if (serviceName.equals("CreateTripService")) {
 				Label l = new Label(invname);
 				l.setStyle("-fx-max-width: Infinity;" + 
 						   "-fx-background-color: linear-gradient(to right, #7FFF00 0%, #F0FFFF 100%);" +
@@ -1793,7 +1794,7 @@ public class PrototypeController implements Initializable {
 		v = new VBox();
 		
 		//entities invariants
-		entities = BuyTicketServiceImpl.opINVRelatedEntity.get("selectSeat");
+		entities = CreateTripServiceImpl.opINVRelatedEntity.get("selectSeat");
 		if (entities != null) {
 			for (String opRelatedEntities : entities) {
 				for (Entry<String, String> inv : entity_invariants_map.entrySet()) {
@@ -1831,7 +1832,7 @@ public class PrototypeController implements Initializable {
 			String[] invt = invname.split("_");
 			String serviceName = invt[0];
 			
-			if (serviceName.equals("BuyTicketService")) {
+			if (serviceName.equals("CreateTripService")) {
 				Label l = new Label(invname);
 				l.setStyle("-fx-max-width: Infinity;" + 
 						   "-fx-background-color: linear-gradient(to right, #7FFF00 0%, #F0FFFF 100%);" +
@@ -1851,7 +1852,7 @@ public class PrototypeController implements Initializable {
 		v = new VBox();
 		
 		//entities invariants
-		entities = BuyTicketServiceImpl.opINVRelatedEntity.get("pay");
+		entities = CreateTripServiceImpl.opINVRelatedEntity.get("pay");
 		if (entities != null) {
 			for (String opRelatedEntities : entities) {
 				for (Entry<String, String> inv : entity_invariants_map.entrySet()) {
@@ -1889,7 +1890,7 @@ public class PrototypeController implements Initializable {
 			String[] invt = invname.split("_");
 			String serviceName = invt[0];
 			
-			if (serviceName.equals("BuyTicketService")) {
+			if (serviceName.equals("CreateTripService")) {
 				Label l = new Label(invname);
 				l.setStyle("-fx-max-width: Infinity;" + 
 						   "-fx-background-color: linear-gradient(to right, #7FFF00 0%, #F0FFFF 100%);" +
@@ -2601,6 +2602,296 @@ public class PrototypeController implements Initializable {
 			}
 		}
 		opInvariantPanel.put("sendNotification", v);
+		
+		v = new VBox();
+		
+		//entities invariants
+		entities = CreateTripServiceImpl.opINVRelatedEntity.get("check");
+		if (entities != null) {
+			for (String opRelatedEntities : entities) {
+				for (Entry<String, String> inv : entity_invariants_map.entrySet()) {
+					
+					String invname = inv.getKey();
+					String[] invt = invname.split("_");
+					String entityName = invt[0];
+		
+					if (opRelatedEntities.equals(entityName)) {
+						Label l = new Label(invname);
+						l.setStyle("-fx-max-width: Infinity;" + 
+								"-fx-background-color: linear-gradient(to right, #7FFF00 0%, #F0FFFF 100%);" +
+							    "-fx-padding: 6px;" +
+							    "-fx-border-color: black;");
+						Tooltip tp = new Tooltip();
+						tp.setText(inv.getValue());
+						l.setTooltip(tp);
+						
+						op_entity_invariants_label_map.put(invname, l);
+						
+						v.getChildren().add(l);
+					}
+				}
+			}
+		} else {
+			Label l = new Label("check" + " is no related invariants");
+			l.setPadding(new Insets(8, 8, 8, 8));
+			v.getChildren().add(l);
+		}
+		
+		//service invariants
+		for (Entry<String, String> inv : service_invariants_map.entrySet()) {
+			
+			String invname = inv.getKey();
+			String[] invt = invname.split("_");
+			String serviceName = invt[0];
+			
+			if (serviceName.equals("CreateTripService")) {
+				Label l = new Label(invname);
+				l.setStyle("-fx-max-width: Infinity;" + 
+						   "-fx-background-color: linear-gradient(to right, #7FFF00 0%, #F0FFFF 100%);" +
+						   "-fx-padding: 6px;" +
+						   "-fx-border-color: black;");
+				Tooltip tp = new Tooltip();
+				tp.setText(inv.getValue());
+				l.setTooltip(tp);
+				
+				op_entity_invariants_label_map.put(invname, l);
+				
+				v.getChildren().add(l);
+			}
+		}
+		opInvariantPanel.put("check", v);
+		
+		v = new VBox();
+		
+		//entities invariants
+		entities = ModifyTripServiceImpl.opINVRelatedEntity.get("checkTicket");
+		if (entities != null) {
+			for (String opRelatedEntities : entities) {
+				for (Entry<String, String> inv : entity_invariants_map.entrySet()) {
+					
+					String invname = inv.getKey();
+					String[] invt = invname.split("_");
+					String entityName = invt[0];
+		
+					if (opRelatedEntities.equals(entityName)) {
+						Label l = new Label(invname);
+						l.setStyle("-fx-max-width: Infinity;" + 
+								"-fx-background-color: linear-gradient(to right, #7FFF00 0%, #F0FFFF 100%);" +
+							    "-fx-padding: 6px;" +
+							    "-fx-border-color: black;");
+						Tooltip tp = new Tooltip();
+						tp.setText(inv.getValue());
+						l.setTooltip(tp);
+						
+						op_entity_invariants_label_map.put(invname, l);
+						
+						v.getChildren().add(l);
+					}
+				}
+			}
+		} else {
+			Label l = new Label("checkTicket" + " is no related invariants");
+			l.setPadding(new Insets(8, 8, 8, 8));
+			v.getChildren().add(l);
+		}
+		
+		//service invariants
+		for (Entry<String, String> inv : service_invariants_map.entrySet()) {
+			
+			String invname = inv.getKey();
+			String[] invt = invname.split("_");
+			String serviceName = invt[0];
+			
+			if (serviceName.equals("ModifyTripService")) {
+				Label l = new Label(invname);
+				l.setStyle("-fx-max-width: Infinity;" + 
+						   "-fx-background-color: linear-gradient(to right, #7FFF00 0%, #F0FFFF 100%);" +
+						   "-fx-padding: 6px;" +
+						   "-fx-border-color: black;");
+				Tooltip tp = new Tooltip();
+				tp.setText(inv.getValue());
+				l.setTooltip(tp);
+				
+				op_entity_invariants_label_map.put(invname, l);
+				
+				v.getChildren().add(l);
+			}
+		}
+		opInvariantPanel.put("checkTicket", v);
+		
+		v = new VBox();
+		
+		//entities invariants
+		entities = CancelTripServiceImpl.opINVRelatedEntity.get("checkCancelTrip");
+		if (entities != null) {
+			for (String opRelatedEntities : entities) {
+				for (Entry<String, String> inv : entity_invariants_map.entrySet()) {
+					
+					String invname = inv.getKey();
+					String[] invt = invname.split("_");
+					String entityName = invt[0];
+		
+					if (opRelatedEntities.equals(entityName)) {
+						Label l = new Label(invname);
+						l.setStyle("-fx-max-width: Infinity;" + 
+								"-fx-background-color: linear-gradient(to right, #7FFF00 0%, #F0FFFF 100%);" +
+							    "-fx-padding: 6px;" +
+							    "-fx-border-color: black;");
+						Tooltip tp = new Tooltip();
+						tp.setText(inv.getValue());
+						l.setTooltip(tp);
+						
+						op_entity_invariants_label_map.put(invname, l);
+						
+						v.getChildren().add(l);
+					}
+				}
+			}
+		} else {
+			Label l = new Label("checkCancelTrip" + " is no related invariants");
+			l.setPadding(new Insets(8, 8, 8, 8));
+			v.getChildren().add(l);
+		}
+		
+		//service invariants
+		for (Entry<String, String> inv : service_invariants_map.entrySet()) {
+			
+			String invname = inv.getKey();
+			String[] invt = invname.split("_");
+			String serviceName = invt[0];
+			
+			if (serviceName.equals("CancelTripService")) {
+				Label l = new Label(invname);
+				l.setStyle("-fx-max-width: Infinity;" + 
+						   "-fx-background-color: linear-gradient(to right, #7FFF00 0%, #F0FFFF 100%);" +
+						   "-fx-padding: 6px;" +
+						   "-fx-border-color: black;");
+				Tooltip tp = new Tooltip();
+				tp.setText(inv.getValue());
+				l.setTooltip(tp);
+				
+				op_entity_invariants_label_map.put(invname, l);
+				
+				v.getChildren().add(l);
+			}
+		}
+		opInvariantPanel.put("checkCancelTrip", v);
+		
+		v = new VBox();
+		
+		//entities invariants
+		entities = CancelTripServiceImpl.opINVRelatedEntity.get("cancelTicket");
+		if (entities != null) {
+			for (String opRelatedEntities : entities) {
+				for (Entry<String, String> inv : entity_invariants_map.entrySet()) {
+					
+					String invname = inv.getKey();
+					String[] invt = invname.split("_");
+					String entityName = invt[0];
+		
+					if (opRelatedEntities.equals(entityName)) {
+						Label l = new Label(invname);
+						l.setStyle("-fx-max-width: Infinity;" + 
+								"-fx-background-color: linear-gradient(to right, #7FFF00 0%, #F0FFFF 100%);" +
+							    "-fx-padding: 6px;" +
+							    "-fx-border-color: black;");
+						Tooltip tp = new Tooltip();
+						tp.setText(inv.getValue());
+						l.setTooltip(tp);
+						
+						op_entity_invariants_label_map.put(invname, l);
+						
+						v.getChildren().add(l);
+					}
+				}
+			}
+		} else {
+			Label l = new Label("cancelTicket" + " is no related invariants");
+			l.setPadding(new Insets(8, 8, 8, 8));
+			v.getChildren().add(l);
+		}
+		
+		//service invariants
+		for (Entry<String, String> inv : service_invariants_map.entrySet()) {
+			
+			String invname = inv.getKey();
+			String[] invt = invname.split("_");
+			String serviceName = invt[0];
+			
+			if (serviceName.equals("CancelTripService")) {
+				Label l = new Label(invname);
+				l.setStyle("-fx-max-width: Infinity;" + 
+						   "-fx-background-color: linear-gradient(to right, #7FFF00 0%, #F0FFFF 100%);" +
+						   "-fx-padding: 6px;" +
+						   "-fx-border-color: black;");
+				Tooltip tp = new Tooltip();
+				tp.setText(inv.getValue());
+				l.setTooltip(tp);
+				
+				op_entity_invariants_label_map.put(invname, l);
+				
+				v.getChildren().add(l);
+			}
+		}
+		opInvariantPanel.put("cancelTicket", v);
+		
+		v = new VBox();
+		
+		//entities invariants
+		entities = CancelTripServiceImpl.opINVRelatedEntity.get("refund");
+		if (entities != null) {
+			for (String opRelatedEntities : entities) {
+				for (Entry<String, String> inv : entity_invariants_map.entrySet()) {
+					
+					String invname = inv.getKey();
+					String[] invt = invname.split("_");
+					String entityName = invt[0];
+		
+					if (opRelatedEntities.equals(entityName)) {
+						Label l = new Label(invname);
+						l.setStyle("-fx-max-width: Infinity;" + 
+								"-fx-background-color: linear-gradient(to right, #7FFF00 0%, #F0FFFF 100%);" +
+							    "-fx-padding: 6px;" +
+							    "-fx-border-color: black;");
+						Tooltip tp = new Tooltip();
+						tp.setText(inv.getValue());
+						l.setTooltip(tp);
+						
+						op_entity_invariants_label_map.put(invname, l);
+						
+						v.getChildren().add(l);
+					}
+				}
+			}
+		} else {
+			Label l = new Label("refund" + " is no related invariants");
+			l.setPadding(new Insets(8, 8, 8, 8));
+			v.getChildren().add(l);
+		}
+		
+		//service invariants
+		for (Entry<String, String> inv : service_invariants_map.entrySet()) {
+			
+			String invname = inv.getKey();
+			String[] invt = invname.split("_");
+			String serviceName = invt[0];
+			
+			if (serviceName.equals("CancelTripService")) {
+				Label l = new Label(invname);
+				l.setStyle("-fx-max-width: Infinity;" + 
+						   "-fx-background-color: linear-gradient(to right, #7FFF00 0%, #F0FFFF 100%);" +
+						   "-fx-padding: 6px;" +
+						   "-fx-border-color: black;");
+				Tooltip tp = new Tooltip();
+				tp.setText(inv.getValue());
+				l.setTooltip(tp);
+				
+				op_entity_invariants_label_map.put(invname, l);
+				
+				v.getChildren().add(l);
+			}
+		}
+		opInvariantPanel.put("refund", v);
 		
 		
 	}
@@ -3714,16 +4005,19 @@ public class PrototypeController implements Initializable {
 		definitions_map.put("querySeat", "seat:Seat = Seat.allInstance()->any(sea:Seat | sea.SeatId = seatid)\r\r\n");
 		definitions_map.put("modifySeat", "seat:Seat = Seat.allInstance()->any(sea:Seat | sea.SeatId = seatid)\n\rtrain:Train = Train.allInstance()->any(tra:Train | tra.TrainId = trainid)\r\r\n");
 		definitions_map.put("deleteSeat", "seat:Seat = Seat.allInstance()->any(sea:Seat | sea.SeatId = seatid)\r\r\n");
-		definitions_map.put("buyTicket", "route:Route = Route.allInstance()->any(rou:Route | rou.RouteId = routeId)\n\raccout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutId)\n\rticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketId)\r\r\n");
+		definitions_map.put("buyTicket", "route:Route = Route.allInstance()->any(rou:Route | rou.RouteId = routeId)\n\rticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketId)\r\r\n");
 		definitions_map.put("saveOrder", "order:Order = Order.allInstance()->any(ord:Order | ord.OrderId = orderId)\r\r\n");
 		definitions_map.put("selectSeat", "seat:Seat = Seat.allInstance()->any(sea:Seat | sea.TrainId = CurrentRoute.TrainId and sea.SeatId = seatId)\r\r\n");
 		definitions_map.put("cancelTrip", "ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketId)\n\raccout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutId)\n\rorder:Order = Order.allInstance()->any(ord:Order | ord.TicketId = ticketId and ord.AccoutId = accoutId and ord.OrderStatus = OrderStatus :: PAID)\r\r\n");
 		definitions_map.put("queryByAccoutId", "accout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutId)\r\r\n");
 		definitions_map.put("queryTicketId", "ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketId)\r\r\n");
-		definitions_map.put("updateTicket", "ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketId and tic.IsValid = true)\n\raccout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutId)\n\rroute:Route = Route.allInstance()->any(rou:Route | rou.RouteId = newRouteId)\n\rorder:Order = Order.allInstance()->any(ord:Order | ord.AccoutId = accoutId and ord.TicketId = ticketId and ord.OrderStatus = OrderStatus :: PAID)\r\r\n");
+		definitions_map.put("updateTicket", "route:Route = Route.allInstance()->any(rou:Route | rou.RouteId = newRouteId)\r\r\n");
 		definitions_map.put("selectNewSeat", "seat:Seat = Seat.allInstance()->any(sea:Seat | sea.SeatId = seatId and sea.TrainId = CurrentRoute.TrainId)\r\r\n");
 		definitions_map.put("deleteOverdueTicket", "ticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketId and tic.IsValid = false)\r\r\n");
 		definitions_map.put("deleteOverdueOrder", "order:Order = Order.allInstance()->any(ord:Order | ord.TicketId = CurrentTicketId and ord.OrderStatus = OrderStatus :: CANCELED)\r\r\n");
+		definitions_map.put("check", "accout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutId)\r\r\n");
+		definitions_map.put("checkTicket", "order:Order = Order.allInstance()->any(ord:Order | ord.AccoutId = accoutId and ord.TicketId = ticketId and ord.OrderStatus = OrderStatus :: PAID)\n\rticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketId and tic.IsValid = true)\n\raccout:Accout = Accout.allInstance()->any(acc:Accout | acc.AccoutId = accoutId)\r\r\n");
+		definitions_map.put("checkCancelTrip", "order:Order = Order.allInstance()->any(ord:Order | ord.AccoutId = accoutId and ord.TicketId = ticketId and ord.OrderStatus = OrderStatus :: PAID)\n\rticket:Ticket = Ticket.allInstance()->any(tic:Ticket | tic.TicketId = ticketId and tic.IsValid = true)\r\r\n");
 		
 		//precondition map
 		preconditions_map = new HashMap<String, String>();
@@ -3751,7 +4045,7 @@ public class PrototypeController implements Initializable {
 		preconditions_map.put("querySeat", "seat.oclIsUndefined() = false");
 		preconditions_map.put("modifySeat", "seat.oclIsUndefined() = false and\ntrain.oclIsUndefined() = false\n");
 		preconditions_map.put("deleteSeat", "seat.oclIsUndefined() = false and\nSeat.allInstance()->includes(seat)\n");
-		preconditions_map.put("buyTicket", "route.oclIsUndefined() = false and\naccout.oclIsUndefined() = false and\nticket.oclIsUndefined() = true\n");
+		preconditions_map.put("buyTicket", "route.oclIsUndefined() = false and\nticket.oclIsUndefined() = true\n");
 		preconditions_map.put("saveOrder", "order.oclIsUndefined() = true");
 		preconditions_map.put("showSeats", "true");
 		preconditions_map.put("selectSeat", "seat.oclIsUndefined() = false");
@@ -3760,7 +4054,7 @@ public class PrototypeController implements Initializable {
 		preconditions_map.put("cancelTrip", "//true\nticket.oclIsUndefined() = false and\naccout.oclIsUndefined() = false and\norder.oclIsUndefined() = false\n");
 		preconditions_map.put("queryByAccoutId", "accout.oclIsUndefined() = false");
 		preconditions_map.put("queryTicketId", "ticket.oclIsUndefined() = false");
-		preconditions_map.put("updateTicket", "ticket.oclIsUndefined() = false and\naccout.oclIsUndefined() = false and\nroute.oclIsUndefined() = false and\norder.oclIsUndefined() = false\n");
+		preconditions_map.put("updateTicket", "route.oclIsUndefined() = false");
 		preconditions_map.put("updateOrder", "true");
 		preconditions_map.put("showSeatsByRouteId", "true");
 		preconditions_map.put("selectNewSeat", "seat.oclIsUndefined() = false");
@@ -3768,6 +4062,11 @@ public class PrototypeController implements Initializable {
 		preconditions_map.put("deleteOverdueTicket", "ticket.oclIsUndefined() = false");
 		preconditions_map.put("deleteOverdueOrder", "order.oclIsUndefined() = false");
 		preconditions_map.put("sendNotification", "true");
+		preconditions_map.put("check", "accout.oclIsUndefined() = false");
+		preconditions_map.put("checkTicket", "order.oclIsUndefined() = false and\nticket.oclIsUndefined() = false and\naccout.oclIsUndefined() = false\n");
+		preconditions_map.put("checkCancelTrip", "order.oclIsUndefined() = false and\nticket.oclIsUndefined() = false\n");
+		preconditions_map.put("cancelTicket", "true");
+		preconditions_map.put("refund", "true");
 		
 		//postcondition map
 		postconditions_map = new HashMap<String, String>();
@@ -3795,7 +4094,7 @@ public class PrototypeController implements Initializable {
 		postconditions_map.put("querySeat", "result = seat");
 		postconditions_map.put("modifySeat", "seat.SeatId = seatid and\nseat.TrainId = trainid and\nseat.SeatType = seattype and\nresult = true\n");
 		postconditions_map.put("deleteSeat", "Seat.allInstance()->excludes(seat) and\nresult = true\n");
-		postconditions_map.put("buyTicket", "let tic:Ticket intic.oclIsNew() and\ntic.TicketId = ticketId and\ntic.RouteId = routeId and\ntic.IsValid = false and\nTicket.allInstance()->includes(tic) and\nCurrentTicket = tic and\nCurrentAccout = accout and\nCurrentRoute = route and\nresult = true\n");
+		postconditions_map.put("buyTicket", "let tic:Ticket intic.oclIsNew() and\ntic.TicketId = ticketId and\ntic.RouteId = routeId and\ntic.IsValid = false and\nTicket.allInstance()->includes(tic) and\nCurrentTicket = tic and\nCurrentRoute = route and\nresult = true\n");
 		postconditions_map.put("saveOrder", "let ord:Order inord.oclIsNew() and\nord.OrderId = orderId and\nord.TicketId = CurrentTicket.TicketId and\nord.AccoutId = CurrentAccout.AccoutId and\nord.CreateTime = boughtTime and\nord.OrderStatus = OrderStatus::NOTPAID and\nCurrentOrder = ord and\nOrder.allInstance()->includes(ord) and\nresult = true\n");
 		postconditions_map.put("showSeats", "result = Seat.allInstance()->select(sea:Seat | sea.TrainId =  CurrentRoute.TrainId)");
 		postconditions_map.put("selectSeat", "CurrentTicket.seatId = seatId and\nresult = true\n");
@@ -3804,7 +4103,7 @@ public class PrototypeController implements Initializable {
 		postconditions_map.put("cancelTrip", "ticket.IsValid = false and\norder.OrderStatus = OrderStatus::CANCELED and\nresult = true\n");
 		postconditions_map.put("queryByAccoutId", "result = Order.allInstance()->select(order:Order | order.AccoutId = accoutId)");
 		postconditions_map.put("queryTicketId", "result = Order.allInstance()->select(order:Order | order.TicketId = ticketId)");
-		postconditions_map.put("updateTicket", "ticket.RouteId = newRouteId and\nticket.IsValid = false and\nCurrentTicket = ticket and\nCurrentOrder = order and\nCurrentAccout = accout and\nCurrentRoute = route and\nresult = true\n");
+		postconditions_map.put("updateTicket", "CurrentTicket.RouteId = newRouteId and\nCurrentTicket.IsValid = false and\nCurrentRoute = route and\nresult = true\n");
 		postconditions_map.put("updateOrder", "CurrentOrder.CreateTime = time and\nCurrentOrder.OrderStatus = OrderStatus::NOTPAID and\nresult = true\n");
 		postconditions_map.put("showSeatsByRouteId", "result = Seat.allInstance()->select(sea:Seat | sea.TrainId =  CurrentRoute.TrainId)");
 		postconditions_map.put("selectNewSeat", "self.CurrentTicket.SeatId = seatId and\nresult = true\n");
@@ -3812,6 +4111,11 @@ public class PrototypeController implements Initializable {
 		postconditions_map.put("deleteOverdueTicket", "self.CurrentTicketId = ticketId and\nTicket.allInstance()->excludes(ticket) and\nresult = true\n");
 		postconditions_map.put("deleteOverdueOrder", "Order.allInstance()->excludes(order) and\nresult = true\n");
 		postconditions_map.put("sendNotification", "result = true");
+		postconditions_map.put("check", "result = true");
+		postconditions_map.put("checkTicket", "CurrentOrder = order and\nCurrentTicket = ticket and\nCurrentAccout = accout and\nresult = true\n");
+		postconditions_map.put("checkCancelTrip", "CurrentOrder = order and\nCurrentTicket = ticket and\nresult = true\n");
+		postconditions_map.put("cancelTicket", "CurrentOrder.OrderStatus = OrderStatus::CANCELED and\nCurrentTicket.IsValid = false and\nresult = true\n");
+		postconditions_map.put("refund", "result = CurrentTicket.Price");
 		
 		//service invariants map
 		service_invariants_map = new LinkedHashMap<String, String>();
@@ -4614,33 +4918,24 @@ modifySeat_seattype_cb.getItems().add("STAND");
 		 buyTicket.setPadding(new Insets(8, 8, 8, 8));
 		 
 		 ObservableList<Node> buyTicket_content = buyTicket.getChildren();
-		 Label buyTicket_accoutId_label = new Label("accoutId:");
-		 buyTicket_accoutId_label.setMinWidth(Region.USE_PREF_SIZE);
-		 buyTicket_content.add(buyTicket_accoutId_label);
-		 GridPane.setConstraints(buyTicket_accoutId_label, 0, 0);
-		 
-		 buyTicket_accoutId_t = new TextField();
-		 buyTicket_content.add(buyTicket_accoutId_t);
-		 buyTicket_accoutId_t.setMinWidth(Region.USE_PREF_SIZE);
-		 GridPane.setConstraints(buyTicket_accoutId_t, 1, 0);
 		 Label buyTicket_routeId_label = new Label("routeId:");
 		 buyTicket_routeId_label.setMinWidth(Region.USE_PREF_SIZE);
 		 buyTicket_content.add(buyTicket_routeId_label);
-		 GridPane.setConstraints(buyTicket_routeId_label, 0, 1);
+		 GridPane.setConstraints(buyTicket_routeId_label, 0, 0);
 		 
 		 buyTicket_routeId_t = new TextField();
 		 buyTicket_content.add(buyTicket_routeId_t);
 		 buyTicket_routeId_t.setMinWidth(Region.USE_PREF_SIZE);
-		 GridPane.setConstraints(buyTicket_routeId_t, 1, 1);
+		 GridPane.setConstraints(buyTicket_routeId_t, 1, 0);
 		 Label buyTicket_ticketId_label = new Label("ticketId:");
 		 buyTicket_ticketId_label.setMinWidth(Region.USE_PREF_SIZE);
 		 buyTicket_content.add(buyTicket_ticketId_label);
-		 GridPane.setConstraints(buyTicket_ticketId_label, 0, 2);
+		 GridPane.setConstraints(buyTicket_ticketId_label, 0, 1);
 		 
 		 buyTicket_ticketId_t = new TextField();
 		 buyTicket_content.add(buyTicket_ticketId_t);
 		 buyTicket_ticketId_t.setMinWidth(Region.USE_PREF_SIZE);
-		 GridPane.setConstraints(buyTicket_ticketId_t, 1, 2);
+		 GridPane.setConstraints(buyTicket_ticketId_t, 1, 1);
 		 operationPanels.put("buyTicket", buyTicket);
 		 
 		 // ==================== GridPane_saveOrder ====================
@@ -4825,33 +5120,15 @@ modifySeat_seattype_cb.getItems().add("STAND");
 		 updateTicket.setPadding(new Insets(8, 8, 8, 8));
 		 
 		 ObservableList<Node> updateTicket_content = updateTicket.getChildren();
-		 Label updateTicket_accoutId_label = new Label("accoutId:");
-		 updateTicket_accoutId_label.setMinWidth(Region.USE_PREF_SIZE);
-		 updateTicket_content.add(updateTicket_accoutId_label);
-		 GridPane.setConstraints(updateTicket_accoutId_label, 0, 0);
-		 
-		 updateTicket_accoutId_t = new TextField();
-		 updateTicket_content.add(updateTicket_accoutId_t);
-		 updateTicket_accoutId_t.setMinWidth(Region.USE_PREF_SIZE);
-		 GridPane.setConstraints(updateTicket_accoutId_t, 1, 0);
-		 Label updateTicket_ticketId_label = new Label("ticketId:");
-		 updateTicket_ticketId_label.setMinWidth(Region.USE_PREF_SIZE);
-		 updateTicket_content.add(updateTicket_ticketId_label);
-		 GridPane.setConstraints(updateTicket_ticketId_label, 0, 1);
-		 
-		 updateTicket_ticketId_t = new TextField();
-		 updateTicket_content.add(updateTicket_ticketId_t);
-		 updateTicket_ticketId_t.setMinWidth(Region.USE_PREF_SIZE);
-		 GridPane.setConstraints(updateTicket_ticketId_t, 1, 1);
 		 Label updateTicket_newRouteId_label = new Label("newRouteId:");
 		 updateTicket_newRouteId_label.setMinWidth(Region.USE_PREF_SIZE);
 		 updateTicket_content.add(updateTicket_newRouteId_label);
-		 GridPane.setConstraints(updateTicket_newRouteId_label, 0, 2);
+		 GridPane.setConstraints(updateTicket_newRouteId_label, 0, 0);
 		 
 		 updateTicket_newRouteId_t = new TextField();
 		 updateTicket_content.add(updateTicket_newRouteId_t);
 		 updateTicket_newRouteId_t.setMinWidth(Region.USE_PREF_SIZE);
-		 GridPane.setConstraints(updateTicket_newRouteId_t, 1, 2);
+		 GridPane.setConstraints(updateTicket_newRouteId_t, 1, 0);
 		 operationPanels.put("updateTicket", updateTicket);
 		 
 		 // ==================== GridPane_updateOrder ====================
@@ -4970,25 +5247,249 @@ modifySeat_seattype_cb.getItems().add("STAND");
 		 GridPane.setConstraints(sendNotification_phoneNumber_t, 1, 0);
 		 operationPanels.put("sendNotification", sendNotification);
 		 
+		 // ==================== GridPane_check ====================
+		 GridPane check = new GridPane();
+		 check.setHgap(4);
+		 check.setVgap(6);
+		 check.setPadding(new Insets(8, 8, 8, 8));
+		 
+		 ObservableList<Node> check_content = check.getChildren();
+		 Label check_accoutId_label = new Label("accoutId:");
+		 check_accoutId_label.setMinWidth(Region.USE_PREF_SIZE);
+		 check_content.add(check_accoutId_label);
+		 GridPane.setConstraints(check_accoutId_label, 0, 0);
+		 
+		 check_accoutId_t = new TextField();
+		 check_content.add(check_accoutId_t);
+		 check_accoutId_t.setMinWidth(Region.USE_PREF_SIZE);
+		 GridPane.setConstraints(check_accoutId_t, 1, 0);
+		 operationPanels.put("check", check);
+		 
+		 // ==================== GridPane_checkTicket ====================
+		 GridPane checkTicket = new GridPane();
+		 checkTicket.setHgap(4);
+		 checkTicket.setVgap(6);
+		 checkTicket.setPadding(new Insets(8, 8, 8, 8));
+		 
+		 ObservableList<Node> checkTicket_content = checkTicket.getChildren();
+		 Label checkTicket_accoutId_label = new Label("accoutId:");
+		 checkTicket_accoutId_label.setMinWidth(Region.USE_PREF_SIZE);
+		 checkTicket_content.add(checkTicket_accoutId_label);
+		 GridPane.setConstraints(checkTicket_accoutId_label, 0, 0);
+		 
+		 checkTicket_accoutId_t = new TextField();
+		 checkTicket_content.add(checkTicket_accoutId_t);
+		 checkTicket_accoutId_t.setMinWidth(Region.USE_PREF_SIZE);
+		 GridPane.setConstraints(checkTicket_accoutId_t, 1, 0);
+		 Label checkTicket_ticketId_label = new Label("ticketId:");
+		 checkTicket_ticketId_label.setMinWidth(Region.USE_PREF_SIZE);
+		 checkTicket_content.add(checkTicket_ticketId_label);
+		 GridPane.setConstraints(checkTicket_ticketId_label, 0, 1);
+		 
+		 checkTicket_ticketId_t = new TextField();
+		 checkTicket_content.add(checkTicket_ticketId_t);
+		 checkTicket_ticketId_t.setMinWidth(Region.USE_PREF_SIZE);
+		 GridPane.setConstraints(checkTicket_ticketId_t, 1, 1);
+		 operationPanels.put("checkTicket", checkTicket);
+		 
+		 // ==================== GridPane_checkCancelTrip ====================
+		 GridPane checkCancelTrip = new GridPane();
+		 checkCancelTrip.setHgap(4);
+		 checkCancelTrip.setVgap(6);
+		 checkCancelTrip.setPadding(new Insets(8, 8, 8, 8));
+		 
+		 ObservableList<Node> checkCancelTrip_content = checkCancelTrip.getChildren();
+		 Label checkCancelTrip_accoutId_label = new Label("accoutId:");
+		 checkCancelTrip_accoutId_label.setMinWidth(Region.USE_PREF_SIZE);
+		 checkCancelTrip_content.add(checkCancelTrip_accoutId_label);
+		 GridPane.setConstraints(checkCancelTrip_accoutId_label, 0, 0);
+		 
+		 checkCancelTrip_accoutId_t = new TextField();
+		 checkCancelTrip_content.add(checkCancelTrip_accoutId_t);
+		 checkCancelTrip_accoutId_t.setMinWidth(Region.USE_PREF_SIZE);
+		 GridPane.setConstraints(checkCancelTrip_accoutId_t, 1, 0);
+		 Label checkCancelTrip_ticketId_label = new Label("ticketId:");
+		 checkCancelTrip_ticketId_label.setMinWidth(Region.USE_PREF_SIZE);
+		 checkCancelTrip_content.add(checkCancelTrip_ticketId_label);
+		 GridPane.setConstraints(checkCancelTrip_ticketId_label, 0, 1);
+		 
+		 checkCancelTrip_ticketId_t = new TextField();
+		 checkCancelTrip_content.add(checkCancelTrip_ticketId_t);
+		 checkCancelTrip_ticketId_t.setMinWidth(Region.USE_PREF_SIZE);
+		 GridPane.setConstraints(checkCancelTrip_ticketId_t, 1, 1);
+		 operationPanels.put("checkCancelTrip", checkCancelTrip);
+		 
+		 // ==================== GridPane_cancelTicket ====================
+		 GridPane cancelTicket = new GridPane();
+		 cancelTicket.setHgap(4);
+		 cancelTicket.setVgap(6);
+		 cancelTicket.setPadding(new Insets(8, 8, 8, 8));
+		 
+		 ObservableList<Node> cancelTicket_content = cancelTicket.getChildren();
+		 Label cancelTicket_label = new Label("This operation is no intput parameters..");
+		 cancelTicket_label.setMinWidth(Region.USE_PREF_SIZE);
+		 cancelTicket_content.add(cancelTicket_label);
+		 GridPane.setConstraints(cancelTicket_label, 0, 0);
+		 operationPanels.put("cancelTicket", cancelTicket);
+		 
+		 // ==================== GridPane_refund ====================
+		 GridPane refund = new GridPane();
+		 refund.setHgap(4);
+		 refund.setVgap(6);
+		 refund.setPadding(new Insets(8, 8, 8, 8));
+		 
+		 ObservableList<Node> refund_content = refund.getChildren();
+		 Label refund_label = new Label("This operation is no intput parameters..");
+		 refund_label.setMinWidth(Region.USE_PREF_SIZE);
+		 refund_content.add(refund_label);
+		 GridPane.setConstraints(refund_label, 0, 0);
+		 operationPanels.put("refund", refund);
+		 
 	}	
 
 	public void actorTreeViewBinding() {
 		
 		 
+
+		TreeItem<String> treeRootadministrator = new TreeItem<String>("Root node");
+		
+		TreeItem<String> subTreeRoot_Route = new TreeItem<String>("manageRoute");
+					 		subTreeRoot_Route.getChildren().addAll(Arrays.asList(					 		
+					 			 		new TreeItem<String>("createRoute"),
+					 			 		new TreeItem<String>("queryRoute"),
+					 			 		new TreeItem<String>("modifyRoute"),
+					 			 		new TreeItem<String>("deleteRoute")					 			 	
+					 			 	));							 		
+		TreeItem<String> subTreeRoot_Train = new TreeItem<String>("manageTrain");
+					 		subTreeRoot_Train.getChildren().addAll(Arrays.asList(					 		
+					 			 		new TreeItem<String>("createTrain"),
+					 			 		new TreeItem<String>("queryTrain"),
+					 			 		new TreeItem<String>("modifyTrain"),
+					 			 		new TreeItem<String>("deleteTrain")					 			 	
+					 			 	));							 		
+		TreeItem<String> subTreeRoot_Ticket = new TreeItem<String>("manageTicket");
+					 		subTreeRoot_Ticket.getChildren().addAll(Arrays.asList(					 		
+					 			 		new TreeItem<String>("createTicket"),
+					 			 		new TreeItem<String>("queryTicket"),
+					 			 		new TreeItem<String>("modifyTicket"),
+					 			 		new TreeItem<String>("deleteTicket")					 			 	
+					 			 	));							 		
+		TreeItem<String> subTreeRoot_Order = new TreeItem<String>("manageOrder");
+					 		subTreeRoot_Order.getChildren().addAll(Arrays.asList(					 		
+					 			 		new TreeItem<String>("createOrder"),
+					 			 		new TreeItem<String>("queryOrder"),
+					 			 		new TreeItem<String>("modifyOrder"),
+					 			 		new TreeItem<String>("deleteOrder")					 			 	
+					 			 	));							 		
+		TreeItem<String> subTreeRoot_Accout = new TreeItem<String>("manageAccout");
+					 		subTreeRoot_Accout.getChildren().addAll(Arrays.asList(					 		
+					 			 		new TreeItem<String>("createAccout"),
+					 			 		new TreeItem<String>("queryAccout"),
+					 			 		new TreeItem<String>("modifyAccout"),
+					 			 		new TreeItem<String>("deleteAccout")					 			 	
+					 			 	));							 		
+		TreeItem<String> subTreeRoot_Seat = new TreeItem<String>("manageSeat");
+					 		subTreeRoot_Seat.getChildren().addAll(Arrays.asList(					 		
+					 			 		new TreeItem<String>("createSeat"),
+					 			 		new TreeItem<String>("querySeat"),
+					 			 		new TreeItem<String>("modifySeat"),
+					 			 		new TreeItem<String>("deleteSeat")					 			 	
+					 			 	));							 		
+		
+					 			
+						 		
+		treeRootadministrator.getChildren().addAll(Arrays.asList(
+		 	subTreeRoot_Route,
+		 	subTreeRoot_Train,
+		 	subTreeRoot_Ticket,
+		 	subTreeRoot_Order,
+		 	subTreeRoot_Accout,
+		 	subTreeRoot_Seat
+				));	
+				
+	 			treeRootadministrator.setExpanded(true);
+
+		actor_treeview_administrator.setShowRoot(false);
+		actor_treeview_administrator.setRoot(treeRootadministrator);
+	 		
+		actor_treeview_administrator.getSelectionModel().selectedItemProperty().addListener(
+		 				 (observable, oldValue, newValue) -> { 
+		 				 								
+		 				 							 //clear the previous return
+		 											 operation_return_pane.setContent(new Label());
+		 											 
+		 				 							 clickedOp = newValue.getValue();
+		 				 							 GridPane op = operationPanels.get(clickedOp);
+		 				 							 VBox vb = opInvariantPanel.get(clickedOp);
+		 				 							 
+		 				 							 //op pannel
+		 				 							 if (op != null) {
+		 				 								 operation_paras.setContent(operationPanels.get(newValue.getValue()));
+		 				 								 
+		 				 								 ObservableList<Node> l = operationPanels.get(newValue.getValue()).getChildren();
+		 				 								 choosenOperation = new LinkedList<TextField>();
+		 				 								 for (Node n : l) {
+		 				 								 	 if (n instanceof TextField) {
+		 				 								 	 	choosenOperation.add((TextField)n);
+		 				 								 	  }
+		 				 								 }
+		 				 								 
+		 				 								 definition.setText(definitions_map.get(newValue.getValue()));
+		 				 								 precondition.setText(preconditions_map.get(newValue.getValue()));
+		 				 								 postcondition.setText(postconditions_map.get(newValue.getValue()));
+		 				 								 
+		 				 						     }
+		 				 							 else {
+		 				 								 Label l = new Label(newValue.getValue() + " is no contract information in requirement model.");
+		 				 								 l.setPadding(new Insets(8, 8, 8, 8));
+		 				 								 operation_paras.setContent(l);
+		 				 							 }	
+		 				 							 
+		 				 							 //op invariants
+		 				 							 if (vb != null) {
+		 				 							 	ScrollPane scrollPane = new ScrollPane(vb);
+		 				 							 	scrollPane.setFitToWidth(true);
+		 				 							 	invariants_panes.setMaxHeight(200); 
+		 				 							 	//all_invariant_pane.setContent(scrollPane);	
+		 				 							 	
+		 				 							 	invariants_panes.setContent(scrollPane);
+		 				 							 } else {
+		 				 							 	 Label l = new Label(newValue.getValue() + " is no related invariants");
+		 				 							     l.setPadding(new Insets(8, 8, 8, 8));
+		 				 							     invariants_panes.setContent(l);
+		 				 							 }
+		 				 							 
+		 				 							 //reset pre- and post-conditions area color
+		 				 							 precondition.setStyle("-fx-background-color:#FFFFFF; -fx-control-inner-background: #FFFFFF ");
+		 				 							 postcondition.setStyle("-fx-background-color:#FFFFFF; -fx-control-inner-background: #FFFFFF");
+		 				 							 //reset condition panel title
+		 				 							 precondition_pane.setText("Precondition");
+		 				 							 postcondition_pane.setText("Postcondition");
+		 				 						} 
+		 				 				);
+
 		
 		
 		 
 		TreeItem<String> treeRootpassenger = new TreeItem<String>("Root node");
-			TreeItem<String> subTreeRoot_buyTicket = new TreeItem<String>("buyTicket");
-			subTreeRoot_buyTicket.getChildren().addAll(Arrays.asList(			 		    
+			TreeItem<String> subTreeRoot_createTrip = new TreeItem<String>("createTrip");
+			subTreeRoot_createTrip.getChildren().addAll(Arrays.asList(			 		    
+					 	new TreeItem<String>("check"),
 					 	new TreeItem<String>("buyTicket"),
 					 	new TreeItem<String>("saveOrder"),
 					 	new TreeItem<String>("showSeats"),
 					 	new TreeItem<String>("selectSeat"),
 					 	new TreeItem<String>("pay")
 				 		));	
+			TreeItem<String> subTreeRoot_cancelTrip = new TreeItem<String>("cancelTrip");
+			subTreeRoot_cancelTrip.getChildren().addAll(Arrays.asList(			 		    
+					 	new TreeItem<String>("checkCancelTrip"),
+					 	new TreeItem<String>("cancelTicket"),
+					 	new TreeItem<String>("refund")
+				 		));	
 			TreeItem<String> subTreeRoot_modifyTrip = new TreeItem<String>("modifyTrip");
 			subTreeRoot_modifyTrip.getChildren().addAll(Arrays.asList(			 		    
+					 	new TreeItem<String>("checkTicket"),
 					 	new TreeItem<String>("updateTicket"),
 					 	new TreeItem<String>("updateOrder"),
 					 	new TreeItem<String>("showSeatsByRouteId"),
@@ -4997,9 +5498,9 @@ modifySeat_seattype_cb.getItems().add("STAND");
 				 		));	
 		
 		treeRootpassenger.getChildren().addAll(Arrays.asList(
-			subTreeRoot_buyTicket,
+			subTreeRoot_createTrip,
 			new TreeItem<String>("queryInformation"),
-			new TreeItem<String>("cancelTrip"),
+			subTreeRoot_cancelTrip,
 			subTreeRoot_modifyTrip
 					));
 		
@@ -5221,7 +5722,7 @@ modifySeat_seattype_cb.getItems().add("STAND");
 						 							 postcondition_pane.setText("Postcondition");
 						 						} 
 						 				);
-		TreeItem<String> treeRootadministrator = new TreeItem<String>("Root node");
+		TreeItem<String> treeRootsheduler = new TreeItem<String>("Root node");
 			TreeItem<String> subTreeRoot_queryOrder = new TreeItem<String>("queryOrder");
 			subTreeRoot_queryOrder.getChildren().addAll(Arrays.asList(			 		    
 					 	new TreeItem<String>("queryByAccoutId"),
@@ -5234,25 +5735,91 @@ modifySeat_seattype_cb.getItems().add("STAND");
 					 	new TreeItem<String>("modifyAccout"),
 					 	new TreeItem<String>("deleteAccout")
 				 		));	
+		
+		treeRootsheduler.getChildren().addAll(Arrays.asList(
+			subTreeRoot_queryOrder,
+			subTreeRoot_manageAccout
+					));
+		
+		treeRootsheduler.setExpanded(true);
+
+		actor_treeview_sheduler.setShowRoot(false);
+		actor_treeview_sheduler.setRoot(treeRootsheduler);
+		
+		//TreeView click, then open the GridPane for inputing parameters
+		actor_treeview_sheduler.getSelectionModel().selectedItemProperty().addListener(
+						 (observable, oldValue, newValue) -> { 
+						 								
+						 							 //clear the previous return
+													 operation_return_pane.setContent(new Label());
+													 
+						 							 clickedOp = newValue.getValue();
+						 							 GridPane op = operationPanels.get(clickedOp);
+						 							 VBox vb = opInvariantPanel.get(clickedOp);
+						 							 
+						 							 //op pannel
+						 							 if (op != null) {
+						 								 operation_paras.setContent(operationPanels.get(newValue.getValue()));
+						 								 
+						 								 ObservableList<Node> l = operationPanels.get(newValue.getValue()).getChildren();
+						 								 choosenOperation = new LinkedList<TextField>();
+						 								 for (Node n : l) {
+						 								 	 if (n instanceof TextField) {
+						 								 	 	choosenOperation.add((TextField)n);
+						 								 	  }
+						 								 }
+						 								 
+						 								 definition.setText(definitions_map.get(newValue.getValue()));
+						 								 precondition.setText(preconditions_map.get(newValue.getValue()));
+						 								 postcondition.setText(postconditions_map.get(newValue.getValue()));
+						 								 
+						 						     }
+						 							 else {
+						 								 Label l = new Label(newValue.getValue() + " is no contract information in requirement model.");
+						 								 l.setPadding(new Insets(8, 8, 8, 8));
+						 								 operation_paras.setContent(l);
+						 							 }	
+						 							 
+						 							 //op invariants
+						 							 if (vb != null) {
+						 							 	ScrollPane scrollPane = new ScrollPane(vb);
+						 							 	scrollPane.setFitToWidth(true);
+						 							 	invariants_panes.setMaxHeight(200); 
+						 							 	//all_invariant_pane.setContent(scrollPane);	
+						 							 	
+						 							 	invariants_panes.setContent(scrollPane);
+						 							 } else {
+						 							 	 Label l = new Label(newValue.getValue() + " is no related invariants");
+						 							     l.setPadding(new Insets(8, 8, 8, 8));
+						 							     invariants_panes.setContent(l);
+						 							 }
+						 							 
+						 							 //reset pre- and post-conditions area color
+						 							 precondition.setStyle("-fx-background-color:#FFFFFF; -fx-control-inner-background: #FFFFFF ");
+						 							 postcondition.setStyle("-fx-background-color:#FFFFFF; -fx-control-inner-background: #FFFFFF");
+						 							 //reset condition panel title
+						 							 precondition_pane.setText("Precondition");
+						 							 postcondition_pane.setText("Postcondition");
+						 						} 
+						 				);
+		TreeItem<String> treeRootscheduler = new TreeItem<String>("Root node");
 			TreeItem<String> subTreeRoot_deleteOverdueOrder = new TreeItem<String>("deleteOverdueOrder");
 			subTreeRoot_deleteOverdueOrder.getChildren().addAll(Arrays.asList(			 		    
 					 	new TreeItem<String>("deleteOverdueTicket"),
 					 	new TreeItem<String>("deleteOverdueOrder")
 				 		));	
 		
-		treeRootadministrator.getChildren().addAll(Arrays.asList(
-			subTreeRoot_queryOrder,
-			subTreeRoot_manageAccout,
+		treeRootscheduler.getChildren().addAll(Arrays.asList(
 			subTreeRoot_deleteOverdueOrder
 					));
 		
-		treeRootadministrator.setExpanded(true);
+		treeRootscheduler.setExpanded(true);
 
-		actor_treeview_administrator.setShowRoot(false);
-		actor_treeview_administrator.setRoot(treeRootadministrator);
+		actor_treeview_scheduler.setShowRoot(false);
+		actor_treeview_scheduler.setRoot(treeRootscheduler);
 		
 		//TreeView click, then open the GridPane for inputing parameters
-		actor_treeview_administrator.getSelectionModel().selectedItemProperty().addListener(
+		actor_treeview_scheduler.getSelectionModel().selectedItemProperty().addListener(
 						 (observable, oldValue, newValue) -> { 
 						 								
 						 							 //clear the previous return
@@ -5357,6 +5924,11 @@ modifySeat_seattype_cb.getItems().add("STAND");
 		case "deleteOverdueTicket" : deleteOverdueTicket(); break;
 		case "deleteOverdueOrder" : deleteOverdueOrder(); break;
 		case "sendNotification" : sendNotification(); break;
+		case "check" : check(); break;
+		case "checkTicket" : checkTicket(); break;
+		case "checkCancelTrip" : checkCancelTrip(); break;
+		case "cancelTicket" : cancelTicket(); break;
+		case "refund" : refund(); break;
 		
 		}
 		
@@ -6975,13 +7547,12 @@ modifySeat_seattype_cb.getItems().add("STAND");
 		
 		System.out.println("execute buyTicket");
 		String time = String.format("%1$tH:%1$tM:%1$tS", System.currentTimeMillis());
-		log.appendText(time + " -- execute operation: buyTicket in service: BuyTicketService ");
+		log.appendText(time + " -- execute operation: buyTicket in service: CreateTripService ");
 		
 		try {
 			//invoke op with parameters
 			//return value is primitive type, bind result to label.
-			String result = String.valueOf(buyticketservice_service.buyTicket(
-			buyTicket_accoutId_t.getText(),
+			String result = String.valueOf(createtripservice_service.buyTicket(
 			buyTicket_routeId_t.getText(),
 			buyTicket_ticketId_t.getText()
 			));	
@@ -7024,12 +7595,12 @@ modifySeat_seattype_cb.getItems().add("STAND");
 		
 		System.out.println("execute saveOrder");
 		String time = String.format("%1$tH:%1$tM:%1$tS", System.currentTimeMillis());
-		log.appendText(time + " -- execute operation: saveOrder in service: BuyTicketService ");
+		log.appendText(time + " -- execute operation: saveOrder in service: CreateTripService ");
 		
 		try {
 			//invoke op with parameters
 			//return value is primitive type, bind result to label.
-			String result = String.valueOf(buyticketservice_service.saveOrder(
+			String result = String.valueOf(createtripservice_service.saveOrder(
 			saveOrder_orderId_t.getText(),
 			saveOrder_boughtTime_t.getText()
 			));	
@@ -7072,11 +7643,11 @@ modifySeat_seattype_cb.getItems().add("STAND");
 		
 		System.out.println("execute showSeats");
 		String time = String.format("%1$tH:%1$tM:%1$tS", System.currentTimeMillis());
-		log.appendText(time + " -- execute operation: showSeats in service: BuyTicketService ");
+		log.appendText(time + " -- execute operation: showSeats in service: CreateTripService ");
 		
 		try {
 			//invoke op with parameters
-					List<Seat> result = buyticketservice_service.showSeats(
+					List<Seat> result = createtripservice_service.showSeats(
 					);
 				
 					//binding result to GUI
@@ -7165,12 +7736,12 @@ modifySeat_seattype_cb.getItems().add("STAND");
 		
 		System.out.println("execute selectSeat");
 		String time = String.format("%1$tH:%1$tM:%1$tS", System.currentTimeMillis());
-		log.appendText(time + " -- execute operation: selectSeat in service: BuyTicketService ");
+		log.appendText(time + " -- execute operation: selectSeat in service: CreateTripService ");
 		
 		try {
 			//invoke op with parameters
 			//return value is primitive type, bind result to label.
-			String result = String.valueOf(buyticketservice_service.selectSeat(
+			String result = String.valueOf(createtripservice_service.selectSeat(
 			selectSeat_seatId_t.getText()
 			));	
 			Label l = new Label(result);
@@ -7212,12 +7783,12 @@ modifySeat_seattype_cb.getItems().add("STAND");
 		
 		System.out.println("execute pay");
 		String time = String.format("%1$tH:%1$tM:%1$tS", System.currentTimeMillis());
-		log.appendText(time + " -- execute operation: pay in service: BuyTicketService ");
+		log.appendText(time + " -- execute operation: pay in service: CreateTripService ");
 		
 		try {
 			//invoke op with parameters
 			//return value is primitive type, bind result to label.
-			String result = String.valueOf(buyticketservice_service.pay(
+			String result = String.valueOf(createtripservice_service.pay(
 			Float.valueOf(pay_price_t.getText())
 			));	
 			Label l = new Label(result);
@@ -7678,8 +8249,6 @@ modifySeat_seattype_cb.getItems().add("STAND");
 			//invoke op with parameters
 			//return value is primitive type, bind result to label.
 			String result = String.valueOf(modifytripservice_service.updateTicket(
-			updateTicket_accoutId_t.getText(),
-			updateTicket_ticketId_t.getText(),
 			updateTicket_newRouteId_t.getText()
 			));	
 			Label l = new Label(result);
@@ -8091,6 +8660,241 @@ modifySeat_seattype_cb.getItems().add("STAND");
 				thirdpartyServiceUnSat();
 		}
 	}
+	public void check() {
+		
+		System.out.println("execute check");
+		String time = String.format("%1$tH:%1$tM:%1$tS", System.currentTimeMillis());
+		log.appendText(time + " -- execute operation: check in service: CreateTripService ");
+		
+		try {
+			//invoke op with parameters
+			//return value is primitive type, bind result to label.
+			String result = String.valueOf(createtripservice_service.check(
+			check_accoutId_t.getText()
+			));	
+			Label l = new Label(result);
+			l.setPadding(new Insets(8, 8, 8, 8));
+			operation_return_pane.setContent(l);
+		    log.appendText(" -- success!\n");
+		    //set pre- and post-conditions text area color
+		    precondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #7CFC00");
+		    postcondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #7CFC00");
+		    //contract evaluation result
+		    precondition_pane.setText("Precondition: True");
+		    postcondition_pane.setText("Postcondition: True");
+		    
+		    
+		} catch (PreconditionException e) {
+			log.appendText(" -- failed!\n");
+			precondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #FF0000");
+			precondition_pane.setText("Precondition: False");	
+			preconditionUnSat();
+			
+		} catch (PostconditionException e) {
+			log.appendText(" -- failed!\n");
+			postcondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #FF0000");	
+			postcondition_pane.setText("Postcondition: False");
+			postconditionUnSat();
+			
+		} catch (NumberFormatException e) {
+			log.appendText(" -- failed!\n");
+			precondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #FF0000");
+			precondition_pane.setText("Precondition: False");	
+			preconditionUnSat();
+			
+		} catch (Exception e ) {		
+			if (e instanceof ThirdPartyServiceException)
+				thirdpartyServiceUnSat();
+		}
+	}
+	public void checkTicket() {
+		
+		System.out.println("execute checkTicket");
+		String time = String.format("%1$tH:%1$tM:%1$tS", System.currentTimeMillis());
+		log.appendText(time + " -- execute operation: checkTicket in service: ModifyTripService ");
+		
+		try {
+			//invoke op with parameters
+			//return value is primitive type, bind result to label.
+			String result = String.valueOf(modifytripservice_service.checkTicket(
+			checkTicket_accoutId_t.getText(),
+			checkTicket_ticketId_t.getText()
+			));	
+			Label l = new Label(result);
+			l.setPadding(new Insets(8, 8, 8, 8));
+			operation_return_pane.setContent(l);
+		    log.appendText(" -- success!\n");
+		    //set pre- and post-conditions text area color
+		    precondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #7CFC00");
+		    postcondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #7CFC00");
+		    //contract evaluation result
+		    precondition_pane.setText("Precondition: True");
+		    postcondition_pane.setText("Postcondition: True");
+		    
+		    
+		} catch (PreconditionException e) {
+			log.appendText(" -- failed!\n");
+			precondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #FF0000");
+			precondition_pane.setText("Precondition: False");	
+			preconditionUnSat();
+			
+		} catch (PostconditionException e) {
+			log.appendText(" -- failed!\n");
+			postcondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #FF0000");	
+			postcondition_pane.setText("Postcondition: False");
+			postconditionUnSat();
+			
+		} catch (NumberFormatException e) {
+			log.appendText(" -- failed!\n");
+			precondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #FF0000");
+			precondition_pane.setText("Precondition: False");	
+			preconditionUnSat();
+			
+		} catch (Exception e ) {		
+			if (e instanceof ThirdPartyServiceException)
+				thirdpartyServiceUnSat();
+		}
+	}
+	public void checkCancelTrip() {
+		
+		System.out.println("execute checkCancelTrip");
+		String time = String.format("%1$tH:%1$tM:%1$tS", System.currentTimeMillis());
+		log.appendText(time + " -- execute operation: checkCancelTrip in service: CancelTripService ");
+		
+		try {
+			//invoke op with parameters
+			//return value is primitive type, bind result to label.
+			String result = String.valueOf(canceltripservice_service.checkCancelTrip(
+			checkCancelTrip_accoutId_t.getText(),
+			checkCancelTrip_ticketId_t.getText()
+			));	
+			Label l = new Label(result);
+			l.setPadding(new Insets(8, 8, 8, 8));
+			operation_return_pane.setContent(l);
+		    log.appendText(" -- success!\n");
+		    //set pre- and post-conditions text area color
+		    precondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #7CFC00");
+		    postcondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #7CFC00");
+		    //contract evaluation result
+		    precondition_pane.setText("Precondition: True");
+		    postcondition_pane.setText("Postcondition: True");
+		    
+		    
+		} catch (PreconditionException e) {
+			log.appendText(" -- failed!\n");
+			precondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #FF0000");
+			precondition_pane.setText("Precondition: False");	
+			preconditionUnSat();
+			
+		} catch (PostconditionException e) {
+			log.appendText(" -- failed!\n");
+			postcondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #FF0000");	
+			postcondition_pane.setText("Postcondition: False");
+			postconditionUnSat();
+			
+		} catch (NumberFormatException e) {
+			log.appendText(" -- failed!\n");
+			precondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #FF0000");
+			precondition_pane.setText("Precondition: False");	
+			preconditionUnSat();
+			
+		} catch (Exception e ) {		
+			if (e instanceof ThirdPartyServiceException)
+				thirdpartyServiceUnSat();
+		}
+	}
+	public void cancelTicket() {
+		
+		System.out.println("execute cancelTicket");
+		String time = String.format("%1$tH:%1$tM:%1$tS", System.currentTimeMillis());
+		log.appendText(time + " -- execute operation: cancelTicket in service: CancelTripService ");
+		
+		try {
+			//invoke op with parameters
+			//return value is primitive type, bind result to label.
+			String result = String.valueOf(canceltripservice_service.cancelTicket(
+			));	
+			Label l = new Label(result);
+			l.setPadding(new Insets(8, 8, 8, 8));
+			operation_return_pane.setContent(l);
+		    log.appendText(" -- success!\n");
+		    //set pre- and post-conditions text area color
+		    precondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #7CFC00");
+		    postcondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #7CFC00");
+		    //contract evaluation result
+		    precondition_pane.setText("Precondition: True");
+		    postcondition_pane.setText("Postcondition: True");
+		    
+		    
+		} catch (PreconditionException e) {
+			log.appendText(" -- failed!\n");
+			precondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #FF0000");
+			precondition_pane.setText("Precondition: False");	
+			preconditionUnSat();
+			
+		} catch (PostconditionException e) {
+			log.appendText(" -- failed!\n");
+			postcondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #FF0000");	
+			postcondition_pane.setText("Postcondition: False");
+			postconditionUnSat();
+			
+		} catch (NumberFormatException e) {
+			log.appendText(" -- failed!\n");
+			precondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #FF0000");
+			precondition_pane.setText("Precondition: False");	
+			preconditionUnSat();
+			
+		} catch (Exception e ) {		
+			if (e instanceof ThirdPartyServiceException)
+				thirdpartyServiceUnSat();
+		}
+	}
+	public void refund() {
+		
+		System.out.println("execute refund");
+		String time = String.format("%1$tH:%1$tM:%1$tS", System.currentTimeMillis());
+		log.appendText(time + " -- execute operation: refund in service: CancelTripService ");
+		
+		try {
+			//invoke op with parameters
+			//return value is primitive type, bind result to label.
+			String result = String.valueOf(canceltripservice_service.refund(
+			));	
+			Label l = new Label(result);
+			l.setPadding(new Insets(8, 8, 8, 8));
+			operation_return_pane.setContent(l);
+		    log.appendText(" -- success!\n");
+		    //set pre- and post-conditions text area color
+		    precondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #7CFC00");
+		    postcondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #7CFC00");
+		    //contract evaluation result
+		    precondition_pane.setText("Precondition: True");
+		    postcondition_pane.setText("Postcondition: True");
+		    
+		    
+		} catch (PreconditionException e) {
+			log.appendText(" -- failed!\n");
+			precondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #FF0000");
+			precondition_pane.setText("Precondition: False");	
+			preconditionUnSat();
+			
+		} catch (PostconditionException e) {
+			log.appendText(" -- failed!\n");
+			postcondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #FF0000");	
+			postcondition_pane.setText("Postcondition: False");
+			postconditionUnSat();
+			
+		} catch (NumberFormatException e) {
+			log.appendText(" -- failed!\n");
+			precondition.setStyle("-fx-background-color:#000000; -fx-control-inner-background: #FF0000");
+			precondition_pane.setText("Precondition: False");	
+			preconditionUnSat();
+			
+		} catch (Exception e ) {		
+			if (e instanceof ThirdPartyServiceException)
+				thirdpartyServiceUnSat();
+		}
+	}
 
 
 
@@ -8111,8 +8915,12 @@ modifySeat_seattype_cb.getItems().add("STAND");
 	@FXML
 	TreeView<String> actor_treeview_staff;
 	@FXML
-	TreeView<String> actor_treeview_administrator;
+	TreeView<String> actor_treeview_sheduler;
+	@FXML
+	TreeView<String> actor_treeview_scheduler;
 	
+	@FXML
+	TreeView<String> actor_treeview_administrator;
 
 
 	@FXML
@@ -8143,7 +8951,7 @@ modifySeat_seattype_cb.getItems().add("STAND");
 	
 	TrainTicketSystem trainticketsystem_service;
 	ThirdPartyServices thirdpartyservices_service;
-	BuyTicketService buyticketservice_service;
+	CreateTripService createtripservice_service;
 	QueryOrderService queryorderservice_service;
 	ManageRouteCRUDService manageroutecrudservice_service;
 	ManageTrainCRUDService managetraincrudservice_service;
@@ -8153,6 +8961,7 @@ modifySeat_seattype_cb.getItems().add("STAND");
 	ManageSeatCRUDService manageseatcrudservice_service;
 	ModifyTripService modifytripservice_service;
 	DeleteOverdueOrderService deleteoverdueorderservice_service;
+	CancelTripService canceltripservice_service;
 	
 	ClassInfo route;
 	ClassInfo train;
@@ -8241,7 +9050,6 @@ modifySeat_seattype_cb.getItems().add("STAND");
 	TextField modifySeat_trainid_t;
 	ChoiceBox modifySeat_seattype_cb;
 	TextField deleteSeat_seatid_t;
-	TextField buyTicket_accoutId_t;
 	TextField buyTicket_routeId_t;
 	TextField buyTicket_ticketId_t;
 	TextField saveOrder_orderId_t;
@@ -8255,14 +9063,17 @@ modifySeat_seattype_cb.getItems().add("STAND");
 	TextField cancelTrip_accoutId_t;
 	TextField queryByAccoutId_accoutId_t;
 	TextField queryTicketId_ticketId_t;
-	TextField updateTicket_accoutId_t;
-	TextField updateTicket_ticketId_t;
 	TextField updateTicket_newRouteId_t;
 	TextField updateOrder_time_t;
 	TextField selectNewSeat_seatId_t;
 	TextField payDifference_difference_t;
 	TextField deleteOverdueTicket_ticketId_t;
 	TextField sendNotification_phoneNumber_t;
+	TextField check_accoutId_t;
+	TextField checkTicket_accoutId_t;
+	TextField checkTicket_ticketId_t;
+	TextField checkCancelTrip_accoutId_t;
+	TextField checkCancelTrip_ticketId_t;
 	
 	HashMap<String, String> definitions_map;
 	HashMap<String, String> preconditions_map;

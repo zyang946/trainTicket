@@ -12,7 +12,7 @@ public class ServiceManager {
 	
 	private static List<TrainTicketSystem> TrainTicketSystemInstances = new LinkedList<TrainTicketSystem>();
 	private static List<ThirdPartyServices> ThirdPartyServicesInstances = new LinkedList<ThirdPartyServices>();
-	private static List<BuyTicketService> BuyTicketServiceInstances = new LinkedList<BuyTicketService>();
+	private static List<CreateTripService> CreateTripServiceInstances = new LinkedList<CreateTripService>();
 	private static List<QueryOrderService> QueryOrderServiceInstances = new LinkedList<QueryOrderService>();
 	private static List<ManageRouteCRUDService> ManageRouteCRUDServiceInstances = new LinkedList<ManageRouteCRUDService>();
 	private static List<ManageTrainCRUDService> ManageTrainCRUDServiceInstances = new LinkedList<ManageTrainCRUDService>();
@@ -22,11 +22,12 @@ public class ServiceManager {
 	private static List<ManageSeatCRUDService> ManageSeatCRUDServiceInstances = new LinkedList<ManageSeatCRUDService>();
 	private static List<ModifyTripService> ModifyTripServiceInstances = new LinkedList<ModifyTripService>();
 	private static List<DeleteOverdueOrderService> DeleteOverdueOrderServiceInstances = new LinkedList<DeleteOverdueOrderService>();
+	private static List<CancelTripService> CancelTripServiceInstances = new LinkedList<CancelTripService>();
 	
 	static {
 		AllServiceInstance.put("TrainTicketSystem", TrainTicketSystemInstances);
 		AllServiceInstance.put("ThirdPartyServices", ThirdPartyServicesInstances);
-		AllServiceInstance.put("BuyTicketService", BuyTicketServiceInstances);
+		AllServiceInstance.put("CreateTripService", CreateTripServiceInstances);
 		AllServiceInstance.put("QueryOrderService", QueryOrderServiceInstances);
 		AllServiceInstance.put("ManageRouteCRUDService", ManageRouteCRUDServiceInstances);
 		AllServiceInstance.put("ManageTrainCRUDService", ManageTrainCRUDServiceInstances);
@@ -36,6 +37,7 @@ public class ServiceManager {
 		AllServiceInstance.put("ManageSeatCRUDService", ManageSeatCRUDServiceInstances);
 		AllServiceInstance.put("ModifyTripService", ModifyTripServiceInstances);
 		AllServiceInstance.put("DeleteOverdueOrderService", DeleteOverdueOrderServiceInstances);
+		AllServiceInstance.put("CancelTripService", CancelTripServiceInstances);
 	} 
 	
 	public static List getAllInstancesOf(String ClassName) {
@@ -52,9 +54,9 @@ public class ServiceManager {
 		ThirdPartyServicesInstances.add(s);
 		return s;
 	}
-	public static BuyTicketService createBuyTicketService() {
-		BuyTicketService s = new BuyTicketServiceImpl();
-		BuyTicketServiceInstances.add(s);
+	public static CreateTripService createCreateTripService() {
+		CreateTripService s = new CreateTripServiceImpl();
+		CreateTripServiceInstances.add(s);
 		return s;
 	}
 	public static QueryOrderService createQueryOrderService() {
@@ -100,6 +102,11 @@ public class ServiceManager {
 	public static DeleteOverdueOrderService createDeleteOverdueOrderService() {
 		DeleteOverdueOrderService s = new DeleteOverdueOrderServiceImpl();
 		DeleteOverdueOrderServiceInstances.add(s);
+		return s;
+	}
+	public static CancelTripService createCancelTripService() {
+		CancelTripService s = new CancelTripServiceImpl();
+		CancelTripServiceInstances.add(s);
 		return s;
 	}
 }	

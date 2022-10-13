@@ -43,6 +43,16 @@
 										<TreeView fx:id="actor_treeview_staff"/> 
 									</content>
 								</TitledPane>
+								<TitledPane fx:id="sheduler" expanded="true" text="Sheduler">
+									<content>
+										<TreeView fx:id="actor_treeview_sheduler"/> 
+									</content>
+								</TitledPane>
+								<TitledPane fx:id="scheduler" expanded="true" text="Scheduler">
+									<content>
+										<TreeView fx:id="actor_treeview_scheduler"/> 
+									</content>
+								</TitledPane>
 								<TitledPane fx:id="administrator" expanded="true" text="Administrator">
 									<content>
 										<TreeView fx:id="actor_treeview_administrator"/> 
